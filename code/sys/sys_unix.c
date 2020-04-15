@@ -20,9 +20,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
+#define __USE_MISC
+#define __USE_POSIX
+#define _GNU_SOURCE
+
 #include "../qcommon/q_shared.h"
 #include "../qcommon/qcommon.h"
 #include "sys_local.h"
+
+//extern int fileno (FILE *__stream) __THROW __wur;
 
 #include <signal.h>
 #include <sys/types.h>

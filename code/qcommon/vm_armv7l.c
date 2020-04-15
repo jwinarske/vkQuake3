@@ -30,6 +30,7 @@ http://www.heyrick.co.uk/armwiki/Category:Opcodes
 ARMv7-A_ARMv7-R_DDI0406_2007.pdf
 */
 
+#define _BSD_SOURCE
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/time.h>
@@ -1159,6 +1160,7 @@ void VM_Compile(vm_t *vm, vmHeader_t *header)
 	}
 
 	// clear icache, http://blogs.arm.com/software-enablement/141-caches-and-self-modifying-code/ 
+#define __clear_cache __builtin___clear_cache
 	__clear_cache(vm->codeBase, vm->codeBase+vm->codeLength);
 
 	vm->destroy = VM_Destroy_Compiled;

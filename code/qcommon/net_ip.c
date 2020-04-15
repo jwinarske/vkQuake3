@@ -58,6 +58,9 @@ static qboolean	winsockInitialized = qfalse;
 
 #else
 
+#define __USE_POSIX
+#define __USE_MISC
+
 #	if MAC_OS_X_VERSION_MIN_REQUIRED == 1020
 		// needed for socklen_t on OSX 10.2
 #		define _BSD_SOCKLEN_T_
