@@ -15,10 +15,10 @@
 // After calling this function we get fully functional vulkan subsystem.
 void vk_initialize(void)
 {
-    // This function is responsible for initializing a valid Vulkan subsystem.
-    vk_createWindow();
+	vk_getProcAddress();
 
-    vk_getProcAddress(); 
+	// This function is responsible for initializing a valid Vulkan subsystem.
+	vk_createWindow();
  
 	// Swapchain. vk.physical_device required to be init. 
 	vk_createSwapChain(vk.device, vk.surface, vk.surface_format);

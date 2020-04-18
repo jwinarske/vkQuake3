@@ -122,7 +122,10 @@ PFN_vkDestroySwapchainKHR						qvkDestroySwapchainKHR;
 PFN_vkGetSwapchainImagesKHR						qvkGetSwapchainImagesKHR;
 PFN_vkQueuePresentKHR							qvkQueuePresentKHR;
 
-
+PFN_vkGetPhysicalDeviceDisplayPropertiesKHR		qvkGetPhysicalDeviceDisplayPropertiesKHR;
+PFN_vkGetDisplayModePropertiesKHR				qvkGetDisplayModePropertiesKHR;
+PFN_vkCreateDisplayPlaneSurfaceKHR				qvkCreateDisplayPlaneSurfaceKHR;
+PFN_vkCreateDisplayModeKHR						qvkCreateDisplayModeKHR;
 
 #ifndef NDEBUG
 
@@ -246,16 +249,16 @@ static void vk_createInstance(void)
     instanceCreateInfo.enabledExtensionCount = nInsExt;
 	instanceCreateInfo.ppEnabledExtensionNames = ppInstanceExt;
 
-#ifndef NDEBUG
-    ri.Printf(PRINT_ALL, "Using VK_LAYER_LUNARG_standard_validation\n");
+/*#ifndef NDEBUG
+	ri.Printf(PRINT_ALL, "Using VK_LAYER_LUNARG_standard_validation\n");
 
     const char* const validation_layer_name = "VK_LAYER_LUNARG_standard_validation";    
     instanceCreateInfo.enabledLayerCount = 1;
 	instanceCreateInfo.ppEnabledLayerNames = &validation_layer_name;
-#else
+#else*/
     instanceCreateInfo.enabledLayerCount = 0;
 	instanceCreateInfo.ppEnabledLayerNames = NULL;
-#endif
+//#endif
 
 
     VkResult e = qvkCreateInstance(&instanceCreateInfo, NULL, &vk.instance);
@@ -288,7 +291,7 @@ static void vk_createInstance(void)
 
 static void vk_loadGlobalFunctions(void)
 {
-    ri.Printf(PRINT_ALL, " Loading vulkan instance functions \n");
+	ri.Printf(PRINT_ALL, " Loading vulkan instance functions \n");
 
     vk_getInstanceProcAddrImpl();
 
@@ -324,12 +327,17 @@ static void vk_loadGlobalFunctions(void)
 	INIT_INSTANCE_FUNCTION(vkGetPhysicalDeviceSurfaceFormatsKHR)
 	INIT_INSTANCE_FUNCTION(vkGetPhysicalDeviceSurfacePresentModesKHR)
 	INIT_INSTANCE_FUNCTION(vkGetPhysicalDeviceSurfaceSupportKHR)
-   
+
 
 #ifndef NDEBUG
     INIT_INSTANCE_FUNCTION(vkCreateDebugReportCallbackEXT)
 	INIT_INSTANCE_FUNCTION(vkDestroyDebugReportCallbackEXT)	//
 #endif
+
+	INIT_INSTANCE_FUNCTION(vkGetPhysicalDeviceDisplayPropertiesKHR)
+	INIT_INSTANCE_FUNCTION(vkGetDisplayModePropertiesKHR)
+	INIT_INSTANCE_FUNCTION(vkCreateDisplayPlaneSurfaceKHR)
+	INIT_INSTANCE_FUNCTION(vkCreateDisplayModeKHR)
 
     #undef INIT_INSTANCE_FUNCTION
 
@@ -424,7 +432,6 @@ static void vk_selectSurfaceFormat(void)
 
     free(pSurfFmts);
 
-
     // To query the basic capabilities of a surface, needed in order to create a swapchain
 	VK_CHECK(qvkGetPhysicalDeviceSurfaceCapabilitiesKHR(vk.physical_device, vk.surface, &vk.surface_caps));
 
@@ -435,7 +442,6 @@ static void vk_selectSurfaceFormat(void)
 	// VK_IMAGE_USAGE_TRANSFER_SRC_BIT is required in order to take screenshots.
 	if ((vk.surface_caps.supportedUsageFlags & VK_IMAGE_USAGE_TRANSFER_SRC_BIT) == 0)
 		ri.Error(ERR_FATAL, "VK_IMAGE_USAGE_TRANSFER_SRC_BIT is not supported by you GPU.\n");
-
 
     // To query supported format features which are properties of the physical device
 	
@@ -462,7 +468,6 @@ static void vk_selectSurfaceFormat(void)
         ri.Printf(PRINT_ALL, "--- Blitting from optimal tiled images supported. ---\n");
         vk.isBlitSupported = VK_TRUE;
     }
-
 
     //=========================== depth =====================================
     qvkGetPhysicalDeviceFormatProperties(vk.physical_device, VK_FORMAT_D24_UNORM_S8_UINT, &props);
@@ -742,21 +747,21 @@ void vk_getProcAddress(void)
     vk_createDebugCallback(vk_DebugCallback);
 #endif
 
-    // The window surface needs to be created right after the instance creation,
-    // because it can actually influence the presentation mode selection.
-	vk_createSurfaceImpl(); 
-   
-    // select physical device
-    vk_selectPhysicalDevice();
+	// select physical device
+	vk_selectPhysicalDevice();
 
-    vk_selectSurfaceFormat(); 
+	vk_createLogicalDevice();
+
+	// Get device level functions.
+	vk_loadDeviceFunctions();
+
+	// The window surface needs to be created right after the instance creation,
+	// because it can actually influence the presentation mode selection.
+	vk_createSurfaceImpl();
+
+	vk_selectSurfaceFormat();
 
     vk_selectQueueFamilyForPresentation();
-
-    vk_createLogicalDevice();
-
-    // Get device level functions.
-    vk_loadDeviceFunctions();
 
     // a call to retrieve queue handle
 	qvkGetDeviceQueue(vk.device, vk.queue_family_index, 0, &vk.queue);
@@ -886,6 +891,11 @@ void vk_clearProcAddress(void)
 	qvkDestroySwapchainKHR						= NULL;
 	qvkGetSwapchainImagesKHR					= NULL;
 	qvkQueuePresentKHR							= NULL;
+
+	qvkGetPhysicalDeviceDisplayPropertiesKHR	= NULL;
+	qvkGetDisplayModePropertiesKHR				= NULL;
+	qvkCreateDisplayPlaneSurfaceKHR				= NULL;
+	qvkCreateDisplayModeKHR						= NULL;
 }
 
 

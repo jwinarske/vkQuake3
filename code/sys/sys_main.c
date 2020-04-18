@@ -514,10 +514,16 @@ void *Sys_LoadDll(const char *name, qboolean useSystemLib)
 		return NULL;
 	}
 
+	char fullName[MAX_OSPATH];
+	fullName[0] = 'l';
+	fullName[1] = 'i';
+	fullName[2] = 'b';
+	memcpy(fullName+3, name, strlen(name)+1);
+
 	if(useSystemLib)
 	{
-		Com_Printf("Trying to load \"%s\"...\n", name);
-		dllhandle = Sys_LoadLibrary(name);
+		Com_Printf("Trying to load \"%s\"...\n", fullName);
+		dllhandle = Sys_LoadLibrary(fullName);
 	}
 	
 	if(!dllhandle)
@@ -531,15 +537,15 @@ void *Sys_LoadDll(const char *name, qboolean useSystemLib)
 		if(!*topDir)
 			topDir = ".";
 
-		len = Com_sprintf(libPath, sizeof(libPath), "%s%c%s", topDir, PATH_SEP, name);
+		len = Com_sprintf(libPath, sizeof(libPath), "%s%c%s", topDir, PATH_SEP, fullName);
 		if(len < sizeof(libPath))
 		{
-			Com_Printf("Trying to load \"%s\" from \"%s\"...\n", name, topDir);
+			Com_Printf("Trying to load \"%s\" from \"%s\"...\n", fullName, topDir);
 			dllhandle = Sys_LoadLibrary(libPath);
 		}
 		else
 		{
-			Com_Printf("Skipping trying to load \"%s\" from \"%s\", file name is too long.\n", name, topDir);
+			Com_Printf("Skipping trying to load \"%s\" from \"%s\", file name is too long.\n", fullName, topDir);
 		}
 
 		if(!dllhandle)
@@ -551,20 +557,20 @@ void *Sys_LoadDll(const char *name, qboolean useSystemLib)
 			
 			if(FS_FilenameCompare(topDir, basePath))
 			{
-				len = Com_sprintf(libPath, sizeof(libPath), "%s%c%s", basePath, PATH_SEP, name);
+				len = Com_sprintf(libPath, sizeof(libPath), "%s%c%s", basePath, PATH_SEP, fullName);
 				if(len < sizeof(libPath))
 				{
-					Com_Printf("Trying to load \"%s\" from \"%s\"...\n", name, basePath);
+					Com_Printf("Trying to load \"%s\" from \"%s\"...\n", fullName, basePath);
 					dllhandle = Sys_LoadLibrary(libPath);
 				}
 				else
 				{
-					Com_Printf("Skipping trying to load \"%s\" from \"%s\", file name is too long.\n", name, basePath);
+					Com_Printf("Skipping trying to load \"%s\" from \"%s\", file name is too long.\n", fullName, basePath);
 				}
 			}
 			
 			if(!dllhandle)
-				Com_Printf("Loading \"%s\" failed\n", name);
+				Com_Printf("Loading \"%s\" failed\n", fullName);
 		}
 	}
 	

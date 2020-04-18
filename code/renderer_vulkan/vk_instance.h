@@ -108,6 +108,11 @@ extern PFN_vkDestroySwapchainKHR						qvkDestroySwapchainKHR;
 extern PFN_vkGetSwapchainImagesKHR						qvkGetSwapchainImagesKHR;
 extern PFN_vkQueuePresentKHR							qvkQueuePresentKHR;
 
+extern PFN_vkGetPhysicalDeviceDisplayPropertiesKHR		qvkGetPhysicalDeviceDisplayPropertiesKHR;
+extern PFN_vkGetDisplayModePropertiesKHR				qvkGetDisplayModePropertiesKHR;
+extern PFN_vkCreateDisplayPlaneSurfaceKHR				qvkCreateDisplayPlaneSurfaceKHR;
+extern PFN_vkCreateDisplayModeKHR						qvkCreateDisplayModeKHR;
+
 
 
 // Initializes VK_Instance structure.

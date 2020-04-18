@@ -1217,13 +1217,13 @@ void IN_Init( void *windowData )
 {
 	int appState;
 
-	if( !SDL_WasInit( SDL_INIT_VIDEO ) )
+	/*if( !SDL_WasInit( SDL_INIT_VIDEO ) )
 	{
 		Com_Error( ERR_FATAL, "IN_Init called before SDL_Init( SDL_INIT_VIDEO )" );
 		return;
-	}
+	}*/
 
-	SDL_window = (SDL_Window *)windowData;
+	//SDL_window = (SDL_Window *)windowData;
 
 	Com_DPrintf( "\n------- Input Initialization -------\n" );
 
@@ -1236,16 +1236,16 @@ void IN_Init( void *windowData )
 	in_joystick = Cvar_Get( "in_joystick", "0", CVAR_ARCHIVE|CVAR_LATCH );
 	in_joystickThreshold = Cvar_Get( "joy_threshold", "0.15", CVAR_ARCHIVE );
 
-	SDL_StartTextInput( );
+	//SDL_StartTextInput( );
 
 	mouseAvailable = ( in_mouse->value != 0 );
 	IN_DeactivateMouse( Cvar_VariableIntegerValue( "r_fullscreen" ) != 0 );
 
-	appState = SDL_GetWindowFlags( SDL_window );
+	//appState = SDL_GetWindowFlags( SDL_window );
 	Cvar_SetValue( "com_unfocused",	!( appState & SDL_WINDOW_INPUT_FOCUS ) );
 	Cvar_SetValue( "com_minimized", appState & SDL_WINDOW_MINIMIZED );
 
-	IN_InitJoystick( );
+	//IN_InitJoystick( );
 	Com_DPrintf( "------------------------------------\n" );
 }
 
