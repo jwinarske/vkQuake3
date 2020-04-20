@@ -544,9 +544,17 @@ void vk_UploadXYZI(float (*pXYZ)[4], uint32_t nVertex, uint32_t* pIdx, uint32_t 
 		const uint32_t indexes_size = nIndex * sizeof(uint32_t);        
 
 		unsigned char* iDst = shadingDat.index_buffer_ptr + shadingDat.index_buffer_offset;
-		memcpy(iDst, pIdx, indexes_size);
 
-		qvkCmdBindIndexBuffer(vk.command_buffer, shadingDat.index_buffer, shadingDat.index_buffer_offset, VK_INDEX_TYPE_UINT32);
+		//memcpy(iDst, pIdx, indexes_size);
+		uint16_t* iDst16 = iDst;
+		for(uint32_t c = 0; c < indexes_size; ++c)
+		{
+			//assert(pIdx[c] > 65535);
+			uint16_t idx = pIdx[c];
+			iDst16[c] = idx;
+		}
+
+		qvkCmdBindIndexBuffer(vk.command_buffer, shadingDat.index_buffer, shadingDat.index_buffer_offset, VK_INDEX_TYPE_UINT16);
 		
         shadingDat.index_buffer_offset += indexes_size;
 
