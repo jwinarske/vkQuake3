@@ -196,6 +196,214 @@ void vk_createPipelineLayout(void)
 
 static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pPipeLine)
 {
+	{
+		ri.Printf(PRINT_ALL, "========================================\n");
+		ri.Printf(PRINT_ALL, "========================================\n");
+		ri.Printf(PRINT_ALL, "========================================\n");
+		ri.Printf(PRINT_ALL, "Create pipeline:\n");
+
+		//ri.Printf(PRINT_ALL, "Clipping plane: %i\n", def->clipping_plane);
+
+		if(def->clipping_plane)
+		{
+			switch(def->shader_type)
+			{
+			case ST_SINGLE_TEXTURE:
+				ri.Printf(PRINT_ALL, "Shader type: single_texture_clipping_plane_vs single_texture_fs\n");
+				break;
+			case ST_MULTI_TEXURE_MUL:
+				ri.Printf(PRINT_ALL, "Shader type: multi_texture_clipping_plane_vs multi_texture_mul_fs\n");
+				break;
+			case ST_MULTI_TEXURE_ADD:
+				ri.Printf(PRINT_ALL, "Shader type: multi_texture_clipping_plane_vs multi_texture_add_fs\n");
+				break;
+			}
+		}
+		else
+		{
+			switch(def->shader_type)
+			{
+			case ST_SINGLE_TEXTURE:
+				ri.Printf(PRINT_ALL, "Shader type: single_texture_vs single_texture_fs\n");
+				break;
+			case ST_MULTI_TEXURE_MUL:
+				ri.Printf(PRINT_ALL, "Shader type: multi_texture_vs multi_texture_mul_fs\n");
+				break;
+			case ST_MULTI_TEXURE_ADD:
+				ri.Printf(PRINT_ALL, "Shader type: multi_texture_vs multi_texture_add_fs\n");
+				break;
+			}
+		}
+
+		if(def->state_bits & GLS_ATEST_GE_80)
+		{
+			ri.Printf(PRINT_ALL, "Alpha test GE 80\n");
+		}
+		else if(def->state_bits & GLS_ATEST_GT_0)
+		{
+			ri.Printf(PRINT_ALL, "Alpha test GT 0\n");
+		}
+		else if(def->state_bits & GLS_ATEST_LT_80)
+		{
+			ri.Printf(PRINT_ALL, "Alpha test LT 80\n");
+		}
+		else if((def->state_bits & GLS_ATEST_BITS) == 0)
+		{
+			ri.Printf(PRINT_ALL, "Alpha test disabled\n");
+		}
+
+//		if(def->state_bits & GLS_DEPTHFUNC_EQUAL)
+//		{
+//			ri.Printf(PRINT_ALL, "Depth func equal\n");
+//		}
+//		else
+//		{
+//			ri.Printf(PRINT_ALL, "Depth func less or equal\n");
+//		}
+
+//		if(def->state_bits & GLS_DEPTHMASK_TRUE)
+//		{
+//			ri.Printf(PRINT_ALL, "Depth write true\n");
+//		}
+//		else
+//		{
+//			ri.Printf(PRINT_ALL, "Depth write false\n");
+//		}
+
+		if((def->state_bits & GLS_DEPTHTEST_DISABLE) == 0 &&
+		   ((def->shadow_phase & SHADOWS_RENDERING_EDGES) ||
+			(def->shadow_phase & SHADOWS_RENDERING_FULLSCREEN_QUAD)
+			)
+		   )
+		{
+			ri.Printf(PRINT_ALL, "Depth write enabled\n");
+		}
+		else
+		{
+			ri.Printf(PRINT_ALL, "Depth write disabled\n");
+		}
+
+		switch(def->shadow_phase)
+		{
+		case SHADOWS_RENDERING_DISABLED:
+			ri.Printf(PRINT_ALL, "Stencil test disabled\n");
+			break;
+		default:
+			ri.Printf(PRINT_ALL, "Stencil test enabled\n");
+			break;
+		}
+
+		if(def->state_bits & GLS_DSTBLEND_DST_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: dst alpha\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_ONE)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: one\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_ONE_MINUS_DST_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: one minus dst alpha\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: one minus src alpha\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_ONE_MINUS_SRC_COLOR)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: one minus src color\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_SRC_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: src alpha\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_SRC_COLOR)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: src color\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_ZERO)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: zero\n");
+		}
+		else if(def->state_bits & GLS_DSTBLEND_DST_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: dst alpha\n");
+		}
+		else if((def->state_bits & GLS_DSTBLEND_BITS) == 0)
+		{
+			ri.Printf(PRINT_ALL, "Dst blend: disabled\n");
+		}
+
+		if(def->state_bits & GLS_SRCBLEND_SRC_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: Src alpha\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_DST_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: dst alpha\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_ONE)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: one\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_ZERO)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: zero\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_ONE_MINUS_SRC_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: one minus Src alpha\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_ONE_MINUS_DST_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: one minus dst alpha\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_ONE_MINUS_DST_COLOR)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: one minus dst color\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_SRC_ALPHA)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: src alpha\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_ALPHA_SATURATE)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: alpha saturate\n");
+		}
+		else if(def->state_bits & GLS_SRCBLEND_DST_COLOR)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: dst color\n");
+		}
+		else if((def->state_bits & GLS_SRCBLEND_BITS) == 0)
+		{
+			ri.Printf(PRINT_ALL, "Src blend: disabled\n");
+		}
+
+//		switch(def->face_culling)
+//		{
+//		case CT_FRONT_SIDED:
+//			ri.Printf(PRINT_ALL, "Face culling: Front sided\n");
+//			break;
+//		case CT_BACK_SIDED:
+//			ri.Printf(PRINT_ALL, "Face culling: Back sided\n");
+//			break;
+//		case CT_TWO_SIDED:
+//			ri.Printf(PRINT_ALL, "Face culling: Two sided\n");
+//			break;
+//		}
+
+//		ri.Printf(PRINT_ALL, "Line primitives: %i\n", def->line_primitives);
+//		ri.Printf(PRINT_ALL, "Mirror: %i\n", def->mirror);
+//		ri.Printf(PRINT_ALL, "Polygon offset: %i\n", def->polygon_offset);
+
+//		if(def->state_bits & GLS_POLYMODE_LINE)
+//		{
+//			ri.Printf(PRINT_ALL, "Polygon mode line\n");
+//		}
+
+		ri.Printf(PRINT_ALL, "\n");
+	}
+
 
 	struct Specialization_Data {
 		int32_t alpha_test_func;
