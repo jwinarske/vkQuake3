@@ -1,8 +1,12 @@
-#include "tr_local.h"
+﻿#include "tr_local.h"
 #include "vk_instance.h"
 #include "vk_shaders.h"
 #include "vk_pipelines.h"
 #include "tr_shader.h"
+
+#include "shaders/RpiAsm/shaders.h"
+#include "vkExt.h"
+
 // The graphics pipeline is the sequence of operations that take the vertices
 // and textures of your meshes all the way to the pixels in the render targets
 //
@@ -193,14 +197,273 @@ void vk_createPipelineLayout(void)
     VK_CHECK(qvkCreatePipelineLayout(vk.device, &desc, NULL, &vk.pipeline_layout));
 }
 
-
-static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pPipeLine)
+uint32_t createShaderCacheID(uint32_t shaderType, uint32_t alphaTest, uint32_t depthStencil, uint32_t dstBlend, uint32_t srcBlend)
 {
+	//fragment shader bit masks:
+	//def->shader_type 3 bits	0x00003800
+	//alpha test: 2 bits		0x00000600
+	//depthstencil: 1 bit		0x00000100
+	//dst blend bits: 4 bit		0x000000f0
+	//src blend bits: 4 bits	0x0000000f
+
+	return srcBlend
+			| dstBlend
+			| (depthStencil << 8)
+			| (alphaTest >> 19)
+			| (shaderType << 11);
+}
+
+static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderModule* vertModule, VkShaderModule* fragModule)
+{
+	typedef struct shaderCacheItem
+	{
+		uint32_t uniqueID;
+		uint64_t* vertShaderAsmPtr;
+		uint32_t vertShaderAsmSize;
+		uint64_t* coordShaderAsmPtr;
+		uint32_t coordShaderAsmSize;
+		uint64_t* fragShaderAsmPtr;
+		uint32_t fragShaderAsmSize;
+		VkShaderModule shader;
+	} shaderCacheItem;
+
+	static shaderCacheItem shaderCache[1024];
+	static uint32_t usedShaderCacheItems = 0;
+
+	*vertModule = 0;
+	*fragModule = 0;
+
+	if(!usedShaderCacheItems)
+	{
+		//populate shader cache
+		shaderCache[usedShaderCacheItems].uniqueID = 0x40000000;
+		shaderCache[usedShaderCacheItems].vertShaderAsmPtr = singleTextureClippingPlaneVS;
+		shaderCache[usedShaderCacheItems].vertShaderAsmSize = sizeof(singleTextureClippingPlaneVS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].coordShaderAsmPtr = singleTextureClippingPlaneCS;
+		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(singleTextureClippingPlaneCS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = 0x30000000;
+		shaderCache[usedShaderCacheItems].vertShaderAsmPtr = multiTextureClippingPlaneVS;
+		shaderCache[usedShaderCacheItems].vertShaderAsmSize = sizeof(multiTextureClippingPlaneVS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].coordShaderAsmPtr = multiTextureClippingPlaneCS;
+		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(multiTextureClippingPlaneCS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = 0x20000000;
+		shaderCache[usedShaderCacheItems].vertShaderAsmPtr = singleTextureVS;
+		shaderCache[usedShaderCacheItems].vertShaderAsmSize = sizeof(singleTextureVS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].coordShaderAsmPtr = singleTextureCS;
+		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(singleTextureCS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = 0x10000000;
+		shaderCache[usedShaderCacheItems].vertShaderAsmPtr = multiTextureVS;
+		shaderCache[usedShaderCacheItems].vertShaderAsmSize = sizeof(multiTextureVS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].coordShaderAsmPtr = multiTextureCS;
+		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(multiTextureCS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_DST_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_DST_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+
+
+		for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
+		{
+			uint32_t spirv[6];
+
+			uint64_t* asm_ptrs[4];
+			uint32_t asm_sizes[4];
+
+			for(uint32_t d = 0; d < 4; ++d)
+			{
+				asm_ptrs[d] = 0;
+				asm_sizes[d] = 0;
+			}
+
+			VkRpiShaderModuleAssemblyCreateInfoEXT shaderModuleCreateInfo = {};
+			shaderModuleCreateInfo.instructions = asm_ptrs;
+			shaderModuleCreateInfo.numInstructions = asm_sizes;
+			shaderModuleCreateInfo.mappings = 0;
+			shaderModuleCreateInfo.numMappings = 0;
+
+			if(shaderCache[c].uniqueID & 0xf0000000)
+			{ //assemble vs code
+				asm_sizes[0] = shaderCache[c].coordShaderAsmSize;
+				asm_ptrs[0] = shaderCache[c].coordShaderAsmPtr;
+				asm_sizes[1] = shaderCache[c].vertShaderAsmSize;
+				asm_ptrs[1] = shaderCache[c].vertShaderAsmPtr;
+			}
+			else
+			{ //assemble fs code
+				asm_sizes[2] = shaderCache[c].fragShaderAsmSize;
+				asm_ptrs[2] = shaderCache[c].fragShaderAsmPtr;
+			}
+
+			spirv[0] = 0x07230203;
+			spirv[1] = 0x00010000;
+			spirv[2] = 0x14E45250;
+			spirv[3] = 1;
+			spirv[4] = (uint32_t)&shaderModuleCreateInfo;
+			//words start here
+			spirv[5] = 1 << 16;
+
+			VkShaderModuleCreateInfo smci = {};
+			smci.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+			smci.codeSize = sizeof(uint32_t)*6;
+			smci.pCode = spirv;
+			qvkCreateShaderModule(vk.device, &smci, 0, &shaderCache[c].shader);
+		}
+	}
+
+	uint32_t vertShaderCacheID = -1;
+	uint32_t fragShaderCacheID = -1;
+
+	//vertex shader: 4 shaders
+	if(def->clipping_plane)
+	{
+		switch(def->shader_type)
+		{
+		case ST_SINGLE_TEXTURE:
+			vertShaderCacheID = 0x40000000;
+			break;
+		case ST_MULTI_TEXURE_MUL:
+		case ST_MULTI_TEXURE_ADD:
+			vertShaderCacheID = 0x30000000;
+			break;
+		}
+	}
+	else
+	{
+		switch(def->shader_type)
+		{
+		case ST_SINGLE_TEXTURE:
+			vertShaderCacheID = 0x20000000;
+			break;
+		case ST_MULTI_TEXURE_MUL:
+		case ST_MULTI_TEXURE_ADD:
+			vertShaderCacheID = 0x10000000;
+			break;
+		}
+	}
+
+	for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
+	{
+		if(shaderCache[c].uniqueID == vertShaderCacheID)
+		{
+			*vertModule =shaderCache[c].shader;
+			break;
+		}
+	}
+
+	//fragment shader bit masks:
+	//def->shader_type 3 bits	0x00003800
+	//alpha test: 2 bits		0x00000600
+	//depthstencil: 1 bit		0x00000100
+	//dst blend bits: 4 bit		0x000000f0
+	//src blend bits: 4 bits	0x0000000f
+
+	uint32_t shaderType = -1;
+	if(!def->clipping_plane)
+	{
+		switch(def->shader_type)
+		{
+		case ST_SINGLE_TEXTURE:
+			shaderType = 0;
+			break;
+		case ST_MULTI_TEXURE_MUL:
+			shaderType = 1;
+			break;
+		case ST_MULTI_TEXURE_ADD:
+			shaderType = 2;
+			break;
+		}
+	}
+	else
+	{
+		switch(def->shader_type)
+		{
+		case ST_SINGLE_TEXTURE:
+			shaderType = 3;
+			break;
+		case ST_MULTI_TEXURE_MUL:
+			shaderType = 4;
+			break;
+		case ST_MULTI_TEXURE_ADD:
+			shaderType = 6;
+			break;
+		}
+	}
+
+	fragShaderCacheID =
+			createShaderCacheID(shaderType,
+								def->state_bits & GLS_ATEST_BITS,
+								(def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE),
+								(def->state_bits & GLS_DSTBLEND_BITS),
+								(def->state_bits & GLS_SRCBLEND_BITS));
+
+	for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
+	{
+		if(shaderCache[c].uniqueID == fragShaderCacheID)
+		{
+			*fragModule = shaderCache[c].shader;
+			break;
+		}
+	}
+
+	if(!*vertModule || !*fragModule)
 	{
 		ri.Printf(PRINT_ALL, "========================================\n");
 		ri.Printf(PRINT_ALL, "========================================\n");
 		ri.Printf(PRINT_ALL, "========================================\n");
-		ri.Printf(PRINT_ALL, "Create pipeline:\n");
+		ri.Printf(PRINT_ALL, "Unhandled Shader Permutation:\n");
+		ri.Printf(PRINT_ALL, "Vert ID %i\n", vertShaderCacheID);
+		ri.Printf(PRINT_ALL, "Frag ID %i\n", fragShaderCacheID);
+
+		ri.Printf(PRINT_ALL, "Shader cache IDs\n");
+		for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
+		{
+			ri.Printf(PRINT_ALL, "%i ", shaderCache[c].uniqueID);
+		}
+		ri.Printf(PRINT_ALL, "\n");
 
 		//ri.Printf(PRINT_ALL, "Clipping plane: %i\n", def->clipping_plane);
 
@@ -402,9 +665,13 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pP
 //		}
 
 		ri.Printf(PRINT_ALL, "\n");
+		assert(0);
 	}
+}
 
 
+static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pPipeLine)
+{
 	struct Specialization_Data {
 		int32_t alpha_test_func;
 	} specialization_data;
@@ -459,7 +726,8 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pP
 	shaderStages[1].pSpecializationInfo =
         (def->state_bits & GLS_ATEST_BITS) ? &specialization_info : NULL;
 
-    vk_specifyShaderModule(def->shader_type, def->clipping_plane, &shaderStages[0].module, &shaderStages[1].module);
+	//vk_specifyShaderModule(def->shader_type, def->clipping_plane, &shaderStages[0].module, &shaderStages[1].module);
+	vk_get_shader_modules(def, &shaderStages[0].module, &shaderStages[1].module);
 
 	// ============== Vertex Input Description =================
     // Applications specify vertex input attribute and vertex input binding

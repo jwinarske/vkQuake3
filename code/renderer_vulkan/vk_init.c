@@ -62,7 +62,7 @@ void vk_initialize(void)
 	//
 	// Shader modules.
 	//
-	vk_loadShaderModules();
+	//vk_loadShaderModules();
 
 	//
 	// Standard pipelines.
