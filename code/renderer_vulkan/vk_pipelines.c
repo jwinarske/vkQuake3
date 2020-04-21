@@ -264,29 +264,44 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(multiTextureCS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, 0, 0);
-		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS;
-		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS) / sizeof(uint64_t);
-		usedShaderCacheItems++;
-
 		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, 0, 0);
 		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS;
 		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
-		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilEnabled_FS;
-		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_ZERO, GLS_SRCBLEND_DST_COLOR);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstZero_SrcDstColor_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstZero_SrcDstColor_DepthStencilEnabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
-		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS;
-		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_DST_ALPHA);
-		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS;
-		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_ONE, GLS_SRCBLEND_DST_COLOR);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstOne_SrcDstColor_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstOne_SrcDstColor_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_ONE, GLS_SRCBLEND_ONE);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 1, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 0, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
 		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, 0, 0);
@@ -294,17 +309,20 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_DST_ALPHA);
-		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS;
-		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcDstAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 1, GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, GLS_DSTBLEND_DST_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
-		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS;
-		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstDstAlpha_SrcSrcAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 1, GLS_DSTBLEND_ONE, GLS_SRCBLEND_ONE);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS) / sizeof(uint64_t);
 		usedShaderCacheItems++;
 
-
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 0, GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS) / sizeof(uint64_t);
+		usedShaderCacheItems++;
 
 		for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
 		{
@@ -433,12 +451,23 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		}
 	}
 
+	uint32_t depthStencil = ((def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE));
+	uint32_t alphaTestBits = def->state_bits & GLS_ATEST_BITS;
+	uint32_t dstBlendBits = (def->state_bits & GLS_DSTBLEND_BITS);
+	uint32_t srcBlendBits = (def->state_bits & GLS_SRCBLEND_BITS);
+
+//	ri.Printf(PRINT_ALL, "\nshadertype %i\n", shaderType);
+//	ri.Printf(PRINT_ALL, "alphaTestBits %i\n", alphaTestBits);
+//	ri.Printf(PRINT_ALL, "depthstencil %i\n", depthStencil);
+//	ri.Printf(PRINT_ALL, "dstBlendBits %i\n", dstBlendBits);
+//	ri.Printf(PRINT_ALL, "srcBlendBits %i\n", srcBlendBits);
+
 	fragShaderCacheID =
 			createShaderCacheID(shaderType,
-								def->state_bits & GLS_ATEST_BITS,
-								(def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE),
-								(def->state_bits & GLS_DSTBLEND_BITS),
-								(def->state_bits & GLS_SRCBLEND_BITS));
+								alphaTestBits,
+								depthStencil,
+								dstBlendBits,
+								srcBlendBits);
 
 	for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
 	{
@@ -533,113 +562,149 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 //			ri.Printf(PRINT_ALL, "Depth write false\n");
 //		}
 
-		if((def->state_bits & GLS_DEPTHTEST_DISABLE) == 0 &&
-		   ((def->shadow_phase & SHADOWS_RENDERING_EDGES) ||
-			(def->shadow_phase & SHADOWS_RENDERING_FULLSCREEN_QUAD)
-			)
-		   )
+		uint32_t depthStencil = ((def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE));
+
+		if(depthStencil)
 		{
-			ri.Printf(PRINT_ALL, "Depth write enabled\n");
+			ri.Printf(PRINT_ALL, "Depth stencil enabled\n");
 		}
 		else
 		{
-			ri.Printf(PRINT_ALL, "Depth write disabled\n");
+			ri.Printf(PRINT_ALL, "Depth stencil disabled\n");
 		}
 
-		switch(def->shadow_phase)
+//		if((def->state_bits & GLS_DEPTHTEST_DISABLE) == 0 &&
+//		   (def->shadow_phase != SHADOWS_RENDERING_DISABLED)
+//		   )
+//		{
+//			ri.Printf(PRINT_ALL, "Depth write enabled\n");
+//		}
+//		else
+//		{
+//			ri.Printf(PRINT_ALL, "Depth write disabled\n");
+//		}
+
+//		switch(def->shadow_phase)
+//		{
+//		case SHADOWS_RENDERING_DISABLED:
+//			ri.Printf(PRINT_ALL, "Stencil test disabled\n");
+//			break;
+//		default:
+//			ri.Printf(PRINT_ALL, "Stencil test enabled\n");
+//			break;
+//		}
+
+		switch(dstBlendBits)
 		{
-		case SHADOWS_RENDERING_DISABLED:
-			ri.Printf(PRINT_ALL, "Stencil test disabled\n");
-			break;
-		default:
-			ri.Printf(PRINT_ALL, "Stencil test enabled\n");
-			break;
-		}
-
-		if(def->state_bits & GLS_DSTBLEND_DST_ALPHA)
+		case GLS_DSTBLEND_DST_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: dst alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_ONE)
+		case GLS_DSTBLEND_ONE:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: one\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_ONE_MINUS_DST_ALPHA)
+		case GLS_DSTBLEND_ONE_MINUS_DST_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: one minus dst alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA)
+		case GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: one minus src alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_ONE_MINUS_SRC_COLOR)
+		case GLS_DSTBLEND_ONE_MINUS_SRC_COLOR:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: one minus src color\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_SRC_ALPHA)
+		case GLS_DSTBLEND_SRC_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: src alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_SRC_COLOR)
+		case GLS_DSTBLEND_SRC_COLOR:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: src color\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_ZERO)
+		case GLS_DSTBLEND_ZERO:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: zero\n");
+			break;
 		}
-		else if(def->state_bits & GLS_DSTBLEND_DST_ALPHA)
-		{
-			ri.Printf(PRINT_ALL, "Dst blend: dst alpha\n");
-		}
-		else if((def->state_bits & GLS_DSTBLEND_BITS) == 0)
+		case 0:
 		{
 			ri.Printf(PRINT_ALL, "Dst blend: disabled\n");
+			break;
+		}
+		default:
+		{
+			ri.Printf(PRINT_ALL, "Unknown dst blending %i\n", dstBlendBits);
+			break;
+		}
 		}
 
-		if(def->state_bits & GLS_SRCBLEND_SRC_ALPHA)
+		switch(srcBlendBits)
+		{
+		case GLS_SRCBLEND_SRC_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: Src alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_DST_ALPHA)
+		case GLS_SRCBLEND_DST_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: dst alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_ONE)
+		case GLS_SRCBLEND_ONE:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: one\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_ZERO)
+		case GLS_SRCBLEND_ZERO:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: zero\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_ONE_MINUS_SRC_ALPHA)
+		case GLS_SRCBLEND_ONE_MINUS_SRC_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: one minus Src alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_ONE_MINUS_DST_ALPHA)
+		case GLS_SRCBLEND_ONE_MINUS_DST_ALPHA:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: one minus dst alpha\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_ONE_MINUS_DST_COLOR)
+		case GLS_SRCBLEND_ONE_MINUS_DST_COLOR:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: one minus dst color\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_SRC_ALPHA)
-		{
-			ri.Printf(PRINT_ALL, "Src blend: src alpha\n");
-		}
-		else if(def->state_bits & GLS_SRCBLEND_ALPHA_SATURATE)
+		case GLS_SRCBLEND_ALPHA_SATURATE:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: alpha saturate\n");
+			break;
 		}
-		else if(def->state_bits & GLS_SRCBLEND_DST_COLOR)
+		case GLS_SRCBLEND_DST_COLOR:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: dst color\n");
+			break;
 		}
-		else if((def->state_bits & GLS_SRCBLEND_BITS) == 0)
+		case 0:
 		{
 			ri.Printf(PRINT_ALL, "Src blend: disabled\n");
+			break;
+		}
+		default:
+		{
+			ri.Printf(PRINT_ALL, "Unknown src blending %i\n", srcBlendBits);
+			break;
+		}
 		}
 
 //		switch(def->face_culling)
