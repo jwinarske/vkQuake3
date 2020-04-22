@@ -401,7 +401,7 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
 	if (isPortal)
     {
         // mvp transform + eye transform + clipping plane in eye space
-        float push_constants[32] QALIGN(16);
+		float push_constants[40] QALIGN(16);
     
         // Eye space transform.
         MatrixMultiply4x4_SSE(mvMat4x4, backEnd.viewParms.projectionMatrix, push_constants);
@@ -423,6 +423,11 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
 		push_constants[25] = backEnd.or.modelMatrix[6];
 		push_constants[26] = backEnd.or.modelMatrix[10];
 		push_constants[27] = backEnd.or.modelMatrix[14];
+
+		push_constants[28] = 0.0f;
+		push_constants[29] = 0.0f;
+		push_constants[30] = 0.0f;
+		push_constants[31] = 1.0f;
 	
         // Clipping plane in eye coordinates.
 		struct rplane_s eye_plane;
@@ -431,61 +436,72 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
         
         // Apply s_flipMatrix to be in the same coordinate system as push_constants.
         
-        push_constants[28] = -eye_plane.normal[1];
-		push_constants[29] =  eye_plane.normal[2];
-		push_constants[30] = -eye_plane.normal[0];
-		push_constants[31] =  eye_plane.dist;
+		push_constants[32] = -eye_plane.normal[1];
+		push_constants[33] =  eye_plane.normal[2];
+		push_constants[34] = -eye_plane.normal[0];
+		push_constants[35] =  eye_plane.dist;
+
+		push_constants[36] = (float)(vk.surface_caps.currentExtent.width) * 0.5f * 16.0f;
+		push_constants[37] = -1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
+		push_constants[38] = 0.5f;
+		push_constants[39] = 0.5f;
 
 
         // As described above in section Pipeline Layouts, the pipeline layout defines shader push constants
         // which are updated via Vulkan commands rather than via writes to memory or copy commands.
         // Push constants represent a high speed path to modify constant data in pipelines
         // that is expected to outperform memory-backed resource updates.
-	    qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 128, push_constants);
+		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 40 * 4, push_constants);
 	}
     else
     {
       	// push constants are another way of passing dynamic values to shaders
 		// Specify push constants.
-		float mvp[16] QALIGN(16); // mvp transform + eye transform + clipping plane in eye space
+		float push_constants[20] QALIGN(16); // mvp transform + eye transform + clipping plane in eye space
         
         if (is2D)
         {            
             float width, height;
             R_GetWinResolutionF(&width, &height);
 
-            mvp[0] = 2.0f / width; 
-            mvp[1] = 0.0f; 
-            mvp[2] = 0.0f;
-            mvp[3] = 0.0f;
+			push_constants[0] = 2.0f / width;
+			push_constants[1] = 0.0f;
+			push_constants[2] = 0.0f;
+			push_constants[3] = 0.0f;
 
-            mvp[4] = 0.0f; 
-            mvp[5] = 2.0f / height; 
-            mvp[6] = 0.0f;
-            mvp[7] = 0.0f;
+			push_constants[4] = 0.0f;
+			push_constants[5] = 2.0f / height;
+			push_constants[6] = 0.0f;
+			push_constants[7] = 0.0f;
 
-            mvp[8] = 0.0f; 
-            mvp[9] = 0.0f; 
-            mvp[10] = 1.0f; 
-            mvp[11] = 0.0f;
+			push_constants[8] = 0.0f;
+			push_constants[9] = 0.0f;
+			push_constants[10] = 1.0f;
+			push_constants[11] = 0.0f;
             
-            mvp[12] = -1.0f; 
-            mvp[13] = -1.0f; 
-            mvp[14] = 0.0f;
-            mvp[15] = 1.0f;
+			push_constants[12] = -1.0f;
+			push_constants[13] = -1.0f;
+			push_constants[14] = 0.0f;
+			push_constants[15] = 1.0f;
         }
         else
         {
             // update q3's proj matrix (opengl) to vulkan conventions:
             // z - [0, 1] instead of [-1, 1] and invert y direction
-            MatrixMultiply4x4_SSE(mvMat4x4, backEnd.viewParms.projectionMatrix, mvp);
+			MatrixMultiply4x4_SSE(mvMat4x4, backEnd.viewParms.projectionMatrix, push_constants);
         }
+
+		push_constants[16] = (float)(vk.surface_caps.currentExtent.width) * 0.5f * 16.0f;
+		push_constants[17] = -1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
+		push_constants[18] = 0.5f;
+		push_constants[19] = 0.5f;
+
 
         // As described above in section Pipeline Layouts, the pipeline layout defines shader push constants
         // which are updated via Vulkan commands rather than via writes to memory or copy commands.
         // Push constants represent a high speed path to modify constant data in pipelines
         // that is expected to outperform memory-backed resource updates.
-		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 64, mvp);
+		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 20 * 4, push_constants);
     }
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "../../vkExt.h"
 
 uint64_t singleTextureVS[] =
 {
@@ -48,6 +49,211 @@ uint64_t singleTextureVS[] =
 	0x100009e7009e7000,
 	0x100009e7009e7000,
 };
+
+VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
+	{ //m0x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		0, //resource offset
+	},
+	{ //m0y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		4, //resource offset
+	},
+	{ //m1x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		16, //resource offset
+	},
+	{ //m3y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		52, //resource offset
+	},
+	{ //m1y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		20, //resource offset
+	},
+	{ //m3x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		48, //resource offset
+	},
+	{ //m2y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		36, //resource offset
+	},
+	{ //m2x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		32, //resource offset
+	},
+	{ //m0z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		8, //resource offset
+	},
+	{ //m3z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		56, //resource offset
+	},
+	{ //m1z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		24, //resource offset
+	},
+	{ //m0w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		12, //resource offset
+	},
+	{ //m2z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		40, //resource offset
+	},
+	{ //m3w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		60, //resource offset
+	},
+	{ //m1w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		28, //resource offset
+	},
+	{ //m2w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		44, //resource offset
+	},
+
+	{ //y scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		64, //resource offset
+	},
+	{ //x scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		68, //resource offset
+	},
+	{ //z scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		72, //resource offset
+	},
+	{ //z offset
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		76, //resource offset
+	},
+};
+
+/**
+sig_load_imm ; vr_setup.nop = load32.always(0x301a00) ; nop = load32.always() ;
+sig_none ; rx2.nop = or.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ;		//read ra2 = vx
+sig_none ; rx2.nop = or.ws.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ;	//read rb2 = vy
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, uni) ; r1 = fmul.always(b, a) ;			//vx * m0x
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(a, b) ;			//vy * m0y
+sig_none ; rx4.nop = fadd.always.nop(r1, r0, ra2, uni) ; r2 = fmul.always(b, a) ;		//vx * m1x
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(a, b) ;			//vy * m3y
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r1 = fmul.always(a, b) ;			//vy * m1y
+sig_none ; rx1.nop = fadd.ws.always.nop(r2, r1, ra2, uni) ; r0 = fmul.always(b, a) ;	//vx * m3x
+sig_none ; rx3.nop = fadd.always.nop(r0, r3, uni, rb2) ; r2 = fmul.always(a, b) ;		//vy * m2y
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, uni) ; r3 = fmul.always(b, a) ;			//vx * m2x
+sig_none ; rx1.nop = fadd.always.nop(r3, r2, vpm_read, nop) ; r2 = v8min.always(a, a) ;	//read r2 = vz
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r0 = fmul.always(a, r2) ;		//vz * m0z
+sig_none ; rx0.nop = fadd.ws.always.nop(a, r0, ra4, uni) ; r3 = fmul.always(b, r2) ;	//vz * m3z
+sig_none ; r0.nop = fadd.always.nop(a, r3, ra3, uni) ; r1 = fmul.always(b, r2) ;		//vz * m1z,
+sig_none ; rx4.nop = fadd.ws.always.nop(b, a, uni, rb0) ; nop = nop.never(r0, r0) ;		//+m0w
+sig_none ; r3.nop = fadd.always.nop(b, r1, uni, rb1) ; r2 = fmul.always(a, r2) ;		//vz * m2z
+sig_load_imm ; vw_setup = load32.ws.always(0x1a00) ; nop = load32.always() ;
+sig_none ; r1.nop = fadd.always.nop(a, r2, ra1, rb4) ; vpm = v8min.always(b, b) ;		//write Xc,
+sig_none ; r0.nop = fadd.always.nop(r0, a, uni, nop) ; nop = nop.never(r0, r0) ;		//+m3w
+sig_none ; r2.nop = fadd.ws.always.nop(r3, a, uni, nop) ; sfu_recip = v8min.always(r0, r0) ;	//+m1w
+sig_none ; rx5.nop = fadd.always.nop(r1, a, uni, nop) ; vpm = v8min.always(r2, r2) ;	//write Yc, +m2w
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r3 = fmul.always(r2, a) ;		//Yscale
+sig_none ; vpm.nop = or.always.nop(a, a, ra5, nop) ; nop = nop.never(r0, r0) ;			//write Zc
+sig_none ; vpm.nop = or.always.nop(r0, r0, nop, nop) ; r0 = fmul.always(r0, r4) ;		//write Wc
+sig_small_imm ; r1.nop = fsub.always.nop(b, r0, nop, 0x40000000) ; nop = nop.never(r0, r0) ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; rx3 = fmul.always(r4, r1) ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb4) ; r1 = fmul.always(b, a) ;			//Xscale
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, rb3) ; r2 = fmul.always(r1, b) ;
+sig_none ; rx0.16a = ftoi.always.nop(r2, r2, nop, rb3) ; r0 = fmul.always(r3, b) ;
+sig_none ; rx0.16b = ftoi.always.nop(r0, r0, ra5, uni) ; r2 = fmul.always(a, b) ;		//Zscale
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, rb3) ; r3 = fmul.always(r2, b) ;
+sig_none ; vpm.nop = or.always.nop(a, a, ra0, nop) ; nop = nop.never(r0, r0) ;			//write XsYs
+sig_none ; vpm.nop = fadd.always.nop(r3, a, uni, nop) ; nop = nop.never(r0, r0) ;		//write Zs, Zoffset
+sig_none ; vpm.nop = or.always.nop(b, b, nop, rb3) ; nop = nop.never(r0, r0) ;			//write 1/Wc
+sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ;
+/**/
 
 uint64_t singleTextureCS[] =
 {
