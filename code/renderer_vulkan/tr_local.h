@@ -225,6 +225,13 @@ typedef struct {
 
 #define NUM_TEXTURE_BUNDLES 2
 
+typedef struct pipelineDef
+{
+	VkPipeline pipeline;
+	uint32_t depthStencil;
+	VkStencilOpState op;
+} pipelineDef;
+
 typedef struct {
 	qboolean		active;
 	
@@ -245,9 +252,9 @@ typedef struct {
 	qboolean		isDetail;
 
 	// VULKAN
-	VkPipeline		vk_pipeline;
-	VkPipeline		vk_portal_pipeline;
-	VkPipeline		vk_mirror_pipeline;
+	pipelineDef			vk_pipeline;
+	pipelineDef			vk_portal_pipeline;
+	pipelineDef			vk_mirror_pipeline;
 
 } shaderStage_t;
 

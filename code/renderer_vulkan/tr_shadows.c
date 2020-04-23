@@ -107,7 +107,7 @@ static void R_ExtrudeShadowEdges( void ) {
 
 
 // VULKAN
-static void vk_renderShadowEdges(VkPipeline vk_pipeline)
+static void vk_renderShadowEdges(pipelineDef vk_pipeline)
 {
 
 	int i = 0;

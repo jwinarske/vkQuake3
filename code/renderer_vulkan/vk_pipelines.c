@@ -1,4 +1,4 @@
-﻿#include "tr_local.h"
+#include "tr_local.h"
 #include "vk_instance.h"
 #include "vk_shaders.h"
 #include "vk_pipelines.h"
@@ -52,7 +52,7 @@ enum Vk_Shadow_Phase {
 
 
 struct Vk_Pipeline_Def {
-    VkPipeline pipeline;
+	pipelineDef pipeline;
     uint32_t state_bits; // GLS_XXX flags
 	cullType_t face_culling;// cullType_t
 	VkBool32 polygon_offset;
@@ -253,8 +253,8 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(singleTextureClippingPlaneCS) / sizeof(uint64_t);
 		shaderCache[usedShaderCacheItems].vertMapping = singleTextureClippingPlaneVS_mapping;
 		shaderCache[usedShaderCacheItems].vertMappingSize = sizeof(singleTextureClippingPlaneVS_mapping)/sizeof(VkRpiAssemblyMappingEXT);;
-		shaderCache[usedShaderCacheItems].coordMapping = singleTextureCS_mapping; //TODO almost fits, need to relocate the end
-		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		shaderCache[usedShaderCacheItems].coordMapping = singleTextureClippingPlaneCS_mapping;
+		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureClippingPlaneCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
 		shaderCache[usedShaderCacheItems].uniqueID = 0x30000000;
@@ -264,8 +264,8 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(multiTextureClippingPlaneCS) / sizeof(uint64_t);
 		shaderCache[usedShaderCacheItems].vertMapping = singleTextureClippingPlaneVS_mapping; //TODO does it fit?
 		shaderCache[usedShaderCacheItems].vertMappingSize = sizeof(singleTextureClippingPlaneVS_mapping)/sizeof(VkRpiAssemblyMappingEXT);;
-		shaderCache[usedShaderCacheItems].coordMapping = singleTextureCS_mapping; //TODO does it fit?
-		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		shaderCache[usedShaderCacheItems].coordMapping = singleTextureClippingPlaneCS_mapping; //TODO does it fit?
+		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureClippingPlaneCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
 		shaderCache[usedShaderCacheItems].uniqueID = 0x20000000;
@@ -788,7 +788,7 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 }
 
 
-static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pPipeLine)
+static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, pipelineDef* pPipeLine)
 {
 	struct Specialization_Data {
 		int32_t alpha_test_func;
@@ -1230,12 +1230,14 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, VkPipeline* pP
     // TODO: provide the handle of a valid pipeline cache object, 
     // 1 is the length of the pCreateInfos and pPipelines arrays.
     //
-	VK_CHECK(qvkCreateGraphicsPipelines(vk.device, VK_NULL_HANDLE, 1, &create_info, NULL, pPipeLine));
+	VK_CHECK(qvkCreateGraphicsPipelines(vk.device, VK_NULL_HANDLE, 1, &create_info, NULL, &pPipeLine->pipeline));
+	pPipeLine->depthStencil = ((def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE));
+	pPipeLine->op = depth_stencil_state.front;
 }
 
 
 
-static VkPipeline vk_find_pipeline(struct Vk_Pipeline_Def* def)
+static pipelineDef vk_find_pipeline(struct Vk_Pipeline_Def* def)
 {
     uint32_t i = 0;
 	for (i = 0; i < s_numPipelines; i++)
@@ -1489,7 +1491,7 @@ void vk_destroyShaderStagePipeline(void)
     uint32_t i;
     for (i = 0; i < s_numPipelines; i++)
     {
-		qvkDestroyPipeline(vk.device, s_pipeline_defs[i].pipeline, NULL);
+		qvkDestroyPipeline(vk.device, s_pipeline_defs[i].pipeline.pipeline, NULL);
         memset(&s_pipeline_defs[i], 0, sizeof(struct Vk_Pipeline_Def));
     }
     s_numPipelines = 0;
@@ -1507,28 +1509,28 @@ void vk_destroyGlobalStagePipeline(void)
     // is destroyed.
    	qvkDestroyDescriptorPool(vk.device, vk.descriptor_pool, NULL);    
     // 
-    qvkDestroyPipeline(vk.device, g_stdPipelines.skybox_pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.skybox_pipeline.pipeline, NULL);
 	for (i = 0; i < 2; i++)
 		for (j = 0; j < 2; j++)
         {
-			qvkDestroyPipeline(vk.device, g_stdPipelines.shadow_volume_pipelines[i][j], NULL);
+			qvkDestroyPipeline(vk.device, g_stdPipelines.shadow_volume_pipelines[i][j].pipeline, NULL);
 		}
 	
-    qvkDestroyPipeline(vk.device, g_stdPipelines.shadow_finish_pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.shadow_finish_pipeline.pipeline, NULL);
 	
     
     for (i = 0; i < 2; i++)
 		for (j = 0; j < 3; j++)
 			for (k = 0; k < 2; k++)
             {
-				qvkDestroyPipeline(vk.device, g_stdPipelines.fog_pipelines[i][j][k], NULL);
-				qvkDestroyPipeline(vk.device, g_stdPipelines.dlight_pipelines[i][j][k], NULL);
+				qvkDestroyPipeline(vk.device, g_stdPipelines.fog_pipelines[i][j][k].pipeline, NULL);
+				qvkDestroyPipeline(vk.device, g_stdPipelines.dlight_pipelines[i][j][k].pipeline, NULL);
 			}
 
-	qvkDestroyPipeline(vk.device, g_stdPipelines.tris_debug_pipeline, NULL);
-	qvkDestroyPipeline(vk.device, g_stdPipelines.tris_mirror_debug_pipeline, NULL);
-	qvkDestroyPipeline(vk.device, g_stdPipelines.normals_debug_pipeline, NULL);
-	qvkDestroyPipeline(vk.device, g_stdPipelines.surface_debug_pipeline_solid, NULL);
-	qvkDestroyPipeline(vk.device, g_stdPipelines.surface_debug_pipeline_outline, NULL);
-	qvkDestroyPipeline(vk.device, g_stdPipelines.images_debug_pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.tris_debug_pipeline.pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.tris_mirror_debug_pipeline.pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.normals_debug_pipeline.pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.surface_debug_pipeline_solid.pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.surface_debug_pipeline_outline.pipeline, NULL);
+	qvkDestroyPipeline(vk.device, g_stdPipelines.images_debug_pipeline.pipeline, NULL);
 }

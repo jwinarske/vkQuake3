@@ -977,6 +977,170 @@ uint64_t singleTextureClippingPlaneVS[] =
 	0x100009e7009e7000,
 };
 
+VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
+	{ //m0x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		0, //resource offset
+	},
+	{ //m0y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		4, //resource offset
+	},
+	{ //m1x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		16, //resource offset
+	},
+	{ //m3y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		52, //resource offset
+	},
+	{ //m1y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		20, //resource offset
+	},
+	{ //m3x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		48, //resource offset
+	},
+	{ //m2y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		36, //resource offset
+	},
+	{ //m2x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		32, //resource offset
+	},
+	{ //m0z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		8, //resource offset
+	},
+	{ //m3z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		56, //resource offset
+	},
+	{ //m1z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		24, //resource offset
+	},
+	{ //m0w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		12, //resource offset
+	},
+	{ //m2z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		40, //resource offset
+	},
+	{ //m3w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		60, //resource offset
+	},
+	{ //m1w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		28, //resource offset
+	},
+	{ //m2w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		44, //resource offset
+	},
+
+	{ //y scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		128+16+4, //resource offset
+	},
+	{ //x scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		128+16+0, //resource offset
+	},
+	{ //z scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		128+16+8, //resource offset
+	},
+	{ //z offset
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		128+16+12, //resource offset
+	},
+};
+
 uint64_t singleTextureClippingPlaneCS[] =
 {
 	0xe0024c6700301a00,
@@ -1279,8 +1443,8 @@ VkRpiAssemblyMappingEXT multiTexture_DepthStencilEnabled_FS_mapping[] = {
 	{ //tex1
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_DESCRIPTOR,
 		VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, //descriptor type
-		0, //descriptor set #
-		1, //descriptor binding #
+		1, //descriptor set #
+		0, //descriptor binding #
 		0, //descriptor array element #
 		0, //resource offset
 	},
@@ -1306,8 +1470,8 @@ VkRpiAssemblyMappingEXT multiTexture_DepthStencilDisabled_FS_mapping[] = {
 	{ //tex1
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_DESCRIPTOR,
 		VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, //descriptor type
-		0, //descriptor set #
-		1, //descriptor binding #
+		1, //descriptor set #
+		0, //descriptor binding #
 		0, //descriptor array element #
 		0, //resource offset
 	},

@@ -323,9 +323,183 @@ void updateCurDescriptor( VkDescriptorSet curDesSet, uint32_t tmu)
     shadingDat.curDescriptorSets[tmu] = curDesSet;
 }
 
+uint32_t getCompareOp(VkCompareOp op)
+{
+	switch(op)
+	{
+	case VK_COMPARE_OP_NEVER:
+		return 0;
+	case VK_COMPARE_OP_LESS:
+		return 1;
+	case VK_COMPARE_OP_EQUAL:
+		return 2;
+	case VK_COMPARE_OP_LESS_OR_EQUAL:
+		return 3;
+	case VK_COMPARE_OP_GREATER:
+		return 4;
+	case VK_COMPARE_OP_NOT_EQUAL:
+		return 5;
+	case VK_COMPARE_OP_GREATER_OR_EQUAL:
+		return 6;
+	case VK_COMPARE_OP_ALWAYS:
+		return 7;
+	default:
+		return -1;
+	}
+}
+
+uint32_t getStencilOp(VkStencilOp op)
+{
+	switch(op)
+	{
+	case VK_STENCIL_OP_ZERO:
+		return 0;
+	case VK_STENCIL_OP_KEEP:
+		return 1;
+	case VK_STENCIL_OP_REPLACE:
+		return 2;
+	case VK_STENCIL_OP_INCREMENT_AND_CLAMP:
+		return 3;
+	case VK_STENCIL_OP_DECREMENT_AND_CLAMP:
+		return 4;
+	case VK_STENCIL_OP_INVERT:
+		return 5;
+	case VK_STENCIL_OP_INCREMENT_AND_WRAP:
+		return 6;
+	case VK_STENCIL_OP_DECREMENT_AND_WRAP:
+		return 7;
+	default:
+		return -1;
+	};
+}
+
+void encodeStencilValue(uint32_t *values, uint32_t* numValues, VkStencilOpState front, VkStencilOpState back, uint8_t stencilTestEnable)
+{
+	assert(values);
+	assert(numValues);
+
+	if(!stencilTestEnable)
+	{
+		front.compareOp = back.compareOp = VK_COMPARE_OP_ALWAYS;
+	}
+
+	if(front.compareMask == back.compareMask &&
+	   front.compareOp == back.compareOp &&
+	   front.depthFailOp == back.depthFailOp &&
+	   front.failOp == back.failOp &&
+	   front.passOp == back.passOp &&
+	   front.reference == back.reference &&
+	   front.writeMask == back.writeMask
+	   )
+	{
+		*numValues = 1;
+
+		values[0] = 0
+				| (front.compareMask & 0xff)
+				| (front.reference & 0xff) << 0x8
+				| (getCompareOp(front.compareOp) & 0x7) << 16
+				| (getStencilOp(front.failOp) & 0x7) << 19
+				| (getStencilOp(front.passOp) & 0x7) << 22
+				| (getStencilOp(front.depthFailOp) & 0x7) << 25
+				| 3 << 30; //front and back
+
+		switch(front.writeMask)
+		{
+		case 0x1:
+			values[0] |= 0 << 28;
+			break;
+		case 0x3:
+			values[0] |= 1 << 28;
+			break;
+		case 0xf:
+			values[0] |= 2 << 28;
+			break;
+		case 0xff:
+			values[0] |= 3 << 28;
+			break;
+		default:
+			values[1] = 0
+					| (front.writeMask & 0xff)
+					| (front.writeMask & 0xff) << 8;
+			*numValues = 2;
+			break;
+		};
+	}
+	else
+	{
+		*numValues = 2;
+
+		values[0] = 0
+				| (front.compareMask & 0xff)
+				| (front.reference & 0xff) << 0x8
+				| (getCompareOp(front.compareOp) & 0x7) << 16
+				| (getStencilOp(front.failOp) & 0x7) << 19
+				| (getStencilOp(front.passOp) & 0x7) << 22
+				| (getStencilOp(front.depthFailOp) & 0x7) << 25
+				| 1 << 30; //front
+
+		values[1] = 0
+				| (back.compareMask & 0xff)
+				| (back.reference & 0xff) << 0x8
+				| (getCompareOp(back.compareOp) & 0x7) << 16
+				| (getStencilOp(back.failOp) & 0x7) << 19
+				| (getStencilOp(back.passOp) & 0x7) << 22
+				| (getStencilOp(back.depthFailOp) & 0x7) << 25
+				| 2 << 30; //front
+
+		if((front.writeMask == 0x1 ||
+		   front.writeMask == 0x3 ||
+		   front.writeMask == 0xf ||
+		   front.writeMask == 0xff) &&
+		   (back.writeMask == 0x1 ||
+		   back.writeMask == 0x3 ||
+		   back.writeMask == 0xf ||
+		   back.writeMask == 0xff))
+		{
+			switch(front.writeMask)
+			{
+			case 0x1:
+				values[0] |= 0 << 28;
+				break;
+			case 0x3:
+				values[0] |= 1 << 28;
+				break;
+			case 0xf:
+				values[0] |= 2 << 28;
+				break;
+			case 0xff:
+				values[0] |= 3 << 28;
+				break;
+			};
+
+			switch(back.writeMask)
+			{
+			case 0x1:
+				values[1] |= 0 << 28;
+				break;
+			case 0x3:
+				values[1] |= 1 << 28;
+				break;
+			case 0xf:
+				values[1] |= 2 << 28;
+				break;
+			case 0xff:
+				values[1] |= 3 << 28;
+				break;
+			};
+		}
+		else
+		{
+			values[2] = 0
+					| (front.writeMask & 0xff)
+					| (back.writeMask & 0xff) << 8;
+			*numValues = 3;
+		}
+	}
+}
 
 
-void vk_shade_geometry(VkPipeline pipeline, VkBool32 multitexture, enum Vk_Depth_Range depRg, VkBool32 indexed)
+void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Depth_Range depRg, VkBool32 indexed)
 {
 	// configure vertex data stream
 	VkBuffer bufs[3] = { shadingDat.vertex_buffer, shadingDat.vertex_buffer, shadingDat.vertex_buffer };
@@ -368,7 +542,7 @@ void vk_shade_geometry(VkPipeline pipeline, VkBool32 multitexture, enum Vk_Depth
         vk.pipeline_layout, 0, (multitexture ? 2 : 1), shadingDat.curDescriptorSets, 0, NULL);
 
     // bind pipeline
-	qvkCmdBindPipeline(vk.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline);
+	qvkCmdBindPipeline(vk.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.pipeline);
 
 	// configure pipeline's dynamic state
 
@@ -383,6 +557,14 @@ void vk_shade_geometry(VkPipeline pipeline, VkBool32 multitexture, enum Vk_Depth
 
 	if (tess.shader->polygonOffset) {
 		qvkCmdSetDepthBias(vk.command_buffer, r_offsetUnits->value, 0.0f, r_offsetFactor->value);
+	}
+
+	if(pipeline.depthStencil)
+	{
+		uint32_t stencilState[2];
+		uint32_t values = 0;
+		encodeStencilValue(stencilState, &values, pipeline.op, pipeline.op, 1);
+		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_FRAGMENT_BIT, 0, 4, stencilState);
 	}
 
 	// issue draw call
@@ -1152,8 +1334,7 @@ static void RB_FogPass( void ) {
 	// VULKAN
 
     assert(tess.shader->fogPass > 0);
-    VkPipeline pipeline = g_stdPipelines.fog_pipelines[tess.shader->fogPass - 1][tess.shader->cullType][tess.shader->polygonOffset];
-    vk_shade_geometry(pipeline, VK_FALSE, DEPTH_RANGE_NORMAL, VK_TRUE);
+	vk_shade_geometry(g_stdPipelines.fog_pipelines[tess.shader->fogPass - 1][tess.shader->cullType][tess.shader->polygonOffset], VK_FALSE, DEPTH_RANGE_NORMAL, VK_TRUE);
 }
 
 
