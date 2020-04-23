@@ -3,46 +3,256 @@
 #include <stdint.h>
 #include "../../vkExt.h"
 
+VkRpiAssemblyMappingEXT singleTextureVS_mapping[] = {
+	{ //m3x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		48, //resource offset
+	},
+	{ //m3y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		52, //resource offset
+	},
+	{ //m0x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		0, //resource offset
+	},
+	{ //m0y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		4, //resource offset
+	},
+	{ //m1x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		16, //resource offset
+	},
+	{ //m1y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		20, //resource offset
+	},
+	{ //m2x
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		32, //resource offset
+	},
+	{ //m2y
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		36, //resource offset
+	},
+	{ //m3z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		56, //resource offset
+	},
+	{ //m3w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		60, //resource offset
+	},
+	{ //m1z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		34, //resource offset
+	},
+	{ //m0z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		8, //resource offset
+	},
+	{ //m2z
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		40, //resource offset
+	},
+	{ //m0w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		12, //resource offset
+	},
+	{ //x scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		64, //resource offset
+	},
+	{ //m1w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		28, //resource offset
+	},
+	{ //y scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		68, //resource offset
+	},
+	{ //m2w
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		44, //resource offset
+	},
+	{ //z scale
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		72, //resource offset
+	},
+	{ //z offset
+		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
+		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
+		0, //descriptor set #
+		0, //descriptor binding #
+		0, //descriptor array element #
+		76, //resource offset
+	},
+};
+
+/**
+sig_load_imm ; vr_setup.nop = load32.always(0x601a00) ; nop = load32.always() ;
+sig_none ; rx2.nop = or.ws.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ;  	//read rb1 = vx
+sig_none ; rx3.nop = or.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ;     	//read ra2 = vy
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r2 = fmul.always(a, b) ;         	//vx * m3x
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra3, uni) ; r1 = fmul.always(b, a) ;         	//vy * m3y
+sig_none ; rx5.nop = fadd.always.nop(r2, r1, uni, rb2) ; r3 = fmul.always(a, b) ;       	//vx * m0x
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra3, uni) ; r2 = fmul.always(b, a) ;         	//vy * m0y
+sig_none ; rx3.nop = fadd.ws.always.nop(r3, r2, uni, rb2) ; r0 = fmul.always(a, b) ;    	//vx * m1x
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra3, uni) ; r3 = fmul.always(b, a) ;         	//vy * m1y
+sig_none ; rx4.nop = fadd.ws.always.nop(r0, r3, uni, rb2) ; r1 = fmul.always(a, b) ;    	//vx * m2x
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra3, uni) ; r0 = fmul.always(b, a) ;         	//vy * m2y
+sig_none ; rx4.nop = fadd.always.nop(r1, r0, vpm_read, nop) ; rx1 = v8min.always(a, a) ;	//read rb0 = vz
+sig_load_imm ; vw_setup = load32.ws.always(0x1a00) ; nop = load32.always() ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb1) ; r0 = fmul.always(a, b) ;         	//vz * m3z
+sig_none ; r3.nop = fadd.always.nop(a, r0, ra5, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; r0.nop = fadd.ws.always.nop(r3, b, vpm_read, uni) ; rx1 = v8min.always(a, a) 	//+m3w;
+sig_none ; sfu_recip.nop = or.ws.always.nop(r0, r0, uni, rb1) ; r3 = fmul.always(a, b) ;	//1 / Wc, vz * m1z
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb1) ; r2 = fmul.always(a, b) ;         	//vz * m0z
+sig_none ; r1.nop = fadd.always.nop(b, r3, nop, rb4) ; nop = nop.never(r0, r0) ;
+sig_none ; rx2.nop = fadd.always.nop(b, r2, nop, rb3) ; r2 = fmul.always(r0, r4) ;      	//
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb1) ; r3 = fmul.always(a, b) ;         	//vz * m2z
+sig_none ; rx5.nop = fadd.ws.always.nop(a, r3, ra4, nop) ; nop = nop.never(r0, r0) ;    	//
+sig_small_imm ; r3.nop = fsub.always.nop(b, r2, nop, 0x40000000) ; nop = nop.never(r0, r	//0) ;
+sig_none ; r0.nop = fadd.ws.always.nop(a, b, ra2, uni) ; rx6 = fmul.always(r4, r3) ;    	//+m0w, ra5 = 1/Wc
+sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r2 = fmul.always(r0, a) ;        	//Xscale
+sig_none ; r1.nop = fadd.always.nop(r1, b, ra6, uni) ; r3 = fmul.always(r2, a) ;        	//+m1w
+sig_none ; rx0.16a = ftoi.always.nop(r3, r3, uni, nop) ; r0 = fmul.always(r1, a) ;      	//Yscale
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra6, nop) ; r1 = fmul.always(r0, a) ;
+sig_none ; rx0.16b = ftoi.always.nop(r1, r1, nop, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; r1.nop = fadd.always.nop(b, a, uni, rb5) ; nop = nop.never(r0, r0) ;         	//+m2w
+sig_none ; vpm.nop = or.always.nop(a, a, ra0, uni) ; r0 = fmul.always(r1, b) ;          	//write Xs/Ys, Zscale
+sig_none ; nop.nop = nop.never.nop(r0, r0, ra6, nop) ; r1 = fmul.always(r0, a) ;
+sig_none ; vpm.nop = fadd.always.nop(r1, b, vpm_read, uni) ; r0 = v8min.always(a, a) ;  	//write Zs, Zoffset
+sig_none ; vpm.nop = or.always.nop(a, a, ra6, nop) ; nop = nop.never(r0, r0) ;          	//write 1/Wc
+sig_none ; vpm.nop = itof.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; vpm.nop = itof.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; vpm.nop = itof.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; vpm.nop = itof.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; vpm.nop = or.always.nop(r0, r0, vpm_read, nop) ; r1 = v8min.always(a, a) ;
+sig_none ; vpm.nop = or.always.nop(r1, r1, nop, nop) ; nop = nop.never(r0, r0) ;
+sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ;
+sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ;
+
+/**/
+
 uint64_t singleTextureVS[] =
 {
-	0xe0024c6700901a00,
-	0x1002106715c27d80,
-	0x100200a715c27d80,
-	0x100049e220801037,
-	0x100049e1200a003e,
-	0x1002412321801477,
-	0x100049e2200a003e,
-	0x100250a0218016b7,
-	0x100049e3200a003e,
-	0x100250e1218010f7,
-	0x100049e0200a003e,
-	0x100240c081c27236,
+	0xe0024c6700601a00,
+	0x100210a715c27d80,
+	0x100200e715c27d80,
+	0x100049e220802037,
+	0x100049e1200e003e,
+	0x1002416321802477,
+	0x100049e2200e003e,
+	0x100250e0218026b7,
+	0x100049e3200e003e,
+	0x10025121218020f7,
+	0x100049e0200e003e,
+	0x1002410181c27236,
 	0xe0025c6700001a00,
-	0x100049e020800037,
-	0x100208e701127c00,
-	0x1002082701827780,
-	0x10025d2335800037,
-	0x100049e220800037,
-	0x10020867019c3ec0,
-	0x10024062219c2e84,
-	0x100049e320800037,
-	0x10021127010e7cc0,
+	0x100049e020801037,
+	0x100208e701167c00,
+	0x1002580181c207f6,
+	0x10025d2335801037,
+	0x100049e220801037,
+	0x10020867019c4ec0,
+	0x100240a2219c3e84,
+	0x100049e320801037,
+	0x1002116701127cc0,
 	0xd00208e7029e1e80,
-	0x1002580521060de3,
+	0x10025806210a0de3,
 	0x100049e220827006,
-	0x10024863211603d6,
+	0x10024863211a03d6,
 	0x10124020278276ce,
-	0x100049e120167006,
+	0x100049e1201a7006,
 	0x10220027079e7240,
-	0x1002086701804f80,
+	0x1002086701805f80,
 	0x10024c2035020d8f,
-	0x100049e120167006,
+	0x100049e1201a7006,
 	0x10024c2081c203f6,
-	0x10020c2715167d80,
-	0x10024c2195c27036,
-	0x10024c2295c27276,
-	0x10024c2395c274b6,
-	0x10024c2095c276f6,
+	0x10020c27151a7d80,
+	0x18020c2708067d80,
+	0x1a020c2708067d80,
+	0x1c020c2708067d80,
+	0x1e020c2708067d80,
 	0x10024c2195c27036,
 	0x10020c27159e7240,
 	0x300009e7009e7000,
@@ -299,73 +509,73 @@ uint64_t singleTextureCS[] =
 
 uint64_t singleTextureClippingPlaneVS[] =
 {
-	0xe0024c6700901a00,
-	0x100211e715c27d80,
-	0x1002022715c27d80,
-	0x100049e02080703e,
-	0x100049e22080703e,
-	0x100049e120220037,
-	0x1002426321220077,
-	0x10025221212204fe,
-	0x100049e320807037,
-	0x100241e22180767e,
-	0x100049e320220037,
-	0x100251a0218074f7,
-	0x100049e22022003e,
-	0x10025161218070b7,
-	0x100049e32022003e,
-	0x10025120212202fe,
-	0x100049e220807037,
-	0x1002410181c27436,
-	0x100049e32080703e,
-	0x100049e220220037,
-	0x100250e0218016be,
-	0x10021027019c8e00,
-	0x100049e320801037,
-	0x100049e02080103e,
-	0x10020167019c4ec0,
-	0x100200e7019c6e00,
-	0x100049e120801037,
-	0x100049e22080103e,
-	0x100049e32080103e,
-	0x100049e020801037,
-	0x100210a7011e7c40,
-	0x100200a701267c80,
-	0x100212a7019c3ec0,
-	0x1002126701127c00,
-	0x10020867010a0dc0,
-	0x100208e701800f80,
+	0xe0024c6700601a00,
+	0x1002122715c27d80,
+	0x1002026715c27d80,
+	0x100049e02080803e,
+	0x100049e22080803e,
+	0x100049e120260037,
+	0x100242a321260077,
+	0x10025261212604fe,
+	0x100049e320808037,
+	0x100242222180867e,
+	0x100049e320260037,
+	0x100251e0218084f7,
+	0x100049e22026003e,
+	0x100251a1218080b7,
+	0x100049e32026003e,
+	0x10025160212602fe,
+	0x100049e220808037,
+	0x1002414281c27436,
+	0x100049e32080803e,
+	0x100049e220260037,
+	0x10025120218026be,
+	0x1002504181c09e36,
+	0x100049e320802037,
+	0x100049e02080203e,
+	0x100201a7019c5ec0,
+	0x10020127019c7e00,
+	0x100049e120802037,
+	0x100049e22080203e,
+	0x100049e32080203e,
+	0x100049e020802037,
+	0x100210e701227c40,
+	0x100200e7012a7c80,
+	0x100212e7019c4ec0,
+	0x100212a701167c00,
+	0x10020867010e0dc0,
+	0x100208e701801f80,
 	0x100049e020827031,
-	0x100049e220801037,
-	0x100241a121805eb3,
+	0x100049e220802037,
+	0x100241e121806eb3,
 	0x10020827019e7200,
-	0x100208e701802f80,
-	0x10025874810e0ddb,
+	0x100208e701803f80,
+	0x1002587481120ddb,
 	0x100049e220827031,
-	0x100202a7019e7080,
+	0x100202e7019e7080,
 	0x100049e0209e701c,
 	0xd0020867029e1e00,
-	0x10025801211a0de1,
+	0x10025802211e0de1,
 	0x100049e220827006,
-	0x1002086701160dc0,
-	0x100049e320067016,
+	0x10020867011a0dc0,
+	0x100049e3200a7016,
 	0x10124020278276ce,
-	0x100049e120067006,
-	0x100208a701809f80,
+	0x100049e1200a7006,
+	0x100208a70180af80,
 	0x1022402227827256,
 	0xe0025c6700001a00,
-	0x100049e320067016,
+	0x100049e3200a7016,
 	0x10020c2715027d80,
 	0x10024c2081c207f6,
-	0x10020c2715067d80,
-	0x10024c2195c27036,
-	0x10024c2295c27276,
-	0x10024c2395c274b6,
-	0x10024c2095c276f6,
+	0x10020c27150a7d80,
+	0x18020c2708067d80,
+	0x1a020c2708067d80,
+	0x1c020c2708067d80,
+	0x1e020c2708067d80,
 	0x1002487095c27d80,
-	0x100248308180af89,
+	0x100248308180bf89,
 	0x100049e320827030,
-	0x10020c27012a7cc0,
+	0x10020c27012e7cc0,
 	0x300009e7009e7000,
 	0x100009e7009e7000,
 	0x100009e7009e7000,
@@ -415,44 +625,44 @@ uint64_t singleTextureClippingPlaneCS[] =
 
 uint64_t multiTextureVS[] =
 {
-	0xe0024c6700b01a00,
-	0x1002106715c27d80,
-	0x100200a715c27d80,
-	0x100049e020801037,
-	0x100049e3200a003e,
-	0x10024121218010f7,
-	0x100049e0200a003e,
-	0x100250a221801237,
-	0x100049e1200a003e,
-	0x100250e321801477,
-	0x100049e2200a003e,
-	0x100240c081c276b6,
+	0xe0024c6700801a00,
+	0x100210a715c27d80,
+	0x100200e715c27d80,
+	0x100049e020802037,
+	0x100049e3200e003e,
+	0x10024161218020f7,
+	0x100049e0200e003e,
+	0x100250e221802237,
+	0x100049e1200e003e,
+	0x1002512321802477,
+	0x100049e2200e003e,
+	0x1002410181c276b6,
 	0xe0025c6700001a00,
-	0x100049e220800037,
-	0x1002086701127c80,
-	0x100208a701827380,
-	0x10025d21358004b7,
-	0x100049e020800037,
-	0x100208e7019c3e40,
-	0x10024060219c2e14,
-	0x100049e120800037,
-	0x10021127010e7c40,
+	0x100049e220801037,
+	0x1002086701167c80,
+	0x1002588181c203f6,
+	0x10025d21358014b7,
+	0x100049e020801037,
+	0x100208e7019c4e40,
+	0x100240a0219c3e14,
+	0x100049e120801037,
+	0x1002116701127c40,
 	0xd0020867029e1e00,
-	0x1002588521060de1,
+	0x10025886210a0de1,
 	0x100049e020827016,
-	0x100248e1211607c6,
+	0x100248e1211a07c6,
 	0x101240222782725e,
-	0x100049e320167016,
+	0x100049e3201a7016,
 	0x1022402087c276f6,
-	0x100208e701804f80,
+	0x100208e701805f80,
 	0x10024c2235020d9f,
-	0x100049e320167016,
+	0x100049e3201a7016,
 	0x10024c2181c207f6,
-	0x10020c2715167d80,
-	0x100248b095c27d80,
-	0x100248f095c27d89,
-	0x1002483095c27d92,
-	0x1002487095c27d9b,
+	0x10020c27151a7d80,
+	0x18020c2708067d80,
+	0x1a020c2708067d80,
+	0x1c020c2708067d80,
+	0x1e020c2708067d80,
 	0x100248b095c27d80,
 	0x100248f095c27d89,
 	0x10020c27159e7480,
@@ -506,75 +716,75 @@ uint64_t multiTextureCS[] =
 
 uint64_t multiTextureClippingPlaneVS[] =
 {
-	0xe0024c6700b01a00,
-	0x100211e715c27d80,
-	0x1002022715c27d80,
-	0x100049e22080703e,
-	0x100049e02080703e,
-	0x100049e320220037,
-	0x10024261212204f7,
-	0x100252232122007e,
-	0x100049e120807037,
-	0x100241e0218072fe,
-	0x100049e120220037,
-	0x100251a221807077,
-	0x100049e02022003e,
-	0x1002516321807437,
-	0x100049e12022003e,
-	0x100251222122067e,
-	0x100049e020807037,
-	0x1002410181c270b6,
-	0x100049e12080703e,
-	0x100049e020220037,
-	0x100250e22180123e,
-	0x10021027019c8e80,
-	0x100049e120801037,
-	0x100049e22080103e,
-	0x10020167019c4e40,
-	0x100200e7019c6e80,
-	0x100049e320801037,
-	0x100049e02080103e,
-	0x100049e12080103e,
-	0x100049e220801037,
-	0x100210a7011e7cc0,
-	0x100200a701267c00,
-	0x100212a7019c3e40,
-	0x1002126701127c80,
-	0x100208e7010a0dc0,
-	0x1002086701800f80,
+	0xe0024c6700801a00,
+	0x1002122715c27d80,
+	0x1002026715c27d80,
+	0x100049e22080803e,
+	0x100049e02080803e,
+	0x100049e320260037,
+	0x100242a1212604f7,
+	0x100252632126007e,
+	0x100049e120808037,
+	0x10024220218082fe,
+	0x100049e120260037,
+	0x100251e221808077,
+	0x100049e02026003e,
+	0x100251a321808437,
+	0x100049e12026003e,
+	0x100251622126067e,
+	0x100049e020808037,
+	0x1002414281c270b6,
+	0x100049e12080803e,
+	0x100049e020260037,
+	0x100251222180223e,
+	0x1002504181c09eb6,
+	0x100049e120802037,
+	0x100049e22080203e,
+	0x100201a7019c5e40,
+	0x10020127019c7e80,
+	0x100049e320802037,
+	0x100049e02080203e,
+	0x100049e12080203e,
+	0x100049e220802037,
+	0x100210e701227cc0,
+	0x100200e7012a7c00,
+	0x100212e7019c4e40,
+	0x100212a701167c80,
+	0x100208e7010e0dc0,
+	0x1002086701801f80,
 	0x100049e220827033,
-	0x100049e020801037,
-	0x100241a321805e31,
+	0x100049e020802037,
+	0x100241e321806e31,
 	0x100208a7019e7680,
-	0x1002086701802f80,
-	0x100258f4810e0dc9,
+	0x1002086701803f80,
+	0x100258f481120dc9,
 	0x100049e020827033,
-	0x100202a7019e7400,
+	0x100202e7019e7400,
 	0x100049e2209e700c,
 	0xd00208e7029e1e80,
-	0x10025881211a0de3,
+	0x10025882211e0de3,
 	0x100049e020827016,
-	0x100208e701160dc0,
-	0x100049e120067006,
+	0x100208e7011a0dc0,
+	0x100049e1200a7006,
 	0x101240222782725e,
-	0x100049e320067016,
-	0x1002082701809f80,
+	0x100049e3200a7016,
+	0x100208270180af80,
 	0x10224020278276c6,
 	0xe0025c6700001a00,
-	0x100049e120067006,
+	0x100049e1200a7006,
 	0x10020c2715027d80,
 	0x10024c2081c203f6,
-	0x10020c2715067d80,
-	0x10024c2195c27036,
-	0x10024c2295c27276,
-	0x10024c2395c274b6,
-	0x10024c2095c276f6,
+	0x10020c27150a7d80,
+	0x18020c2708067d80,
+	0x1a020c2708067d80,
+	0x1c020c2708067d80,
+	0x1e020c2708067d80,
 	0x10024c2195c27036,
 	0x10024c2295c27276,
 	0x100248f095c27d92,
-	0x100248b08180af9b,
+	0x100248b08180bf9b,
 	0x100049e120827032,
-	0x10020c27012a7c40,
+	0x10020c27012e7c40,
 	0x300009e7009e7000,
 	0x100009e7009e7000,
 	0x100009e7009e7000,

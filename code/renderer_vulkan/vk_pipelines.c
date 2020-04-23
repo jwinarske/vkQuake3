@@ -253,7 +253,7 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(singleTextureClippingPlaneCS) / sizeof(uint64_t);
 		shaderCache[usedShaderCacheItems].vertMapping = 0;
 		shaderCache[usedShaderCacheItems].vertMappingSize = 0;
-		shaderCache[usedShaderCacheItems].coordMapping = singleTextureCS_mapping;
+		shaderCache[usedShaderCacheItems].coordMapping = singleTextureCS_mapping; //fits fine
 		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
@@ -273,10 +273,10 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].vertShaderAsmSize = sizeof(singleTextureVS) / sizeof(uint64_t);
 		shaderCache[usedShaderCacheItems].coordShaderAsmPtr = singleTextureCS;
 		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(singleTextureCS) / sizeof(uint64_t);
-		shaderCache[usedShaderCacheItems].vertMapping = 0;
-		shaderCache[usedShaderCacheItems].vertMappingSize = 0;
-		shaderCache[usedShaderCacheItems].coordMapping = 0;
-		shaderCache[usedShaderCacheItems].coordMappingSize = 0;
+		shaderCache[usedShaderCacheItems].vertMapping = singleTextureVS_mapping;
+		shaderCache[usedShaderCacheItems].vertMappingSize = sizeof(singleTextureVS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		shaderCache[usedShaderCacheItems].coordMapping = singleTextureCS_mapping;
+		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
 		shaderCache[usedShaderCacheItems].uniqueID = 0x10000000;
@@ -284,10 +284,10 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].vertShaderAsmSize = sizeof(multiTextureVS) / sizeof(uint64_t);
 		shaderCache[usedShaderCacheItems].coordShaderAsmPtr = multiTextureCS;
 		shaderCache[usedShaderCacheItems].coordShaderAsmSize = sizeof(multiTextureCS) / sizeof(uint64_t);
-		shaderCache[usedShaderCacheItems].vertMapping = 0;
-		shaderCache[usedShaderCacheItems].vertMappingSize = 0;
-		shaderCache[usedShaderCacheItems].coordMapping = 0;
-		shaderCache[usedShaderCacheItems].coordMappingSize = 0;
+		shaderCache[usedShaderCacheItems].vertMapping = singleTextureVS_mapping; //should just fit, as there's only an extra attribute
+		shaderCache[usedShaderCacheItems].vertMappingSize = sizeof(singleTextureVS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		shaderCache[usedShaderCacheItems].coordMapping = singleTextureCS_mapping; //fits fine
+		shaderCache[usedShaderCacheItems].coordMappingSize = sizeof(singleTextureCS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
 		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, 0, 0);
