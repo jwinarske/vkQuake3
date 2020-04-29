@@ -173,7 +173,7 @@ static void vk_createRenderPass(VkDevice device)
 	attachments[0].format = vk.surface_format.format;
 //  have something with the multisampling
 	attachments[0].samples = VK_SAMPLE_COUNT_1_BIT;
-	attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+	attachments[0].loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
 	attachments[0].storeOp = VK_ATTACHMENT_STORE_OP_STORE;
 	attachments[0].stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
 	attachments[0].stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
