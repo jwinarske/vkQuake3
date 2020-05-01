@@ -881,7 +881,7 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, pipelineDef* p
         // xyz
         attribs[0].location = 0;
         attribs[0].binding = 0;
-        attribs[0].format = VK_FORMAT_R32G32B32A32_SFLOAT;
+		attribs[0].format = VK_FORMAT_R32G32B32_SFLOAT;
         attribs[0].offset = 0;
         // color
         attribs[1].location = 1;

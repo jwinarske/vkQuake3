@@ -396,7 +396,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor set #
 		0, //descriptor binding #
 		0, //descriptor array element #
-		64, //resource offset
+		68, //resource offset
 	},
 	{ //x scale
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
@@ -404,7 +404,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor set #
 		0, //descriptor binding #
 		0, //descriptor array element #
-		68, //resource offset
+		64, //resource offset
 	},
 	{ //z scale
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
