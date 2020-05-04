@@ -85,11 +85,12 @@ file(GLOB q3vkobj
 	"../../qcommon/puff.c"
 	"../../qcommon/q_math.c"
 
+	"../../renderer_vulkan/QPUassembler/qpu_assembler.c"
 )
 
 add_library(renderer_vulkan_armv6 SHARED ${q3vkobj})
 target_compile_options(renderer_vulkan_armv6 PRIVATE -Wall -Werror=implicit-function-declaration -std=c11)
 
-target_include_directories(renderer_vulkan_armv6 PUBLIC ../../jpeg-8c ../../)
+target_include_directories(renderer_vulkan_armv6 PUBLIC ../../jpeg-8c ../../ ../../renderer_vulkan/QPUassembler/)
 
 target_link_libraries(renderer_vulkan_armv6 pthread dl m rt SDL2)
