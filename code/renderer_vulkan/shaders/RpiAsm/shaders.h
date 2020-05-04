@@ -268,7 +268,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		0, //resource offset
 	},
-	{ //m0y
+	{ //m1x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -276,7 +276,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		16, //resource offset
 	},
-	{ //m1x
+	{ //m0y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -284,7 +284,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		4, //resource offset
 	},
-	{ //m3y
+	{ //m1w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -300,7 +300,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		20, //resource offset
 	},
-	{ //m3x
+	{ //m0w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -308,7 +308,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		12, //resource offset
 	},
-	{ //m2y
+	{ //m1z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -316,7 +316,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		24, //resource offset
 	},
-	{ //m2x
+	{ //m0z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -324,7 +324,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		8, //resource offset
 	},
-	{ //m0z
+	{ //m2x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -332,7 +332,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		32, //resource offset
 	},
-	{ //m3z
+	{ //m2w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -340,7 +340,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		44, //resource offset
 	},
-	{ //m1z
+	{ //m2y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -348,7 +348,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		36, //resource offset
 	},
-	{ //m0w
+	{ //m3x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -372,7 +372,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		60, //resource offset
 	},
-	{ //m1w
+	{ //m3y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -380,7 +380,7 @@ VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 		0, //descriptor array element #
 		52, //resource offset
 	},
-	{ //m2w
+	{ //m3z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -427,25 +427,25 @@ char singleTextureCS_str[] =
 "sig_load_imm ; vr_setup.nop = load32.always(0x301a00) ; nop = load32.always() ; "
 "sig_none ; rx2.nop = or.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "			//read ra2 = vx
 "sig_none ; rx2.nop = or.ws.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "		//read rb2 = vy
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, uni) ; r1 = fmul.always(b, a) ; "				//vx * m0x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(a, b) ; "				//vy * m0y
-"sig_none ; rx4.nop = fadd.always.nop(r1, r0, ra2, uni) ; r2 = fmul.always(b, a) ; "			//vx * m1x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(a, b) ; "				//vy * m3y
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r1 = fmul.always(a, b) ; "				//vy * m1y
-"sig_none ; rx1.nop = fadd.ws.always.nop(r2, r1, ra2, uni) ; r0 = fmul.always(b, a) ; "			//vx * m3x
-"sig_none ; rx3.nop = fadd.always.nop(r0, r3, uni, rb2) ; r2 = fmul.always(a, b) ; "			//vy * m2y
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, uni) ; r3 = fmul.always(b, a) ; "				//vx * m2x
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, uni) ; r1 = fmul.always(b, a) ; "				///vx * m0x
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(a, b) ; "				///vy * m1x
+"sig_none ; rx4.nop = fadd.always.nop(r1, r0, ra2, uni) ; r2 = fmul.always(b, a) ; "			///vx * m0y
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(a, b) ; "				///vy * m1w
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r1 = fmul.always(a, b) ; "				///vy * m1y
+"sig_none ; rx1.nop = fadd.ws.always.nop(r2, r1, ra2, uni) ; r0 = fmul.always(b, a) ; "			///vx * m0w
+"sig_none ; rx3.nop = fadd.always.nop(r0, r3, uni, rb2) ; r2 = fmul.always(a, b) ; "			///vy * m1z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, uni) ; r3 = fmul.always(b, a) ; "				///vx * m0z
 "sig_none ; rx1.nop = fadd.always.nop(r3, r2, vpm_read, nop) ; r2 = v8min.always(a, a) ; "		//read r2 = vz
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r0 = fmul.always(a, r2) ; "				//vz * m0z
-"sig_none ; rx0.nop = fadd.ws.always.nop(a, r0, ra4, uni) ; r3 = fmul.always(b, r2) ; "			//vz * m3z
-"sig_none ; r0.nop = fadd.always.nop(a, r3, ra3, uni) ; r1 = fmul.always(b, r2) ; "				//vz * m1z,
-"sig_none ; rx4.nop = fadd.ws.always.nop(b, a, uni, rb0) ; nop = nop.never(r0, r0) ; "			//+m0w
-"sig_none ; r3.nop = fadd.always.nop(b, r1, uni, rb1) ; r2 = fmul.always(a, r2) ; "				//vz * m2z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r0 = fmul.always(a, r2) ; "				///vz * m2x
+"sig_none ; rx0.nop = fadd.ws.always.nop(a, r0, ra4, uni) ; r3 = fmul.always(b, r2) ; "			///vz * m2w
+"sig_none ; r0.nop = fadd.always.nop(a, r3, ra3, uni) ; r1 = fmul.always(b, r2) ; "				///vz * m2y,
+"sig_none ; rx4.nop = fadd.ws.always.nop(b, a, uni, rb0) ; nop = nop.never(r0, r0) ; "			///+m3x
+"sig_none ; r3.nop = fadd.always.nop(b, r1, uni, rb1) ; r2 = fmul.always(a, r2) ; "				///vz * m2z
 "sig_load_imm ; vw_setup = load32.ws.always(0x1a00) ; nop = load32.always() ; "
 "sig_none ; r1.nop = fadd.always.nop(a, r2, ra1, rb4) ; vpm = v8min.always(b, b) ; "			//write Xc,
-"sig_none ; r0.nop = fadd.always.nop(r0, a, uni, nop) ; nop = nop.never(r0, r0) ; "				//+m3w
-"sig_none ; r2.nop = fadd.ws.always.nop(r3, a, uni, nop) ; sfu_recip = v8min.always(r0, r0) ; "	//+m1w
-"sig_none ; rx5.nop = fadd.always.nop(r1, a, uni, nop) ; vpm = v8min.always(r2, r2) ; "			//write Yc, +m2w
+"sig_none ; r0.nop = fadd.always.nop(r0, a, uni, nop) ; nop = nop.never(r0, r0) ; "				///+m3w
+"sig_none ; r2.nop = fadd.ws.always.nop(r3, a, uni, nop) ; sfu_recip = v8min.always(r0, r0) ; "	///+m3y
+"sig_none ; rx5.nop = fadd.always.nop(r1, a, uni, nop) ; vpm = v8min.always(r2, r2) ; "			///write Yc, +m3z
 "sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r3 = fmul.always(r2, a) ; "				//Yscale
 "sig_none ; vpm.nop = or.always.nop(a, a, ra5, nop) ; nop = nop.never(r0, r0) ; "				//write Zc
 "sig_none ; vpm.nop = or.always.nop(r0, r0, nop, nop) ; r0 = fmul.always(r0, r4) ; "			//write Wc

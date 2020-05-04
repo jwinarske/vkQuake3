@@ -624,10 +624,11 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
 		push_constants[35] =  eye_plane.dist;
 
 		push_constants[36] = (float)(vk.surface_caps.currentExtent.width) * 0.5f * 16.0f;
-		push_constants[37] = 1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
+		//TODO Y shouldn't be flipped
+		//for some reason doesn't render otherwise
+		push_constants[37] = -1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
 		push_constants[38] = 1.0f;
 		push_constants[39] = 0.0f;
-
 
         // As described above in section Pipeline Layouts, the pipeline layout defines shader push constants
         // which are updated via Vulkan commands rather than via writes to memory or copy commands.
@@ -674,10 +675,11 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
         }
 
 		push_constants[16] = (float)(vk.surface_caps.currentExtent.width) * 0.5f * 16.0f;
-		push_constants[17] = 1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
+		//TODO Y shouldn't be flipped
+		//for some reason doesn't render otherwise
+		push_constants[17] = -1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
 		push_constants[18] = 1.0f;
 		push_constants[19] = 0.0f;
-
 
         // As described above in section Pipeline Layouts, the pipeline layout defines shader push constants
         // which are updated via Vulkan commands rather than via writes to memory or copy commands.
