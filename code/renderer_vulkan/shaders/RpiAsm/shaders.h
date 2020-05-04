@@ -1970,6 +1970,7 @@ uint64_t singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS[] =
 	0x500009e7009e7000,
 };
 
+//TODO menu text frag shader
 char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -2082,6 +2083,9 @@ uint64_t singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnab
 	0x500009e7009e7000,
 };
 
+/**
+//TODO
+//the interpolated color values are incorrect for some reason
 char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -2103,6 +2107,50 @@ char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
+/**/
+
+/**/
+//abcd
+//BGRA
+char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r1, r5, nop, nop) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; nop = nop.never(r0, r0) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(a, a, ra2, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(a, a, ra3, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+///"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+///"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+///"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+///"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+///"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+///"sig_none ; tlb_color_all.nop = or.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+
+///color channel debug
+///texture data: abcd = rgba
+"sig_small_imm ; r3 = or.always(b, b, nop, 0) ; nop = nop(r0, r0) ;"
+"sig_none ; r0 = fmax.pm.always.8c(r4, r4, nop, nop) ; nop = nop(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, nop) ; r3.8a = v8min.always(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8a(r4, r4, nop, nop) ; r3.8b = v8min.always(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8d(r4, r4, nop, nop) ; r3.8c = v8min.always(r0, r0) ; "
+"sig_none ; nop = nop.pm(r0, r0) ; r3.8d = v8min.always(r0, r0) ; "
+"sig_none ; tlb_color_all.nop = or.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+
+///texcoord visualising
+///"sig_small_imm ; r3 = or.always(b, b, nop, 0) ; nop = nop(r0, r0) ;"
+///"sig_none ; nop = nop.pm(r0, r0, ra3, nop) ; r3.8c = v8min.always(a, a) ; "
+///"sig_none ; tlb_color_all = or.always(r3, r3) ; nop = nop(r0, r0) ;"
+
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+;
+/**/
 
 uint64_t singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS[] =
 {
