@@ -977,7 +977,7 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, pipelineDef* p
 
     
     // how fragments are generated for geometry.
-	rasterization_state.frontFace = VK_FRONT_FACE_CLOCKWISE; // Q3 defaults to clockwise vertex order
+	rasterization_state.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; //VK_FRONT_FACE_CLOCKWISE; // Q3 defaults to clockwise vertex order
 
 	rasterization_state.depthBiasEnable = def->polygon_offset ? VK_TRUE : VK_FALSE;
 	rasterization_state.depthBiasConstantFactor = 0.0f; // dynamic depth bias state
