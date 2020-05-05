@@ -1970,7 +1970,8 @@ uint64_t singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS[] =
 	0x500009e7009e7000,
 };
 
-//TODO menu text frag shader
+////////////
+///TODO menu text frag shader
 char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -1983,10 +1984,18 @@ char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDis
 "sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
-"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, rb0) ; r2.8c = fmul.always(b, r3) ; "
-"sig_none ; r1 = fmax.pm.always.8c(r4, r4, ra1, nop) ; r2.8b = fmul.always(a, r0) ; "
-"sig_none ; nop = nop.pm.never.8d(r0, r0, ra0, nop) ; r3.nop = fmul.always(a, r4) ; "
-"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r2.8a = fmul.always(b, r1) ; "
+
+///TODO intepolated color value incorrect for some reason
+///"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, rb0) ; r2.8c = fmul.always(b, r3) ; "
+///"sig_none ; r1 = fmax.pm.always.8c(r4, r4, ra1, nop) ; r2.8b = fmul.always(a, r0) ; "
+///"sig_none ; nop = nop.pm.never.8d(r0, r0, ra0, nop) ; r3.nop = fmul.always(a, r4) ; "
+///"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r2.8a = fmul.always(b, r1) ; "
+///
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, rb0) ; r2.8c = v8min.always(r3, r3) ; "
+"sig_none ; r1 = fmax.pm.always.8c(r4, r4, ra1, nop) ; r2.8b = v8min.always(r0, r0) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, ra0, nop) ; r3.nop = v8min.always(r4, r4) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r2.8a = v8min.always(r1, r1) ; "
+
 "sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r0.8888 = v8min.always(r3, r3) ; "
 "sig_none ; r1 = not.pm.always.nop(r0, r0, nop, nop) ; r2.8d = v8min.always(r3, r3) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r3 = v8muld.always(r2, r0) ; "
