@@ -515,7 +515,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+0, //resource offset
 	},
-	{ //em1x
+	{ //em0y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -523,7 +523,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+4, //resource offset
 	},
-	{ //em0y
+	{ //em1x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -539,7 +539,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+20, //resource offset
 	},
-	{ //m3y
+	{ //m1w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -547,7 +547,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		28, //resource offset
 	},
-	{ //m3x
+	{ //m0w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -555,7 +555,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		12, //resource offset
 	},
-	{ //em2x
+	{ //em0z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -563,7 +563,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+8, //resource offset
 	},
-	{ //em2y
+	{ //em1z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -579,7 +579,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		0, //resource offset
 	},
-	{ //m0y
+	{ //m1x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -587,7 +587,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		16, //resource offset
 	},
-	{ //m1x
+	{ //m0y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -603,7 +603,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		20, //resource offset
 	},
-	{ //m2y
+	{ //m1z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -611,7 +611,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		24, //resource offset
 	},
-	{ //m2x
+	{ //m0z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -619,7 +619,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		8, //resource offset
 	},
-	{ //em3x
+	{ //em0w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -627,7 +627,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+12, //resource offset
 	},
-	{ //em3y
+	{ //em1w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -635,7 +635,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+28, //resource offset
 	},
-	{ //em1z
+	{ //em2y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -643,7 +643,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+36, //resource offset
 	},
-	{ //m1z
+	{ //m2y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -659,7 +659,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+40, //resource offset
 	},
-	{ //m3z
+	{ //m2w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -667,7 +667,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		44, //resource offset
 	},
-	{ //em0z
+	{ //em2x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -675,7 +675,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+32, //resource offset
 	},
-	{ //em3z
+	{ //em2w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -691,7 +691,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		40, //resource offset
 	},
-	{ //em0w
+	{ //em3x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -699,7 +699,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		64+48, //resource offset
 	},
-	{ //em1w
+	{ //em3y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -715,7 +715,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		128+0, //resource offset
 	},
-	{ //m0z
+	{ //m2x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -739,7 +739,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		60, //resource offset
 	},
-	{ //em2w
+	{ //em3z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -755,7 +755,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		128+8, //resource offset
 	},
-	{ //m0w
+	{ //m3x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -771,7 +771,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		128+16+0, //resource offset
 	},
-	{ //m1w
+	{ //m3y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -787,7 +787,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 		0, //descriptor array element #
 		128+16+4, //resource offset
 	},
-	{ //m2w
+	{ //m3z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -833,56 +833,56 @@ char singleTextureClippingPlaneVS_str[] =
 "sig_load_imm ; vr_setup.nop = load32.always(0x601a00) ; nop = load32.always() ; "
 "sig_none ; rx8.nop = or.ws.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "		//read rb8 = vx
 "sig_none ; rx9.nop = or.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "			//read ra9 = vy
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r0 = fmul.always(b, a) ; "				//vx * em0x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r2 = fmul.always(b, a) ; "				//vx * em1x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r1 = fmul.always(a, b) ; "				//vy * em0y
-"sig_none ; rx10.nop = fadd.always.nop(r0, r1, ra9, uni) ; r3 = fmul.always(a, b) ; "			//vy * em1y
-"sig_none ; rx9.nop = fadd.ws.always.nop(r2, r3, ra9, uni) ; r1 = fmul.always(b, a) ; "			//vy * m3y
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r3 = fmul.always(a, b) ; "				//vx * m3x
-"sig_none ; rx8.nop = fadd.always.nop(r3, r1, uni, rb8) ; r2 = fmul.always(b, a) ; "			//vx * em2x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r3 = fmul.always(a, b) ; "				//vy * em2y
-"sig_none ; rx7.nop = fadd.ws.always.nop(r2, r3, uni, rb8) ; r0 = fmul.always(a, b) ; "			//vx * m0x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r2 = fmul.always(b, a) ; "				//vy * m0y
-"sig_none ; rx6.nop = fadd.ws.always.nop(r0, r2, uni, rb8) ; r1 = fmul.always(a, b) ; "			//vx * m1x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r3 = fmul.always(b, a) ; "				//vy * m1y
-"sig_none ; rx5.nop = fadd.ws.always.nop(r1, r3, ra9, uni) ; r0 = fmul.always(b, a) ; "			//vy * m2y
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r2 = fmul.always(a, b) ; "				//vx * m2x
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r0 = fmul.always(b, a) ; "				///vx * em0x
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r2 = fmul.always(b, a) ; "				///vx * em0y
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r1 = fmul.always(a, b) ; "				///vy * em1x
+"sig_none ; rx10.nop = fadd.always.nop(r0, r1, ra9, uni) ; r3 = fmul.always(a, b) ; "			///vy * em1y
+"sig_none ; rx9.nop = fadd.ws.always.nop(r2, r3, ra9, uni) ; r1 = fmul.always(b, a) ; "			///vy * m1w
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r3 = fmul.always(a, b) ; "				///vx * m0w
+"sig_none ; rx8.nop = fadd.always.nop(r3, r1, uni, rb8) ; r2 = fmul.always(b, a) ; "			///vx * em0z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r3 = fmul.always(a, b) ; "				///vy * em1z
+"sig_none ; rx7.nop = fadd.ws.always.nop(r2, r3, uni, rb8) ; r0 = fmul.always(a, b) ; "			///vx * m0x
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r2 = fmul.always(b, a) ; "				///vy * m1x
+"sig_none ; rx6.nop = fadd.ws.always.nop(r0, r2, uni, rb8) ; r1 = fmul.always(a, b) ; "			///vx * m0y
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r3 = fmul.always(b, a) ; "				///vy * m1y
+"sig_none ; rx5.nop = fadd.ws.always.nop(r1, r3, ra9, uni) ; r0 = fmul.always(b, a) ; "			///vy * m1z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r2 = fmul.always(a, b) ; "				///vx * m0z
 "sig_none ; rx5.nop = fadd.always.nop(r2, r0, vpm_read, nop) ; rx2 = v8min.always(a, a) ; "		//read rb2 = vz
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r3 = fmul.always(b, a) ; "				//vx * em3x
-"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r2 = fmul.always(a, b) ; "				//vy * em3y
-"sig_none ; rx4.nop = fadd.ws.always.nop(r3, r2, uni, rb2) ; r0 = fmul.always(b, a) ; "			//vz * em1z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb8) ; r3 = fmul.always(b, a) ; "				///vx * em0w
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra9, uni) ; r2 = fmul.always(a, b) ; "				///vy * em1w
+"sig_none ; rx4.nop = fadd.ws.always.nop(r3, r2, uni, rb2) ; r0 = fmul.always(b, a) ; "			///vz * em2y
 "sig_none ; rx1.nop = fadd.ws.always.nop(b, r0, vpm_read, rb9) ; rx1 = v8min.always(a, a) ; "
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(a, b) ; "				//vz * m1z
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(b, a) ; "				//vz * em2z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(a, b) ; "				///vz * m2y
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(b, a) ; "				///vz * em2z
 "sig_none ; rx6.nop = fadd.always.nop(b, r3, nop, rb5) ; nop = nop.never(r0, r0) ; "
 "sig_none ; rx4.nop = fadd.always.nop(b, r0, nop, rb7) ; nop = nop.never(r0, r0) ; "
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r1 = fmul.always(a, b) ; "				//vz * m3z
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r2 = fmul.always(b, a) ; "				//vz * em0z
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(b, a) ; "				//vz * em3z
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(a, b) ; "				//vz * m2z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r1 = fmul.always(a, b) ; "				///vz * m2w
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r2 = fmul.always(b, a) ; "				///vz * em2x
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r3 = fmul.always(b, a) ; "				///vz * em2w
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r0 = fmul.always(a, b) ; "				///vz * m2z
 "sig_none ; rx3.nop = fadd.ws.always.nop(a, r1, ra8, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; rx3.nop = fadd.always.nop(a, r2, ra10, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; rx11.nop = fadd.ws.always.nop(b, r3, nop, rb4) ; nop = nop.never(r0, r0) ; "
 "sig_none ; rx10.nop = fadd.ws.always.nop(a, r0, ra5, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; r1.nop = fadd.always.nop(a, b, ra3, uni) ; nop = nop.never(r0, r0) ; "				//+em0w
-"sig_none ; r3.nop = fadd.always.nop(b, a, uni, rb1) ; nop = nop.never(r0, r0) ; "				//+em1w
+"sig_none ; r1.nop = fadd.always.nop(a, b, ra3, uni) ; nop = nop.never(r0, r0) ; "				///+em3x
+"sig_none ; r3.nop = fadd.always.nop(b, a, uni, rb1) ; nop = nop.never(r0, r0) ; "				///+em3y
 "sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r0 = fmul.always(a, r1) ; "				//CPx
-"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r2 = fmul.always(a, b) ; "				//vz * m0z
+"sig_none ; nop.nop = nop.never.nop(r0, r0, uni, rb2) ; r2 = fmul.always(a, b) ; "				///vz * m2x
 "sig_none ; rx7.nop = fadd.always.nop(b, r2, uni, rb6) ; r1 = fmul.always(a, r3) ; "			//CPy
 "sig_none ; r0.nop = fadd.always.nop(r1, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; r3.nop = fadd.always.nop(b, a, uni, rb3) ; nop = nop.never(r0, r0) ; "				//+m3w
-"sig_none ; r1.nop = fadd.ws.always.nop(a, b, ra4, uni) ; sfu_recip = v8min.always(r3, r3) ; "	//+em2w
+"sig_none ; r3.nop = fadd.always.nop(b, a, uni, rb3) ; nop = nop.never(r0, r0) ; "				///+m3w
+"sig_none ; r1.nop = fadd.ws.always.nop(a, b, ra4, uni) ; sfu_recip = v8min.always(r3, r3) ; "	///+em3z
 "sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r2 = fmul.always(a, r1) ; "				//CPz
 "sig_none ; rx11.nop = fadd.always.nop(r0, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r0 = fmul.always(r3, r4) ; "
 "sig_small_imm ; r1.nop = fsub.always.nop(b, r0, nop, 0x40000000) ; nop = nop.never(r0, r0) ; "
-"sig_none ; r0.nop = fadd.ws.always.nop(a, b, ra7, uni) ; rx2 = fmul.always(r4, r1) ; "        //+m0w
+"sig_none ; r0.nop = fadd.ws.always.nop(a, b, ra7, uni) ; rx2 = fmul.always(r4, r1) ; "        ///+m3x
 "sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r2 = fmul.always(r0, a) ; "				//Xscale
-"sig_none ; r1.nop = fadd.always.nop(a, b, ra6, uni) ; nop = nop.never(r0, r0) ; "				//+m1w
+"sig_none ; r1.nop = fadd.always.nop(a, b, ra6, uni) ; nop = nop.never(r0, r0) ; "				///+m3y
 "sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, nop) ; r3 = fmul.always(r2, a) ; "
 "sig_none ; rx0.16a = ftoi.always.nop(r3, r3, uni, nop) ; r0 = fmul.always(r1, a) ; "			//Yscale
 "sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, nop) ; r1 = fmul.always(r0, a) ; "
-"sig_none ; r2.nop = fadd.always.nop(b, a, uni, rb10) ; nop = nop.never(r0, r0) ; "				//+m2w
+"sig_none ; r2.nop = fadd.always.nop(b, a, uni, rb10) ; nop = nop.never(r0, r0) ; "				///+m3z
 "sig_none ; rx0.16b = ftoi.always.nop(r1, r1, uni, nop) ; r2 = fmul.always(r2, a) ; "			//zscale
 "sig_load_imm ; vw_setup = load32.ws.always(0x1a00) ; nop = load32.always() ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, ra2, nop) ; r3 = fmul.always(r2, a) ; "
@@ -894,7 +894,7 @@ char singleTextureClippingPlaneVS_str[] =
 "sig_none ; vpm.nop = itof.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorB
 "sig_none ; vpm.nop = itof.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorA
 "sig_none ; r1.nop = or.always.nop(a, a, vpm_read, nop) ; vpm = v8min.always(r0, r0) ; "		//write texcoordU
-"sig_none ; r0.nop = fadd.always.nop(b, a, uni, rb11) ; vpm = v8min.always(r1, r1) ; "			//write texcoordV, +em3w
+"sig_none ; r0.nop = fadd.always.nop(b, a, uni, rb11) ; vpm = v8min.always(r1, r1) ; "			///write texcoordV, +em3w
 "sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r3 = fmul.always(a, r0) ; "				//CPw
 "sig_none ; vpm.nop = fadd.always.nop(a, r3, ra11, nop) ; nop = nop.never(r0, r0) ;	"			//write clipDistance
 "sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
@@ -985,7 +985,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		0, //resource offset
 	},
-	{ //m0y
+	{ //m1x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -993,7 +993,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		16, //resource offset
 	},
-	{ //m1x
+	{ //m0y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1001,7 +1001,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		4, //resource offset
 	},
-	{ //m3y
+	{ //m1w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1017,7 +1017,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		20, //resource offset
 	},
-	{ //m3x
+	{ //m0w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1025,7 +1025,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		12, //resource offset
 	},
-	{ //m2y
+	{ //m1z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1033,7 +1033,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		24, //resource offset
 	},
-	{ //m2x
+	{ //m0z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1041,7 +1041,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		8, //resource offset
 	},
-	{ //m0z
+	{ //m2z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1049,7 +1049,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		32, //resource offset
 	},
-	{ //m3z
+	{ //m2w
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1057,7 +1057,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		44, //resource offset
 	},
-	{ //m1z
+	{ //m2y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1065,7 +1065,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		36, //resource offset
 	},
-	{ //m0w
+	{ //m3x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1089,7 +1089,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		60, //resource offset
 	},
-	{ //m1w
+	{ //m3y
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
@@ -1097,7 +1097,7 @@ VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 		0, //descriptor array element #
 		52, //resource offset
 	},
-	{ //m2w
+	{ //m3z
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
 		VK_DESCRIPTOR_TYPE_MAX_ENUM, //descriptor type
 		0, //descriptor set #
