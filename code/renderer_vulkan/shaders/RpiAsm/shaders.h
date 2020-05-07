@@ -201,10 +201,10 @@ char singleTextureVS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, ra6, nop) ; r1 = fmul.always(r0, a) ; "
 "sig_none ; vpm.nop = fadd.always.nop(r1, b, vpm_read, uni) ; r0 = v8min.always(a, a) ;	"		//write Zs, Zoffset
 "sig_none ; vpm.nop = or.always.nop(a, a, ra6, nop) ; nop = nop.never(r0, r0) ;	"				//write 1/Wc
-"sig_none ; vpm.nop = itof.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; vpm.nop = or.always.nop(r0, r0, vpm_read, nop) ; r1 = v8min.always(a, a) ; "
 "sig_none ; vpm.nop = or.always.nop(r1, r1, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
@@ -889,10 +889,10 @@ char singleTextureClippingPlaneVS_str[] =
 "sig_none ; vpm.nop = or.always.nop(a, a, ra0, nop) ; nop = nop.never(r0, r0) ; "				//write XsYs
 "sig_none ; vpm.nop = fadd.always.nop(r3, b, vpm_read, uni) ; r0 = v8min.always(a, a) ; "		//write Zs, zoffset
 "sig_none ; vpm.nop = or.always.nop(a, a, ra2, nop) ; nop = nop.never(r0, r0) ; "				//write 1/Wc
-"sig_none ; vpm.nop = itof.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorR
-"sig_none ; vpm.nop = itof.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorG
-"sig_none ; vpm.nop = itof.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorB
-"sig_none ; vpm.nop = itof.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorA
+"sig_none ; vpm.nop = fmax.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorR
+"sig_none ; vpm.nop = fmax.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorG
+"sig_none ; vpm.nop = fmax.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorB
+"sig_none ; vpm.nop = fmax.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "				//write incolorA
 "sig_none ; r1.nop = or.always.nop(a, a, vpm_read, nop) ; vpm = v8min.always(r0, r0) ; "		//write texcoordU
 "sig_none ; r0.nop = fadd.always.nop(b, a, uni, rb11) ; vpm = v8min.always(r1, r1) ; "			///write texcoordV, +em3w
 "sig_none ; nop.nop = nop.never.nop(r0, r0, uni, nop) ; r3 = fmul.always(a, r0) ; "				//CPw
@@ -1258,10 +1258,10 @@ char multiTextureVS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, ra6, nop) ; r3 = fmul.always(r2, a) ; "
 "sig_none ; vpm.nop = fadd.always.nop(r3, b, vpm_read, uni) ; r1 = v8min.always(a, a) ; "
 "sig_none ; vpm.nop = or.always.nop(a, a, ra6, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; r2.nop = or.always.nop(a, a, vpm_read, nop) ; vpm = v8min.always(r0, r0) ; "
 "sig_none ; r3.nop = or.always.nop(a, a, vpm_read, nop) ; vpm = v8min.always(r1, r1) ; "
 "sig_none ; vpm.nop = or.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
@@ -1463,10 +1463,10 @@ char multiTextureClippingPlaneVS_str[] =
 "sig_none ; vpm.nop = or.always.nop(a, a, ra0, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; vpm.nop = fadd.always.nop(r1, b, vpm_read, uni) ; r0 = v8min.always(a, a) ; "
 "sig_none ; vpm.nop = or.always.nop(a, a, ra2, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; vpm.nop = itof.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8a(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8b(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8c(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; vpm.nop = fmax.always.8d(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; vpm.nop = or.always.nop(r0, r0, vpm_read, nop) ; r1 = v8min.always(a, a) ; "
 "sig_none ; vpm.nop = or.always.nop(r1, r1, vpm_read, nop) ; r2 = v8min.always(a, a) ; "
 "sig_none ; r3.nop = or.always.nop(a, a, vpm_read, nop) ; vpm = v8min.always(r2, r2) ; "
@@ -1970,8 +1970,6 @@ uint64_t singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS[] =
 	0x500009e7009e7000,
 };
 
-////////////
-///TODO menu text frag shader
 char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -1984,18 +1982,10 @@ char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDis
 "sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
-
-///TODO intepolated color value incorrect for some reason
-///"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, rb0) ; r2.8c = fmul.always(b, r3) ; "
-///"sig_none ; r1 = fmax.pm.always.8c(r4, r4, ra1, nop) ; r2.8b = fmul.always(a, r0) ; "
-///"sig_none ; nop = nop.pm.never.8d(r0, r0, ra0, nop) ; r3.nop = fmul.always(a, r4) ; "
-///"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r2.8a = fmul.always(b, r1) ; "
-///
-"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, rb0) ; r2.8c = v8min.always(r3, r3) ; "
-"sig_none ; r1 = fmax.pm.always.8c(r4, r4, ra1, nop) ; r2.8b = v8min.always(r0, r0) ; "
-"sig_none ; nop = nop.pm.never.8d(r0, r0, ra0, nop) ; r3.nop = v8min.always(r4, r4) ; "
-"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r2.8a = v8min.always(r1, r1) ; "
-
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, rb0) ; r2.8c = fmul.always(b, r3) ; "
+"sig_none ; r1 = fmax.pm.always.8c(r4, r4, ra1, nop) ; r2.8b = fmul.always(a, r0) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, ra0, nop) ; r3.nop = fmul.always(a, r4) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r2.8a = fmul.always(b, r1) ; "
 "sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r0.8888 = v8min.always(r3, r3) ; "
 "sig_none ; r1 = not.pm.always.nop(r0, r0, nop, nop) ; r2.8d = v8min.always(r3, r3) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r3 = v8muld.always(r2, r0) ; "
@@ -2092,9 +2082,6 @@ uint64_t singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnab
 	0x500009e7009e7000,
 };
 
-/**
-//TODO
-//the interpolated color values are incorrect for some reason
 char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -2116,50 +2103,6 @@ char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-/**/
-
-/**/
-//abcd
-//BGRA
-char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
-"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
-"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
-"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
-"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
-"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
-"sig_none ; rx3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
-"sig_none ; rx2.nop = fadd.always.nop(r1, r5, nop, nop) ; r1 = fmul.always(b, a) ; "
-"sig_last_thread_switch ; nop = nop.never(r0, r0) ; nop = nop.never(r0, r0) ; "
-"sig_none ; tmu0_t.nop = or.ws.always.nop(a, a, ra2, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; tmu0_s.nop = or.ws.always.nop(a, a, ra3, nop) ; nop = nop.never(r0, r0) ; "
-"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
-///"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
-///"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
-///"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
-///"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
-///"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
-///"sig_none ; tlb_color_all.nop = or.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
-
-///color channel debug
-///texture data: abcd = rgba
-"sig_small_imm ; r3 = or.always(b, b, nop, 0) ; nop = nop(r0, r0) ;"
-"sig_none ; r0 = fmax.pm.always.8c(r4, r4, nop, nop) ; nop = nop(r0, r0) ; "
-"sig_none ; r0 = fmax.pm.always.8b(r4, r4, nop, nop) ; r3.8a = v8min.always(r0, r0) ; "
-"sig_none ; r0 = fmax.pm.always.8a(r4, r4, nop, nop) ; r3.8b = v8min.always(r0, r0) ; "
-"sig_none ; r0 = fmax.pm.always.8d(r4, r4, nop, nop) ; r3.8c = v8min.always(r0, r0) ; "
-"sig_none ; nop = nop.pm(r0, r0) ; r3.8d = v8min.always(r0, r0) ; "
-"sig_none ; tlb_color_all.nop = or.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
-
-///texcoord visualising
-///"sig_small_imm ; r3 = or.always(b, b, nop, 0) ; nop = nop(r0, r0) ;"
-///"sig_none ; nop = nop.pm(r0, r0, ra3, nop) ; r3.8c = v8min.always(a, a) ; "
-///"sig_none ; tlb_color_all = or.always(r3, r3) ; nop = nop(r0, r0) ;"
-
-"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
-"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
-"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
-;
-/**/
 
 uint64_t singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS[] =
 {
