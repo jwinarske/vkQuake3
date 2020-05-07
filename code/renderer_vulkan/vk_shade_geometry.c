@@ -563,7 +563,8 @@ void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Dept
 	{
 		uint32_t stencilState[2];
 		uint32_t values = 0;
-		encodeStencilValue(stencilState, &values, pipeline.op, pipeline.op, 1);
+		encodeStencilValue(stencilState, &values, pipeline.op, pipeline.op, pipeline.stencilTest);
+		//ri.Printf(PRINT_ALL, "Stencil states %u, %u\n", stencilState[0], stencilState[1]);
 		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_FRAGMENT_BIT, 0, 4, stencilState);
 	}
 

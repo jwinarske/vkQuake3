@@ -1248,6 +1248,7 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, pipelineDef* p
 	VK_CHECK(qvkCreateGraphicsPipelines(vk.device, VK_NULL_HANDLE, 1, &create_info, NULL, &pPipeLine->pipeline));
 	pPipeLine->depthStencil = ((def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE));
 	pPipeLine->op = depth_stencil_state.front;
+	pPipeLine->stencilTest = depth_stencil_state.stencilTestEnable;
 }
 
 
