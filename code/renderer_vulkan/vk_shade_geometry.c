@@ -839,7 +839,7 @@ void vk_clearColorAttachments(const float* color)
     // VK_IMAGE_ASPECT_COLOR_BIT for color attachments,
     // VK_IMAGE_ASPECT_DEPTH_BIT for depth/stencil attachments with a depth
     // component, and VK_IMAGE_ASPECT_STENCIL_BIT for depth/stencil attachments
-    // with a stencil component. If the subpassï¿½ï¿½s depth/stencil attachment
+    // with a stencil component. If the subpass¡¯s depth/stencil attachment
     // is VK_ATTACHMENT_UNUSED, then the clear has no effect.
 
     attachments[0].aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;

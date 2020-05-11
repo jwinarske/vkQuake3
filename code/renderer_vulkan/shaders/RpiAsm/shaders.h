@@ -212,53 +212,6 @@ char singleTextureVS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTextureVS[] =
-{
-	0xe0024c6700601a00,
-	0x100210a715c27d80,
-	0x100200e715c27d80,
-	0x100049e220802037,
-	0x100049e1200e003e,
-	0x1002416321802477,
-	0x100049e2200e003e,
-	0x100250e0218026b7,
-	0x100049e3200e003e,
-	0x10025121218020f7,
-	0x100049e0200e003e,
-	0x1002410181c27236,
-	0xe0025c6700001a00,
-	0x100049e020801037,
-	0x100208e701167c00,
-	0x1002580181c207f6,
-	0x10025d2335801037,
-	0x100049e220801037,
-	0x10020867019c4ec0,
-	0x100240a2219c3e84,
-	0x100049e320801037,
-	0x1002116701127cc0,
-	0xd00208e7029e1e80,
-	0x10025806210a0de3,
-	0x100049e220827006,
-	0x10024863211a03d6,
-	0x10124020278276ce,
-	0x100049e1201a7006,
-	0x10220027079e7240,
-	0x1002086701805f80,
-	0x10024c2035020d8f,
-	0x100049e1201a7006,
-	0x10024c2081c203f6,
-	0x10020c27151a7d80,
-	0x18020c2708067d80,
-	0x1a020c2708067d80,
-	0x1c020c2708067d80,
-	0x1e020c2708067d80,
-	0x10024c2195c27036,
-	0x10020c27159e7240,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
-
 VkRpiAssemblyMappingEXT singleTextureCS_mapping[] = {
 	{ //m0x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
@@ -463,48 +416,6 @@ char singleTextureCS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTextureCS[] =
-{
-	0xe0024c6700301a00,
-	0x100200a715c27d80,
-	0x100210a715c27d80,
-	0x100049e1200a003e,
-	0x100049e020802037,
-	0x10024122210a023e,
-	0x100049e320802037,
-	0x100049e120802037,
-	0x10025060210a047e,
-	0x100240e2218020f7,
-	0x100049e3200a003e,
-	0x1002406281c276b6,
-	0x100049e020827032,
-	0x1002502321120c3a,
-	0x10024821210e0cfa,
-	0x1002112701800f80,
-	0x100248e221801e72,
-	0xe0025c6700001a00,
-	0x1002487081044cbf,
-	0x1002082701827180,
-	0x100258b481827780,
-	0x1002417081827392,
-	0x100049e320827016,
-	0x10020c2715167d80,
-	0x10024c20359e7004,
-	0xd0020867029e1e00,
-	0x100049c3209e7021,
-	0x100049e12080403e,
-	0x100049e2209c300f,
-	0x10124020279c349f,
-	0x1022402227160037,
-	0x100049e3209c3017,
-	0x10020c2715027d80,
-	0x10020c2701827780,
-	0x10020c27159c3fc0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
 
 VkRpiAssemblyMappingEXT singleTextureClippingPlaneVS_mapping[] = {
 	{ //em0x
@@ -902,80 +813,6 @@ char singleTextureClippingPlaneVS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTextureClippingPlaneVS[] =
-{
-	0xe0024c6700601a00,
-	0x1002122715c27d80,
-	0x1002026715c27d80,
-	0x100049e02080803e,
-	0x100049e22080803e,
-	0x100049e120260037,
-	0x100242a321260077,
-	0x10025261212604fe,
-	0x100049e320808037,
-	0x100242222180867e,
-	0x100049e320260037,
-	0x100251e0218084f7,
-	0x100049e22026003e,
-	0x100251a1218080b7,
-	0x100049e32026003e,
-	0x10025160212602fe,
-	0x100049e220808037,
-	0x1002414281c27436,
-	0x100049e32080803e,
-	0x100049e220260037,
-	0x10025120218026be,
-	0x1002504181c09e36,
-	0x100049e320802037,
-	0x100049e02080203e,
-	0x100201a7019c5ec0,
-	0x10020127019c7e00,
-	0x100049e120802037,
-	0x100049e22080203e,
-	0x100049e32080203e,
-	0x100049e020802037,
-	0x100210e701227c40,
-	0x100200e7012a7c80,
-	0x100212e7019c4ec0,
-	0x100212a701167c00,
-	0x10020867010e0dc0,
-	0x100208e701801f80,
-	0x100049e020827031,
-	0x100049e220802037,
-	0x100241e121806eb3,
-	0x10020827019e7200,
-	0x100208e701803f80,
-	0x1002587481120ddb,
-	0x100049e220827031,
-	0x100202e7019e7080,
-	0x100049e0209e701c,
-	0xd0020867029e1e00,
-	0x10025802211e0de1,
-	0x100049e220827006,
-	0x10020867011a0dc0,
-	0x100049e3200a7016,
-	0x10124020278276ce,
-	0x100049e1200a7006,
-	0x100208a70180af80,
-	0x1022402227827256,
-	0xe0025c6700001a00,
-	0x100049e3200a7016,
-	0x10020c2715027d80,
-	0x10024c2081c207f6,
-	0x10020c27150a7d80,
-	0x18020c2708067d80,
-	0x1a020c2708067d80,
-	0x1c020c2708067d80,
-	0x1e020c2708067d80,
-	0x1002487095c27d80,
-	0x100248308180bf89,
-	0x100049e320827030,
-	0x10020c27012e7cc0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
-
 VkRpiAssemblyMappingEXT singleTextureClippingPlaneCS_mapping[] = {
 	{ //m0x
 		VK_RPI_ASSEMBLY_MAPPING_TYPE_PUSH_CONSTANT,
@@ -1181,48 +1018,6 @@ char singleTextureClippingPlaneCS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTextureClippingPlaneCS[] =
-{
-	0xe0024c6700301a00,
-	0x100200a715c27d80,
-	0x100210a715c27d80,
-	0x100049e1200a003e,
-	0x100049e020802037,
-	0x10024122210a023e,
-	0x100049e320802037,
-	0x100049e120802037,
-	0x10025060210a047e,
-	0x100240e2218020f7,
-	0x100049e3200a003e,
-	0x1002406281c276b6,
-	0x100049e020827032,
-	0x1002502321120c3a,
-	0x10024821210e0cfa,
-	0x1002112701800f80,
-	0x100248e221801e72,
-	0xe0025c6700001a00,
-	0x1002487081044cbf,
-	0x1002082701827180,
-	0x100258b481827780,
-	0x1002417081827392,
-	0x100049e320827016,
-	0x10020c2715167d80,
-	0x10024c20359e7004,
-	0xd0020867029e1e00,
-	0x100049c3209e7021,
-	0x100049e12080403e,
-	0x100049e2209c300f,
-	0x10124020279c349f,
-	0x1022402227160037,
-	0x100049e3209c3017,
-	0x10020c2715027d80,
-	0x10020c2701827780,
-	0x10020c27159c3fc0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
-
 char multiTextureVS_str[] =
 "sig_load_imm ; vr_setup.nop = load32.always(0x801a00) ; nop = load32.always() ;"
 "sig_none ; rx2.nop = or.ws.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "
@@ -1271,55 +1066,6 @@ char multiTextureVS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t multiTextureVS[] =
-{
-	0xe0024c6700801a00,
-	0x100210a715c27d80,
-	0x100200e715c27d80,
-	0x100049e020802037,
-	0x100049e3200e003e,
-	0x10024161218020f7,
-	0x100049e0200e003e,
-	0x100250e221802237,
-	0x100049e1200e003e,
-	0x1002512321802477,
-	0x100049e2200e003e,
-	0x1002410181c276b6,
-	0xe0025c6700001a00,
-	0x100049e220801037,
-	0x1002086701167c80,
-	0x1002588181c203f6,
-	0x10025d21358014b7,
-	0x100049e020801037,
-	0x100208e7019c4e40,
-	0x100240a0219c3e14,
-	0x100049e120801037,
-	0x1002116701127c40,
-	0xd0020867029e1e00,
-	0x10025886210a0de1,
-	0x100049e020827016,
-	0x100248e1211a07c6,
-	0x101240222782725e,
-	0x100049e3201a7016,
-	0x1022402087c276f6,
-	0x100208e701805f80,
-	0x10024c2235020d9f,
-	0x100049e3201a7016,
-	0x10024c2181c207f6,
-	0x10020c27151a7d80,
-	0x18020c2708067d80,
-	0x1a020c2708067d80,
-	0x1c020c2708067d80,
-	0x1e020c2708067d80,
-	0x100248b095c27d80,
-	0x100248f095c27d89,
-	0x10020c27159e7480,
-	0x10020c27159e76c0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
-
 char multiTextureCS_str[] =
 "sig_load_imm ; vr_setup.nop = load32.always(0x301a00) ; nop = load32.always() ;"
 "sig_none ; rx2.nop = or.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "
@@ -1359,49 +1105,7 @@ char multiTextureCS_str[] =
 "sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
-;
-
-uint64_t multiTextureCS[] =
-{
-	0xe0024c6700301a00,
-	0x100200a715c27d80,
-	0x100210a715c27d80,
-	0x100049e1200a003e,
-	0x100049e020802037,
-	0x10024122210a023e,
-	0x100049e320802037,
-	0x100049e120802037,
-	0x10025060210a047e,
-	0x100240e2218020f7,
-	0x100049e3200a003e,
-	0x1002406281c276b6,
-	0x100049e020827032,
-	0x1002502321120c3a,
-	0x10024821210e0cfa,
-	0x1002112701800f80,
-	0x100248e221801e72,
-	0xe0025c6700001a00,
-	0x1002487081044cbf,
-	0x1002082701827180,
-	0x100258b481827780,
-	0x1002417081827392,
-	0x100049e320827016,
-	0x10020c2715167d80,
-	0x10024c20359e7004,
-	0xd0020867029e1e00,
-	0x100049c3209e7021,
-	0x100049e12080403e,
-	0x100049e2209c300f,
-	0x10124020279c349f,
-	0x1022402227160037,
-	0x100049e3209c3017,
-	0x10020c2715027d80,
-	0x10020c2701827780,
-	0x10020c27159c3fc0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};                
+;           
 
 char multiTextureClippingPlaneVS_str[] =
 "sig_load_imm ; vr_setup.nop = load32.always(0x801a00) ; nop = load32.always() ;"
@@ -1478,82 +1182,6 @@ char multiTextureClippingPlaneVS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t multiTextureClippingPlaneVS[] =
-{
-	0xe0024c6700801a00,
-	0x1002122715c27d80,
-	0x1002026715c27d80,
-	0x100049e22080803e,
-	0x100049e02080803e,
-	0x100049e320260037,
-	0x100242a1212604f7,
-	0x100252632126007e,
-	0x100049e120808037,
-	0x10024220218082fe,
-	0x100049e120260037,
-	0x100251e221808077,
-	0x100049e02026003e,
-	0x100251a321808437,
-	0x100049e12026003e,
-	0x100251622126067e,
-	0x100049e020808037,
-	0x1002414281c270b6,
-	0x100049e12080803e,
-	0x100049e020260037,
-	0x100251222180223e,
-	0x1002504181c09eb6,
-	0x100049e120802037,
-	0x100049e22080203e,
-	0x100201a7019c5e40,
-	0x10020127019c7e80,
-	0x100049e320802037,
-	0x100049e02080203e,
-	0x100049e12080203e,
-	0x100049e220802037,
-	0x100210e701227cc0,
-	0x100200e7012a7c00,
-	0x100212e7019c4e40,
-	0x100212a701167c80,
-	0x100208e7010e0dc0,
-	0x1002086701801f80,
-	0x100049e220827033,
-	0x100049e020802037,
-	0x100241e321806e31,
-	0x100208a7019e7680,
-	0x1002086701803f80,
-	0x100258f481120dc9,
-	0x100049e020827033,
-	0x100202e7019e7400,
-	0x100049e2209e700c,
-	0xd00208e7029e1e80,
-	0x10025882211e0de3,
-	0x100049e020827016,
-	0x100208e7011a0dc0,
-	0x100049e1200a7006,
-	0x101240222782725e,
-	0x100049e3200a7016,
-	0x100208270180af80,
-	0x10224020278276c6,
-	0xe0025c6700001a00,
-	0x100049e1200a7006,
-	0x10020c2715027d80,
-	0x10024c2081c203f6,
-	0x10020c27150a7d80,
-	0x18020c2708067d80,
-	0x1a020c2708067d80,
-	0x1c020c2708067d80,
-	0x1e020c2708067d80,
-	0x10024c2195c27036,
-	0x10024c2295c27276,
-	0x100248f095c27d92,
-	0x100248b08180bf9b,
-	0x100049e120827032,
-	0x10020c27012e7c40,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
-
 char multiTextureClippingPlaneCS_str[] =
 "sig_load_imm ; vr_setup.nop = load32.always(0x301a00) ; nop = load32.always() ;"
 "sig_none ; rx2.nop = or.always.nop(a, a, vpm_read, nop) ; nop = nop.never(r0, r0) ; "
@@ -1594,49 +1222,6 @@ char multiTextureClippingPlaneCS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t multiTextureClippingPlaneCS[] =
-{
-	0xe0024c6700301a00,
-	0x100200a715c27d80,
-	0x100210a715c27d80,
-	0x100049e1200a003e,
-	0x100049e020802037,
-	0x10024122210a023e,
-	0x100049e320802037,
-	0x100049e120802037,
-	0x10025060210a047e,
-	0x100240e2218020f7,
-	0x100049e3200a003e,
-	0x1002406281c276b6,
-	0x100049e020827032,
-	0x1002502321120c3a,
-	0x10024821210e0cfa,
-	0x1002112701800f80,
-	0x100248e221801e72,
-	0xe0025c6700001a00,
-	0x1002487081044cbf,
-	0x1002082701827180,
-	0x100258b481827780,
-	0x1002417081827392,
-	0x100049e320827016,
-	0x10020c2715167d80,
-	0x10024c20359e7004,
-	0xd0020867029e1e00,
-	0x100049c3209e7021,
-	0x100049e12080403e,
-	0x100049e2209c300f,
-	0x10124020279c349f,
-	0x1022402227160037,
-	0x100049e3209c3017,
-	0x10020c2715027d80,
-	0x10020c2701827780,
-	0x10020c27159c3fc0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x100009e7009e7000,
-};
-
 
 //======================================================================
 //======================================================================
@@ -1744,30 +1329,6 @@ char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS_str[] =
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTexture_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10024021213e317e,
-	0x10025022213e337e,
-	0x10024063213e357e,
-	0x10025060213e377e,
-	0x100248e1213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e76c0,
-	0xa0020ae715827d80,
-	0x190208e7049e7900,
-	0x1b62482324027933,
-	0x1d524863249c0938,
-	0x1f4248a324067931,
-	0x117049e3209c103a,
-	0x10020b27159cffc0,
-	0x10020ba7159e76c0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
-
 char singleTexture_AlphaDisabled_DstZero_SrcDstColor_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -1791,31 +1352,6 @@ char singleTexture_AlphaDisabled_DstZero_SrcDstColor_DepthStencilEnabled_FS_str[
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTexture_AlphaDisabled_DstZero_SrcDstColor_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10024021213e317e,
-	0x10025022213e337e,
-	0x10024063213e357e,
-	0x10025060213e377e,
-	0x100248e1213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e76c0,
-	0xa00009e7009e7000,
-	0x190208e7049e7900,
-	0x1b62482324027933,
-	0x1d524863249c0938,
-	0x1f4248a324067931,
-	0x117049e3209c103a,
-	0x80020ae715827d80,
-	0x10020b27159cffc0,
-	0x100059ee609e701c,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
 
 char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
@@ -1844,34 +1380,6 @@ char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEna
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10024061213e317e,
-	0x10025062213e337e,
-	0x100240a3213e357e,
-	0x10025020213e377e,
-	0x100248e1213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e76c0,
-	0xa00009e7009e7000,
-	0x190208e7049e7900,
-	0x1b62580024067933,
-	0x1d525840249c1938,
-	0x114059c0200a7031,
-	0x1f0049e2209c003c,
-	0x117059c0809e7012,
-	0x113049e3809e7012,
-	0x10024821770276f3,
-	0x80020ae715827d80,
-	0x10024b20759cffe0,
-	0x100059eec09e7008,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
-
 char singleTexture_AlphaDisabled_DstOne_SrcDstColor_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -1896,31 +1404,6 @@ char singleTexture_AlphaDisabled_DstOne_SrcDstColor_DepthStencilEnabled_FS_str[]
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTexture_AlphaDisabled_DstOne_SrcDstColor_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10024021213e317e,
-	0x10025022213e337e,
-	0x10024063213e357e,
-	0x10025060213e377e,
-	0x10024821213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e7000,
-	0xa00009e7009e7000,
-	0x190208e7049e7900,
-	0x1b62482324027933,
-	0x1d524863249c0938,
-	0x1f4248a324067931,
-	0x117049e3209c103a,
-	0x80020ae715827d80,
-	0x10024b23759cffdc,
-	0x100059eec09e701c,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
-
 char singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -1944,31 +1427,6 @@ char singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTexture_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10024021213e317e,
-	0x10025022213e337e,
-	0x10024063213e357e,
-	0x10025060213e377e,
-	0x100248e1213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e76c0,
-	0xa00009e7009e7000,
-	0x190208e7049e7900,
-	0x1b62482324027933,
-	0x1d524863249c0938,
-	0x1f4248a324067931,
-	0x117049e3209c103a,
-	0x80020ae715827d80,
-	0x10020b27159cffc0,
-	0x100059eec09e701c,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
 
 char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
@@ -1996,34 +1454,6 @@ char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDis
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10025021213e317e,
-	0x10024062213e337e,
-	0x10025063213e357e,
-	0x10024020213e377e,
-	0x100248e1213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e76c0,
-	0xa00009e7009e7000,
-	0x190208e7049e7900,
-	0x1b624822249c093b,
-	0x1d52486224067930,
-	0x1f0049e320027034,
-	0x114049e2209c1039,
-	0x113049e0809e701b,
-	0x11724862979e701b,
-	0x100049e3609e7010,
-	0x800009e7009e7000,
-	0x100049e2609e7021,
-	0x100059eec09e701a,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
 
 char singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
@@ -2053,35 +1483,6 @@ char singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnabled_
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10025021213e317e,
-	0x10024062213e337e,
-	0x10025063213e357e,
-	0x100240a0213e377e,
-	0x100248e1213e317e,
-	0x100208a7019e7340,
-	0x10021e67159e7480,
-	0x10024e23353e36fe,
-	0xd0020027159c0fc0,
-	0x60020827019e7740,
-	0x100229e7049e7000,
-	0xd0080027159dffc0,
-	0xa0020ae715827d80,
-	0x19020867049e7900,
-	0x1b6248a1249c0939,
-	0x1d5248e124067932,
-	0x100229e715027d80,
-	0x1f424821249c193b,
-	0x117049e1200a7030,
-	0x10040b27159cffc0,
-	0x10040ba7159e7240,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
-
 char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -2103,29 +1504,6 @@ char singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTexture_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10024021213e317e,
-	0x10025022213e337e,
-	0x10024063213e357e,
-	0x10025060213e377e,
-	0x100248e1213e317e,
-	0x600208a7019e7340,
-	0x10021e67159e7480,
-	0x10021e27159e76c0,
-	0xa00009e7009e7000,
-	0x190208e7049e7900,
-	0x1b62482324027933,
-	0x1d524863249c0938,
-	0x1f4248a324067931,
-	0x117049e3209c103a,
-	0x10020ba7159e76c0,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
 
 char singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
@@ -2153,34 +1531,6 @@ char singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilDisabled
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTextureClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilDisabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10025021213e317e,
-	0x10024062213e337e,
-	0x10025063213e357e,
-	0x100240a0213e377e,
-	0x100248e1213e317e,
-	0x100208a7019e7340,
-	0x10021e67159e7480,
-	0x10024e23353e36fe,
-	0xd0020027159c0fc0,
-	0x60020827019e7740,
-	0x100229e7049e7000,
-	0xd0080027159dffc0,
-	0xa00009e7009e7000,
-	0x19020867049e7900,
-	0x1b6248a1249c0939,
-	0x1d5248e124067932,
-	0x1f424821249c193b,
-	0x100229e715027d80,
-	0x117049e1200a7030,
-	0x10040ba7159e7240,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
 
 char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
@@ -2215,40 +1565,6 @@ char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_De
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10025021213e317e,
-	0x10024062213e337e,
-	0x10025063213e357e,
-	0x100240a0213e377e,
-	0x10024821213e317e,
-	0x100248a3213e337e,
-	0x10021e67159e7480,
-	0x10024838819e7740,
-	0xd0020027159c0fc0,
-	0x600229e7049e7000,
-	0xd0080027159dffc0,
-	0x100009e7009e7000,
-	0x100229e715027d80,
-	0xa00009e7009e7000,
-	0x19020867049e7900,
-	0x1b6248a0249c0939,
-	0x1d5248e024067932,
-	0x1f0049e1200a7034,
-	0x114049e0209c103b,
-	0x113049e2809e7009,
-	0x117248e0979e7489,
-	0x100049e1609e7002,
-	0x80020ae715827d80,
-	0x10044b20759cffe3,
-	0x100049e2c09e7008,
-	0x10040ba7159e7480,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
-
 char singleTextureClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
 "sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
@@ -2277,36 +1593,6 @@ char singleTextureClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_
 "sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
-
-uint64_t singleTextureClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS[] =
-{
-	0x100049e0203e303e,
-	0x10025021213e317e,
-	0x10024062213e337e,
-	0x10025063213e357e,
-	0x100240a0213e377e,
-	0x100248e1213e317e,
-	0x100208a7019e7340,
-	0x10021e67159e7480,
-	0x10024e23353e36fe,
-	0xd0020027159c0fc0,
-	0x60020827019e7740,
-	0x100229e7049e7000,
-	0xd0080027159dffc0,
-	0xa00009e7009e7000,
-	0x19020867049e7900,
-	0x1b6248a1249c0939,
-	0x1d5248e124067932,
-	0x1f424821249c193b,
-	0x100229e715027d80,
-	0x117049e1200a7030,
-	0x80020ae715827d80,
-	0x10044b20d59cffcc,
-	0x10040ba7159e7000,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
-};
 
 char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS_str[] =
 "sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
@@ -2341,36 +1627,507 @@ char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_De
 "sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 ;
 
-uint64_t singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilDisabled_FS[] =
+char singleTexture_AlphaDisabled_DstSrcColor_SrcDstColor_DepthStencilEnabled_FS_str[] =
 {
-	0x100049e0203e303e,
-	0x10025021213e317e,
-	0x10024062213e337e,
-	0x10025063213e357e,
-	0x100240a0213e377e,
-	0x100248e1213e317e,
-	0x100208a7019e7340,
-	0x10021e67159e7480,
-	0x10024e23353e36fe,
-	0xd0020027159c0fc0,
-	0x60020827019e7740,
-	0x100229e7049e7000,
-	0xd0080027159dffc0,
-	0xa00009e7009e7000,
-	0x19020867049e7900,
-	0x1b6248a0249c0939,
-	0x1d5248e024067932,
-	0x114049e0209c103b,
-	0x1f0049e2200a7034,
-	0x117049e0809e7012,
-	0x113049e3809e7012,
-	0x10024821779e76c3,
-	0x100229e715027d80,
-	0x800009e7009e7000,
-	0x100049e0609e7020,
-	0x100049e1c09e7008,
-	0x10040ba7159e7240,
-	0x300009e7009e7000,
-	0x100009e7009e7000,
-	0x500009e7009e7000,
+	"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+	"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+	"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+	"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+	"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+	"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+	"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+	"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+	"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+	"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r0 = v8muld.always(r3, r4) ; "
+	"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r0, r0) ; "
+	"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstSrcColor_SrcDstColor_DepthStencilEnabled_FS_str[] =
+{
+	"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+	"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+	"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+	"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+	"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+	"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+	"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+	"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+	"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+	"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r0 = v8muld.always(r3, r4) ; "
+	"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r0, r0) ; "
+	"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char multiTextureMul_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS_str[] =
+{
+	"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; rx3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+	"sig_none ; rx3.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+	"sig_none ; rx4.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+	"sig_none ; rx4.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+	"sig_none ; r2.nop = fadd.always.nop(r1, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+	"sig_thread_switch ; rx1.nop = fadd.always.nop(r3, r5, nop, nop) ; tmu0_t = v8min.always(r2, r2) ; "
+	"sig_none ; tmu0_s.nop = or.always.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+	"sig_none ; rx0.nop = fadd.always.nop(r0, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; rx14.nop = fmax.ws.always.nop(a, a, ra3, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tmu0_t.nop = or.ws.always.nop(a, a, ra0, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_last_thread_switch ; tmu0_s.nop = or.ws.always.nop(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; rx2.nop = or.always.nop(r4, r4, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_load_tmu0 ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; nop.nop = nop.never.8a(r0, r0, ra2, rb14) ; rx0 = fmul.always(b, a) ; "
+	"sig_none ; r1 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+	"sig_none ; r2 = fmax.pm.always.8b(r4, r4, nop, rb0) ; rx2.8c = fmul.always(b, r1) ; "
+	"sig_none ; nop.nop = nop.never.8b(r0, r0, ra2, rb3) ; r1 = fmul.always(b, a) ; "
+	"sig_none ; rx14.nop = fmax.ws.always.nop(a, a, ra4, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; r3 = fmax.pm.always.8c(r4, r4, nop, nop) ; rx2.8b = fmul.always(r1, r2) ; "
+	"sig_none ; nop.nop = nop.never.8c(r0, r0, ra2, rb14) ; r2 = fmul.always(b, a) ; "
+	"sig_none ; r0 = fmax.pm.always.8d(r4, r4, nop, nop) ; rx2.8a = fmul.always(r2, r3) ; "
+	"sig_none ; nop.nop = nop.never.8d(r0, r0, ra2, rb4) ; r3 = fmul.always(b, a) ; "
+	"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; rx2.8d = fmul.always(r3, r0) ; "
+	"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; tlb_color_all.nop = or.always.nop(b, b, nop, rb2) ; nop = nop.never(r0, r0) ; "
+	"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+	"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char multiTextureMulClippingPlane_AlphaDisabled_BlendDisabled_DepthStencilEnabled_FS_str[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx3.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx4.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx4.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; r2.nop = fadd.always.nop(r1, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_thread_switch ; rx1.nop = fadd.always.nop(r3, r5, nop, nop) ; tmu0_t = v8min.always(r2, r2) ; "
+"sig_none ; tmu0_s.nop = or.always.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.always.nop(r0, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; rx14.nop = fmax.ws.always.nop(a, a, ra3, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(a, a, ra0, nop) ; nop = nop.never(r0, r0) ; "
+"sig_last_thread_switch ; tmu0_s.nop = or.ws.always.nop(a, a, ra1, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; rx2.nop = or.always.nop(r4, r4, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.8a(r0, r0, ra2, rb14) ; rx0 = fmul.always(b, a) ; "
+"sig_none ; r1 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r2 = fmax.pm.always.8b(r4, r4, nop, rb0) ; rx2.8c = fmul.always(b, r1) ; "
+"sig_none ; nop.nop = nop.never.8b(r0, r0, ra2, rb3) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx14.nop = fmax.ws.always.nop(a, a, ra4, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8c(r4, r4, nop, nop) ; rx2.8b = fmul.always(r1, r2) ; "
+"sig_none ; nop.nop = nop.never.8c(r0, r0, ra2, rb14) ; r2 = fmul.always(b, a) ; "
+"sig_none ; r0 = fmax.pm.always.8d(r4, r4, nop, nop) ; rx2.8a = fmul.always(r2, r3) ; "
+"sig_none ; nop.nop = nop.never.8d(r0, r0, ra2, rb4) ; r3 = fmul.always(b, a) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; rx2.8d = fmul.always(r3, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_color_all.nop = or.always.nop(b, b, nop, rb2) ; nop = nop.never(r0, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstZero_SrcDstColor_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8muld.always(r3, r4) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTexture_AlphaDisabled_DstSrcAlpha_SrcDstColor_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, ra1, nop) ; rx0.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, nop, rb1) ; rx0.8b = fmul.always(b, r0) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, nop, rb0) ; r2.nop = fmul.always(b, r4) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, nop, nop) ; rx0.8d = v8min.always(r2, r2) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r3.8888 = v8min.always(r2, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r2 = v8muld.always(r4, r3) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra0, nop) ; r1 = v8muld.always(a, r4) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r1, r2) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstSrcAlpha_SrcDstColor_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, ra1, nop) ; rx0.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, nop, rb1) ; rx0.8b = fmul.always(b, r0) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, nop, rb0) ; r2.nop = fmul.always(b, r4) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, nop, nop) ; rx0.8d = v8min.always(r2, r2) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r3.8888 = v8min.always(r2, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r2 = v8muld.always(r4, r3) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra0, nop) ; r1 = v8muld.always(a, r4) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r1, r2) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTexture_AlphaDisabled_DstOneMinusDstAlpha_SrcDstColor_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, nop, rb0) ; rx0.8c = fmul.always(b, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, ra1, nop) ; rx0.8b = fmul.always(a, r0) ; "
+"sig_none ; r2 = fmax.ws.pm.always.8d(r4, r4, nop, rb1) ; rx0.8a = fmul.always(b, r1) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8d = fmul.always(a, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r2.nop = shr.always.nop(r4, a, uni, pay_zw) ; tlb_z = v8min.always(b, b) ; "
+"sig_small_imm ; r3.nop = shl.always.nop(r2, b, nop, 8) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3.nop = or.always.nop(r2, r3, ra0, nop) ; r2 = v8muld.always(a, r4) ; "
+"sig_none ; r0.nop = shl.always.nop(r3, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r0.nop = or.always.nop(r3, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r1.nop = not.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r0 = v8muld.always(r4, r1) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r2, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstOneMinusDstAlpha_SrcDstColor_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, nop, rb0) ; rx0.8c = fmul.always(b, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, ra1, nop) ; rx0.8b = fmul.always(a, r0) ; "
+"sig_none ; r2 = fmax.ws.pm.always.8d(r4, r4, nop, rb1) ; rx0.8a = fmul.always(b, r1) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8d = fmul.always(a, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r2.nop = shr.always.nop(r4, a, uni, pay_zw) ; tlb_z = v8min.always(b, b) ; "
+"sig_small_imm ; r3.nop = shl.always.nop(r2, b, nop, 8) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3.nop = or.always.nop(r2, r3, ra0, nop) ; r2 = v8muld.always(a, r4) ; "
+"sig_none ; r0.nop = shl.always.nop(r3, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r0.nop = or.always.nop(r3, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r1.nop = not.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r0 = v8muld.always(r4, r1) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r2, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstOne_SrcDstColor_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r3 = v8muld.always(r3, r4) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r3, r4) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstSrcAlpha_SrcOneMinusSrcAlpha_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, ra1, nop) ; rx0.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, nop, rb1) ; rx0.8b = fmul.always(b, r0) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, nop, rb0) ; r3.nop = fmul.always(b, r4) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, nop, nop) ; rx0.8d = v8min.always(r3, r3) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r1.8888 = v8min.always(r3, r3) ; "
+"sig_none ; r2.nop = not.always.nop(r1, r1, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra0, nop) ; r3 = v8muld.always(a, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r2 = v8muld.always(r4, r1) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r3, r2) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcAlpha_SrcOne_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, ra1, nop) ; rx0.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, nop, rb1) ; rx0.8b = fmul.always(b, r0) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, nop, rb0) ; r3.nop = fmul.always(b, r4) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r2.8888 = v8min.always(r3, r3) ; "
+"sig_none ; r0 = not.ws.pm.always.nop(r2, r2, nop, nop) ; rx0.8d = v8min.always(r3, r3) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r0 = v8muld.always(r4, r0) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, ra0, nop) ; tlb_color_all = v8adds.always(a, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcColor_SrcZero_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+"sig_none ; r0.nop = not.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8muld.always(r4, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+
+char singleTextureClippingPlane_AlphaDisabled_DstOneMinusSrcColor_SrcOne_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, nop, rb0) ; rx0.8c = fmul.always(b, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, ra1, nop) ; rx0.8b = fmul.always(a, r0) ; "
+"sig_none ; r2 = fmax.ws.pm.always.8d(r4, r4, nop, rb1) ; rx0.8a = fmul.always(b, r1) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8d = fmul.always(a, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3.nop = not.always.nop(a, a, ra0, pay_zw) ; tlb_z = v8min.always(b, b) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r1 = v8muld.always(r4, r3) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, ra0, nop) ; tlb_color_all = v8adds.always(a, r1) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTexture_AlphaDisabled_DstSrcAlpha_SrcOneMinusSrcAlpha_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, ra1, nop) ; rx0.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, nop, rb1) ; rx0.8b = fmul.always(b, r0) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, nop, rb0) ; r3.nop = fmul.always(b, r4) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, nop, nop) ; rx0.8d = v8min.always(r3, r3) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r1.8888 = v8min.always(r3, r3) ; "
+"sig_none ; r2.nop = not.always.nop(r1, r1, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, ra0, nop) ; r3 = v8muld.always(a, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r2 = v8muld.always(r4, r1) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8adds.always(r3, r2) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTexture_AlphaDisabled_DstOneMinusSrcAlpha_SrcOne_DepthStencilEnabled_FS[]=
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, ra1, nop) ; rx0.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, nop, rb1) ; rx0.8b = fmul.always(b, r0) ; "
+"sig_none ; nop = nop.pm.never.8d(r0, r0, nop, rb0) ; r3.nop = fmul.always(b, r4) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, nop) ; r2.8888 = v8min.always(r3, r3) ; "
+"sig_none ; r0 = not.ws.pm.always.nop(r2, r2, nop, nop) ; rx0.8d = v8min.always(r3, r3) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; r0 = v8muld.always(r4, r0) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, ra0, nop) ; tlb_color_all = v8adds.always(a, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTexture_AlphaDisabled_DstOneMinusSrcColor_SrcZero_DepthStencilEnabled_FS[] =
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r3.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.pm.always.8b(r4, r4, ra0, nop) ; r3.8c = fmul.always(a, r3) ; "
+"sig_none ; r1 = fmax.pm.always.8c(r4, r4, nop, rb0) ; r3.8b = fmul.always(b, r0) ; "
+"sig_none ; r2 = fmax.pm.always.8d(r4, r4, ra1, nop) ; r3.8a = fmul.always(a, r1) ; "
+"sig_none ; nop = nop.pm.never.nop(r0, r0, nop, rb1) ; r3.8d = fmul.always(b, r2) ; "
+"sig_none ; r0.nop = not.always.nop(r3, r3, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tlb_z.nop = or.always.nop(b, b, nop, pay_zw) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, nop, nop) ; tlb_color_all = v8muld.always(r4, r0) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+};
+
+char singleTexture_AlphaDisabled_DstOneMinusSrcColor_SrcOne_DepthStencilEnabled_FS[]=
+{
+"sig_none ; nop.nop = nop.never.nop(r0, r0, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; rx0.nop = fadd.ws.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.always.nop(r1, r5, pay_zw, vary) ; r2 = fmul.always(b, a) ; "
+"sig_none ; rx1.nop = fadd.ws.always.nop(r2, r5, pay_zw, vary) ; r3 = fmul.always(b, a) ; "
+"sig_none ; rx2.nop = fadd.always.nop(r3, r5, pay_zw, vary) ; r0 = fmul.always(b, a) ; "
+"sig_none ; r0.nop = fadd.always.nop(r0, r5, pay_zw, vary) ; r1 = fmul.always(b, a) ; "
+"sig_last_thread_switch ; r2.nop = fadd.always.nop(r1, r5, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_t.nop = or.ws.always.nop(r2, r2, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; tmu0_s.nop = or.ws.always.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_load_tmu0 ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3 = fmax.pm.always.8a(r4, r4, nop, nop) ; nop.nop = nop.never(r0, r0) ; "
+"sig_none ; r0 = fmax.ws.pm.always.8b(r4, r4, nop, rb0) ; rx0.8c = fmul.always(b, r3) ; "
+"sig_none ; r1 = fmax.ws.pm.always.8c(r4, r4, ra1, nop) ; rx0.8b = fmul.always(a, r0) ; "
+"sig_none ; r2 = fmax.ws.pm.always.8d(r4, r4, nop, rb1) ; rx0.8a = fmul.always(b, r1) ; "
+"sig_none ; nop = nop.ws.pm.never.nop(r0, r0, ra2, nop) ; rx0.8d = fmul.always(a, r2) ; "
+"sig_color_load ; tlb_stencil_setup.nop = or.always.nop(a, a, uni, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; r3.nop = not.always.nop(a, a, ra0, pay_zw) ; tlb_z = v8min.always(b, b) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; r1 = v8muld.always(r4, r3) ; "
+"sig_none ; nop.nop = nop.ws.never.nop(r0, r0, ra0, nop) ; tlb_color_all = v8adds.always(a, r1) ; "
+"sig_end ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_none ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
+"sig_unlock_score ; nop.nop = nop.never.nop(r0, r0, nop, nop) ; nop = nop.never(r0, r0) ; "
 };
