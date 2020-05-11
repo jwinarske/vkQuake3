@@ -624,8 +624,8 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
 		push_constants[34] = -eye_plane.normal[0];
 		push_constants[35] =  eye_plane.dist;
 
-		push_constants[36] = (float)(vk.surface_caps.currentExtent.width) * 0.5f * 16.0f;
-		push_constants[37] = 1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
+		push_constants[36] = (float)(backEnd.viewParms.viewportWidth) * 0.5f * 16.0f;
+		push_constants[37] = 1.0f * (float)(backEnd.viewParms.viewportHeight) * 0.5f * 16.0f;
 		push_constants[38] = 1.0f;
 		push_constants[39] = 0.0f;
 
@@ -665,16 +665,20 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
 			push_constants[13] = -1.0f;
 			push_constants[14] = 0.0f;
 			push_constants[15] = 1.0f;
+
+			push_constants[16] = (float)(width) * 0.5f * 16.0f;
+			push_constants[17] = 1.0f * (float)(height) * 0.5f * 16.0f;
         }
         else
         {
             // update q3's proj matrix (opengl) to vulkan conventions:
             // z - [0, 1] instead of [-1, 1] and invert y direction
 			MatrixMultiply4x4_SSE(mvMat4x4, backEnd.viewParms.projectionMatrix, push_constants);
+
+			push_constants[16] = (float)(backEnd.viewParms.viewportWidth) * 0.5f * 16.0f;
+			push_constants[17] = 1.0f * (float)(backEnd.viewParms.viewportHeight) * 0.5f * 16.0f;
         }
 
-		push_constants[16] = (float)(vk.surface_caps.currentExtent.width) * 0.5f * 16.0f;
-		push_constants[17] = 1.0f * (float)(vk.surface_caps.currentExtent.height) * 0.5f * 16.0f;
 		push_constants[18] = 1.0f;
 		push_constants[19] = 0.0f;
 
@@ -835,7 +839,7 @@ void vk_clearColorAttachments(const float* color)
     // VK_IMAGE_ASPECT_COLOR_BIT for color attachments,
     // VK_IMAGE_ASPECT_DEPTH_BIT for depth/stencil attachments with a depth
     // component, and VK_IMAGE_ASPECT_STENCIL_BIT for depth/stencil attachments
-    // with a stencil component. If the subpass¡¯s depth/stencil attachment
+    // with a stencil component. If the subpassï¿½ï¿½s depth/stencil attachment
     // is VK_ATTACHMENT_UNUSED, then the clear has no effect.
 
     attachments[0].aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
