@@ -228,6 +228,8 @@ typedef struct {
 typedef struct pipelineDef
 {
 	VkPipeline pipeline;
+	uint32_t vertID;
+	uint32_t fragID;
 	uint32_t depthStencil;
 	uint32_t stencilTest;
 	VkStencilOpState op;

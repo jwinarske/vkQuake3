@@ -207,7 +207,7 @@ uint32_t createShaderCacheID(uint32_t shaderType, uint32_t alphaTest, uint32_t d
 {
 	//fragment shader bit masks:
 	//def->shader_type 3 bits	0x00003800
-	//alpha test: 2 bits		0x00000600
+	//alpha test: 3 bits		0x00000E00
 	//depthstencil: 1 bit		0x00000100
 	//dst blend bits: 4 bit		0x000000f0
 	//src blend bits: 4 bits	0x0000000f
@@ -215,11 +215,11 @@ uint32_t createShaderCacheID(uint32_t shaderType, uint32_t alphaTest, uint32_t d
 	return srcBlend
 			| dstBlend
 			| (depthStencil << 8)
-			| (alphaTest >> 19)
-			| (shaderType << 11);
+			| ((alphaTest >> 28) << 9)
+			| (shaderType << 12);
 }
 
-static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderModule* vertModule, VkShaderModule* fragModule)
+static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderModule* vertModule, VkShaderModule* fragModule, uint32_t* vertID, uint32_t* fragID)
 {
 	typedef struct shaderCacheItem
 	{
@@ -502,6 +502,20 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, GLS_ATEST_GE_80, 1, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaGE80_BlendDisabled_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaGE80_BlendDisabled_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = singleTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, GLS_ATEST_GE_80, 1, 0, 0);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaGE80_BlendDisabled_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaGE80_BlendDisabled_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = singleTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
 		for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
 		{
 			uint32_t spirv[6];
@@ -645,6 +659,15 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		}
 	}
 
+	if(shaderType == 1 ||
+	   shaderType == 2 ||
+	   shaderType == 4 ||
+	   shaderType == 5)
+	{
+		assert((vertShaderCacheID == 0x10000000 ||
+				vertShaderCacheID == 0x30000000));
+	}
+
 	uint32_t depthStencil = ((def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE));
 	uint32_t alphaTestBits = def->state_bits & GLS_ATEST_BITS;
 	uint32_t dstBlendBits = (def->state_bits & GLS_DSTBLEND_BITS);
@@ -671,6 +694,9 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 			break;
 		}
 	}
+
+	*vertID = vertShaderCacheID;
+	*fragID = fragShaderCacheID;
 
 	if(!*vertModule || !*fragModule)
 	{
@@ -985,8 +1011,9 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, pipelineDef* p
 	shaderStages[1].pSpecializationInfo =
         (def->state_bits & GLS_ATEST_BITS) ? &specialization_info : NULL;
 
+	uint32_t vertID, fragID;
 	//vk_specifyShaderModule(def->shader_type, def->clipping_plane, &shaderStages[0].module, &shaderStages[1].module);
-	vk_get_shader_modules(def, &shaderStages[0].module, &shaderStages[1].module);
+	vk_get_shader_modules(def, &shaderStages[0].module, &shaderStages[1].module, &vertID, &fragID);
 
 	// ============== Vertex Input Description =================
     // Applications specify vertex input attribute and vertex input binding
@@ -1375,6 +1402,8 @@ static void vk_create_pipeline(const struct Vk_Pipeline_Def* def, pipelineDef* p
 	pPipeLine->depthStencil = ((def->shadow_phase != SHADOWS_RENDERING_DISABLED) || !(def->state_bits & GLS_DEPTHTEST_DISABLE));
 	pPipeLine->op = depth_stencil_state.front;
 	pPipeLine->stencilTest = depth_stencil_state.stencilTestEnable;
+	pPipeLine->vertID = vertID;
+	pPipeLine->fragID = fragID;
 }
 
 
