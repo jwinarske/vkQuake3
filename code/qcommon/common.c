@@ -2797,12 +2797,12 @@ void Com_Init(char *commandLine )
 		// if the user didn't give any commands, run default action
 		if ( !com_dedicated->integer ) {
 #ifdef CINEMATICS_LOGO
-			Cbuf_AddText ("cinematic " CINEMATICS_LOGO "\n");
+			//Cbuf_AddText ("cinematic " CINEMATICS_LOGO "\n");
 #endif
 #ifdef CINEMATICS_INTRO
 			if( !com_introPlayed->integer ) {
-				Cvar_Set( com_introPlayed->name, "1" );
-				Cvar_Set( "nextmap", "cinematic " CINEMATICS_INTRO );
+				//Cvar_Set( com_introPlayed->name, "1" );
+				//Cvar_Set( "nextmap", "cinematic " CINEMATICS_INTRO );
 			}
 #endif
 		}
@@ -2814,7 +2814,9 @@ void Com_Init(char *commandLine )
 	CL_StartHunkUsers( qfalse );
 
 	// make sure single player is off by default
-	Cvar_Set("ui_singlePlayerActive", "0");
+	//Cvar_Set("ui_singlePlayerActive", "0");
+	Cvar_Set("ui_singlePlayerActive", "1");
+	Cmd_ExecuteString("map q3dm0");
 
 	com_fullyInitialized = qtrue;
 

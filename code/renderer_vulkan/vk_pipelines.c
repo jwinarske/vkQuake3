@@ -640,7 +640,7 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 			shaderType = 4;
 			break;
 		case ST_MULTI_TEXURE_ADD:
-			shaderType = 6;
+			shaderType = 5;
 			break;
 		}
 	}
