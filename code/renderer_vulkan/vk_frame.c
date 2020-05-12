@@ -523,7 +523,11 @@ void vk_begin_frame(void)
 
 
 	// Begin render pass.
-	VkClearValue clear_values[2];
+	VkClearValue clear_values[2] = {};
+//	clear_values[0].color.float32[0] = 1.0f;
+//	clear_values[0].color.float32[1] = 0.0f;
+//	clear_values[0].color.float32[2] = 1.0f;
+//	clear_values[0].color.float32[3] = 1.0f;
 	/// ignore clear_values[0] which corresponds to color attachment
 	clear_values[1].depthStencil.depth = 1.0;
 	clear_values[1].depthStencil.stencil = 0;
@@ -632,6 +636,9 @@ void vk_end_frame(void)
     // queue is a queue that is capable of presentation to the target 
     // surface's platform on the same device as the image's swapchain.
     VkResult result = qvkQueuePresentKHR(vk.queue, &present_info);
+
+	//exit(0);
+
     if(result == VK_SUCCESS)
     {
         return;
