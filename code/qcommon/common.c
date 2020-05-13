@@ -2820,28 +2820,26 @@ void Com_Init(char *commandLine )
 	Cmd_ExecuteString("cg_drawfps 1");
 	Cmd_ExecuteString("com_maxfps 999");
 
-	//missing shaders
-	//Cmd_ExecuteString("map q3dm2");
-	//Cmd_ExecuteString("map q3dm4");
-	//Cmd_ExecuteString("map q3dm6");
-	//Cmd_ExecuteString("map q3dm7");
-	//Cmd_ExecuteString("map q3dm8");
-	//Cmd_ExecuteString("map q3dm9");
-	//Cmd_ExecuteString("map q3dm10");
-	//Cmd_ExecuteString("map q3dm11");
-	//Cmd_ExecuteString("map q3dm12");
-	//Cmd_ExecuteString("map q3dm14");
-	//Cmd_ExecuteString("map q3dm15");
-	//Cmd_ExecuteString("map q3dm17");
-	//Cmd_ExecuteString("map q3dm18");
-
 	//working
 	Cmd_ExecuteString("map q3dm0"); //10fps
 	//Cmd_ExecuteString("map q3dm1"); //20fps
+	//Cmd_ExecuteString("map q3dm2"); //20fps
 	//Cmd_ExecuteString("map q3dm3"); //30fps
+	//Cmd_ExecuteString("map q3dm4"); //20fps
 	//Cmd_ExecuteString("map q3dm5"); //20fps
+	//Cmd_ExecuteString("map q3dm6"); //20fps
+	//Cmd_ExecuteString("map q3dm7"); //25fps
+	//Cmd_ExecuteString("map q3dm8"); //30fps
+	//Cmd_ExecuteString("map q3dm9"); //20fps
+	//Cmd_ExecuteString("map q3dm10"); //30fps
+	//Cmd_ExecuteString("map q3dm11"); //20fps
+	//Cmd_ExecuteString("map q3dm12"); //25fps
 	//Cmd_ExecuteString("map q3dm13"); //30fps
+	//Cmd_ExecuteString("map q3dm14"); //30fps
+	//Cmd_ExecuteString("map q3dm15"); //20fps
 	//Cmd_ExecuteString("map q3dm16"); //20fps
+	//Cmd_ExecuteString("map q3dm17"); //20fps
+	//Cmd_ExecuteString("map q3dm18"); //20fps
 	//Cmd_ExecuteString("map q3dm19"); //15fps
 
 
