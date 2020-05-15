@@ -586,6 +586,48 @@ static void vk_get_shader_modules(const struct Vk_Pipeline_Def* def, VkShaderMod
 		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
 		usedShaderCacheItems++;
 
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, GLS_ATEST_GE_80, 1, GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaGE80_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaGE80_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = singleTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, GLS_ATEST_GE_80, 1, GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA, GLS_SRCBLEND_SRC_ALPHA);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaGE80_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaGE80_DstOneMinusSrcAlpha_SrcSrcAlpha_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = singleTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(2, 0, 1, GLS_DSTBLEND_ONE, GLS_SRCBLEND_ONE);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = multiTextureAdd_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(multiTextureAdd_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = multiTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(multiTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(5, 0, 1, GLS_DSTBLEND_ONE, GLS_SRCBLEND_ONE);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = multiTextureAddClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(multiTextureAddClippingPlane_AlphaDisabled_DstOne_SrcOne_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = multiTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(multiTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(0, 0, 1, GLS_DSTBLEND_SRC_COLOR, GLS_SRCBLEND_ZERO);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTexture_AlphaDisabled_DstSrcColor_SrcZero_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTexture_AlphaDisabled_DstSrcColor_SrcZero_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = singleTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
+		shaderCache[usedShaderCacheItems].uniqueID = createShaderCacheID(3, 0, 1, GLS_DSTBLEND_SRC_COLOR, GLS_SRCBLEND_ZERO);
+		shaderCache[usedShaderCacheItems].fragShaderAsmPtr = singleTextureClippingPlane_AlphaDisabled_DstSrcColor_SrcZero_DepthStencilEnabled_FS;
+		shaderCache[usedShaderCacheItems].fragShaderAsmSize = sizeof(singleTextureClippingPlane_AlphaDisabled_DstSrcColor_SrcZero_DepthStencilEnabled_FS) / sizeof(uint64_t);
+		shaderCache[usedShaderCacheItems].fragMapping = singleTexture_DepthStencilEnabled_FS_mapping;
+		shaderCache[usedShaderCacheItems].fragMappingSize = sizeof(singleTexture_DepthStencilEnabled_FS_mapping)/sizeof(VkRpiAssemblyMappingEXT);
+		usedShaderCacheItems++;
+
 		for(uint32_t c = 0; c < usedShaderCacheItems; ++c)
 		{
 			uint32_t spirv[6];
