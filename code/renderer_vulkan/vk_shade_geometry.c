@@ -592,24 +592,24 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
         // NOTE: backEnd.or.modelMatrix incorporates s_flipMatrix,
         // so it should be taken into account when computing clipping plane too.
 
-		push_constants[16] = backEnd.or.modelMatrix[0];
-		push_constants[17] = backEnd.or.modelMatrix[4];
-		push_constants[18] = backEnd.or.modelMatrix[8];
-		push_constants[19] = backEnd.or.modelMatrix[12];
+		push_constants[16] = backEnd.or.modelMatrix[0];//
+		push_constants[17] = backEnd.or.modelMatrix[1];//
+		push_constants[18] = backEnd.or.modelMatrix[2];//
+		push_constants[19] = 0.0f;//
 
-		push_constants[20] = backEnd.or.modelMatrix[1];
-		push_constants[21] = backEnd.or.modelMatrix[5];
-		push_constants[22] = backEnd.or.modelMatrix[9];
-		push_constants[23] = backEnd.or.modelMatrix[13];
+		push_constants[20] = backEnd.or.modelMatrix[4];//
+		push_constants[21] = backEnd.or.modelMatrix[5];//
+		push_constants[22] = backEnd.or.modelMatrix[6];//
+		push_constants[23] = 0.0f; //
 
-		push_constants[24] = backEnd.or.modelMatrix[2];
-		push_constants[25] = backEnd.or.modelMatrix[6];
-		push_constants[26] = backEnd.or.modelMatrix[10];
-		push_constants[27] = backEnd.or.modelMatrix[14];
+		push_constants[24] = backEnd.or.modelMatrix[8];///
+		push_constants[25] = backEnd.or.modelMatrix[9];//
+		push_constants[26] = backEnd.or.modelMatrix[10];//
+		push_constants[27] = 0.0f;
 
-		push_constants[28] = 0.0f;
-		push_constants[29] = 0.0f;
-		push_constants[30] = 0.0f;
+		push_constants[28] = backEnd.or.modelMatrix[12];
+		push_constants[29] = backEnd.or.modelMatrix[13];
+		push_constants[30] = backEnd.or.modelMatrix[14];
 		push_constants[31] = 1.0f;
 	
         // Clipping plane in eye coordinates.
