@@ -2821,8 +2821,8 @@ void Com_Init(char *commandLine )
 	Cmd_ExecuteString("com_maxfps 999");
 
 	//working
-	Cmd_ExecuteString("map q3dm0"); //10fps
-	//Cmd_ExecuteString("map q3dm1"); //20fps
+	//Cmd_ExecuteString("map q3dm0"); //10fps
+	Cmd_ExecuteString("map q3dm1"); //20fps
 	//Cmd_ExecuteString("map q3dm2"); //20fps
 	//Cmd_ExecuteString("map q3dm3"); //30fps
 	//Cmd_ExecuteString("map q3dm4"); //20fps

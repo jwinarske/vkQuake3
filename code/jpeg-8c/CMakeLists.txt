@@ -4,4 +4,4 @@ file(GLOB jpegSrc
 )
 
 add_library(jpeg-8c SHARED ${jpegSrc})
-target_compile_options(jpeg-8c PRIVATE -Wall -Werror=implicit-function-declaration -std=c11)
+target_compile_options(jpeg-8c PRIVATE -Wall -Werror=implicit-function-declaration -std=c11 -march=${ARCH_STRING} -fPIC)

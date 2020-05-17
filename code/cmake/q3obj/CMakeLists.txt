@@ -117,7 +117,7 @@ file(GLOB q3obj
 )
 
 add_executable(ioquake3 ${q3obj})
-target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declaration -std=c11)
+target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declaration -std=c11 -march=${ARCH_STRING})
 
 target_include_directories(ioquake3 PUBLIC ../../SDL2)
 
