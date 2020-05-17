@@ -64,6 +64,8 @@ file(GLOB q3obj
 	"../../qcommon/puff.c"
 	"../../qcommon/vm.c"
 	"../../qcommon/vm_interpreted.c"
+	"../../qcommon/vm_armv7l.c"
+	"../../client/vm_armv7l.c"
 
 	"../../botlib/be_aas_bspq3.c"
 	"../../botlib/be_aas_cluster.c"
@@ -107,9 +109,6 @@ file(GLOB q3obj
 	#OGG?
 	#VORBIS?
 	#ZLIB?
-
-	#ARMv7l
-	#"../../client/vm_armv7l.c"
 
 	"../../sys/sys_unix.c"
 

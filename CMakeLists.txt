@@ -29,7 +29,7 @@ add_definitions(-DMISSIONPACK="missionpack")
 add_definitions(-DMOUNT_DIR="code")
 add_definitions(-DBUILD_DIR="build")
 add_definitions(-DBOTLIB)
-add_definitions(-DNO_VM_COMPILED)
+#add_definitions(-DNO_VM_COMPILED)
 add_definitions(-DUSE_RENDERER_DLOPEN)
 
 set (SOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
