@@ -134,7 +134,7 @@ const char * cvtResToStr(VkResult result);
 #endif
 
 
-#define MAX_SWAPCHAIN_IMAGES    8
+#define MAX_SWAPCHAIN_IMAGES    2
 
 // Vk_Instance contains engine-specific vulkan resources that persist entire renderer lifetime.
 // This structure is initialized/deinitialized by vk_initialize/vk_shutdown functions correspondingly.
@@ -180,7 +180,7 @@ struct Vk_Instance {
 
 
 	VkCommandPool command_pool;
-	VkCommandBuffer command_buffer;
+	VkCommandBuffer command_buffer[MAX_SWAPCHAIN_IMAGES];
 
 	VkImage depth_image;
 	VkDeviceMemory depth_image_memory;

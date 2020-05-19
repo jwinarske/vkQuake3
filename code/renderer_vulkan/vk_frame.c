@@ -52,9 +52,9 @@
 //
 //
 
-VkSemaphore sema_imageAvailable;
-VkSemaphore sema_renderFinished;
-VkFence fence_renderFinished;
+VkSemaphore sema_imageAvailable[MAX_SWAPCHAIN_IMAGES];
+VkSemaphore sema_renderFinished[MAX_SWAPCHAIN_IMAGES];
+VkFence fence_renderFinished[MAX_SWAPCHAIN_IMAGES];
 
 /*
    Use of a presentable image must occur only after the image is
@@ -95,8 +95,11 @@ void vk_create_sync_primitives(void)
     // &desc is a pointer to an instance of the VkSemaphoreCreateInfo structure
     // which contains information about how the semaphore is to be created.
     // When created, the semaphore is in the unsignaled state.
-    VK_CHECK(qvkCreateSemaphore(vk.device, &desc, NULL, &sema_imageAvailable));
-    VK_CHECK(qvkCreateSemaphore(vk.device, &desc, NULL, &sema_renderFinished));
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		VK_CHECK(qvkCreateSemaphore(vk.device, &desc, NULL, &sema_imageAvailable[c]));
+		VK_CHECK(qvkCreateSemaphore(vk.device, &desc, NULL, &sema_renderFinished[c]));
+	}
 
 
     VkFenceCreateInfo fence_desc;
@@ -116,7 +119,10 @@ void vk_create_sync_primitives(void)
     // "fence_renderFinished" is a handle in which the resulting
     // fence object is returned.
 
-    VK_CHECK(qvkCreateFence(vk.device, &fence_desc, NULL, &fence_renderFinished));
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		VK_CHECK(qvkCreateFence(vk.device, &fence_desc, NULL, &fence_renderFinished[c]));
+	}
 }
 
 
@@ -124,11 +130,17 @@ void vk_destroy_sync_primitives(void)
 {
     ri.Printf(PRINT_ALL, " Destroy sema_imageAvailable sema_renderFinished fence_renderFinished\n");
 
-    qvkDestroySemaphore(vk.device, sema_imageAvailable, NULL);
-	qvkDestroySemaphore(vk.device, sema_renderFinished, NULL);
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		qvkDestroySemaphore(vk.device, sema_imageAvailable[c], NULL);
+		qvkDestroySemaphore(vk.device, sema_renderFinished[c], NULL);
+	}
 
     // To destroy a fence, 
-	qvkDestroyFence(vk.device, fence_renderFinished, NULL);
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		qvkDestroyFence(vk.device, fence_renderFinished[c], NULL);
+	}
 }
 
 
@@ -421,6 +433,7 @@ void vk_destroyFrameBuffers(void)
     qvkDestroyRenderPass(vk.device, vk.render_pass, NULL);
 }
 
+static uint32_t idxPrev = 0;
 
 void vk_begin_frame(void)
 {
@@ -438,8 +451,9 @@ void vk_begin_frame(void)
     
     // An application must wait until either the semaphore or fence is signaled
     // before accessing the image's data.
+	idxPrev = vk.idx_swapchain_image;
 	VK_CHECK(qvkAcquireNextImageKHR(vk.device, vk.swapchain, UINT64_MAX,
-        sema_imageAvailable, VK_NULL_HANDLE, &vk.idx_swapchain_image));
+		sema_imageAvailable[idxPrev], VK_NULL_HANDLE, &vk.idx_swapchain_image));
 
 
     //  User could call method vkWaitForFences to wait for completion. A fence is a 
@@ -454,12 +468,12 @@ void vk_begin_frame(void)
     //  the time vkWaitForFences is called, then vkWaitForFences will block and 
     //  wait up to timeout nanoseconds for the condition to become satisfied.
 
-	VK_CHECK(qvkWaitForFences(vk.device, 1, &fence_renderFinished, VK_FALSE, 1e9));
+	VK_CHECK(qvkWaitForFences(vk.device, 1, &fence_renderFinished[vk.idx_swapchain_image], VK_FALSE, 1e9));
  
     //  To set the state of fences to unsignaled from the host
     //  "1" is the number of fences to reset. 
     //  "fence_renderFinished" is the fence handle to reset.
-	VK_CHECK(qvkResetFences(vk.device, 1, &fence_renderFinished));
+	VK_CHECK(qvkResetFences(vk.device, 1, &fence_renderFinished[vk.idx_swapchain_image]));
 
     //  commandBuffer must not be in the recording or pending state.
     
@@ -477,7 +491,7 @@ void vk_begin_frame(void)
 	begin_info.pInheritanceInfo = NULL;
 
     // To begin recording a command buffer
-	VK_CHECK(qvkBeginCommandBuffer(vk.command_buffer, &begin_info));
+	VK_CHECK(qvkBeginCommandBuffer(vk.command_buffer[vk.idx_swapchain_image], &begin_info));
 
 	// Ensure visibility of geometry buffers writes.
 
@@ -512,12 +526,12 @@ void vk_begin_frame(void)
 	barrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 	
     // To record a pipeline barrier
-    qvkCmdPipelineBarrier(vk.command_buffer, VK_PIPELINE_STAGE_HOST_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, 0, NULL, 1, &barrier, 0, NULL);
+	qvkCmdPipelineBarrier(vk.command_buffer[vk.idx_swapchain_image], VK_PIPELINE_STAGE_HOST_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, 0, NULL, 1, &barrier, 0, NULL);
 
     // VK_ACCESS_INDEX_READ_BIT specifies read access to an index buffer 
     // as part of an indexed drawing command, bound by vkCmdBindIndexBuffer.
     barrier.dstAccessMask = VK_ACCESS_INDEX_READ_BIT;
-    qvkCmdPipelineBarrier(vk.command_buffer, VK_PIPELINE_STAGE_HOST_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, 0, NULL, 1, &barrier, 0, NULL);
+	qvkCmdPipelineBarrier(vk.command_buffer[vk.idx_swapchain_image], VK_PIPELINE_STAGE_HOST_BIT, VK_PIPELINE_STAGE_VERTEX_INPUT_BIT, 0, 0, NULL, 1, &barrier, 0, NULL);
 
 }
 
@@ -543,16 +557,16 @@ void vk_begin_frame(void)
     renderPass_beginInfo.clearValueCount = 2;
 	renderPass_beginInfo.pClearValues = clear_values;
 
-	qvkCmdBeginRenderPass(vk.command_buffer, &renderPass_beginInfo, VK_SUBPASS_CONTENTS_INLINE);
+	qvkCmdBeginRenderPass(vk.command_buffer[vk.idx_swapchain_image], &renderPass_beginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
 }
 
 
 void vk_end_frame(void)
 {
-	qvkCmdEndRenderPass(vk.command_buffer);
+	qvkCmdEndRenderPass(vk.command_buffer[vk.idx_swapchain_image]);
 	
-    VK_CHECK(qvkEndCommandBuffer(vk.command_buffer));
+	VK_CHECK(qvkEndCommandBuffer(vk.command_buffer[vk.idx_swapchain_image]));
 
 
 	VkPipelineStageFlags wait_dst_stage_mask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
@@ -562,14 +576,14 @@ void vk_end_frame(void)
 	submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submit_info.pNext = NULL;
 	submit_info.waitSemaphoreCount = 1;
-	submit_info.pWaitSemaphores = &sema_imageAvailable;
+	submit_info.pWaitSemaphores = &sema_imageAvailable[idxPrev];
 	submit_info.pWaitDstStageMask = &wait_dst_stage_mask;
 	submit_info.commandBufferCount = 1;
-	submit_info.pCommandBuffers = &vk.command_buffer;
+	submit_info.pCommandBuffers = &vk.command_buffer[vk.idx_swapchain_image];
 	submit_info.signalSemaphoreCount = 1;
     // specify which semaphones to signal once the command buffers
     // have finished execution
-	submit_info.pSignalSemaphores = &sema_renderFinished;
+	submit_info.pSignalSemaphores = &sema_renderFinished[vk.idx_swapchain_image];
 
 
     //  queue is the queue that the command buffers will be submitted to.
@@ -610,13 +624,13 @@ void vk_end_frame(void)
        
     //  To submit command buffers to a queue 
     
-    VK_CHECK(qvkQueueSubmit(vk.queue, 1, &submit_info, fence_renderFinished));
+	VK_CHECK(qvkQueueSubmit(vk.queue, 1, &submit_info, fence_renderFinished[vk.idx_swapchain_image]));
 
     VkPresentInfoKHR present_info;
 	present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 	present_info.pNext = NULL;
 	present_info.waitSemaphoreCount = 1;
-	present_info.pWaitSemaphores = &sema_renderFinished;
+	present_info.pWaitSemaphores = &sema_renderFinished[vk.idx_swapchain_image];
 
     // specify the swap chains to present images to
 	present_info.swapchainCount = 1;

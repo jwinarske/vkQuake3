@@ -30,18 +30,18 @@ struct ShadingData_t
     // by binding them to a graphics or compute pipeline via descriptor sets or 
     // via certain commands,  or by directly specifying them as parameters to 
     // certain commands. Buffers are represented by VkBuffer handles:
-	VkBuffer vertex_buffer;
-	unsigned char* vertex_buffer_ptr ; // pointer to mapped vertex buffer
-	uint32_t xyz_elements;
-	uint32_t color_st_elements;
+	VkBuffer vertex_buffer[MAX_SWAPCHAIN_IMAGES];
+	unsigned char* vertex_buffer_ptr[MAX_SWAPCHAIN_IMAGES]; // pointer to mapped vertex buffer
+	uint32_t xyz_elements[MAX_SWAPCHAIN_IMAGES];
+	uint32_t color_st_elements[MAX_SWAPCHAIN_IMAGES];
 
-	VkBuffer index_buffer;
-	unsigned char* index_buffer_ptr; // pointer to mapped index buffer
-	uint32_t index_buffer_offset;
+	VkBuffer index_buffer[MAX_SWAPCHAIN_IMAGES];
+	unsigned char* index_buffer_ptr[MAX_SWAPCHAIN_IMAGES]; // pointer to mapped index buffer
+	uint32_t index_buffer_offset[MAX_SWAPCHAIN_IMAGES];
 
 	// host visible memory that holds both vertex and index data
-	VkDeviceMemory vertex_buffer_memory;
-	VkDeviceMemory index_buffer_memory;
+	VkDeviceMemory vertex_buffer_memory[MAX_SWAPCHAIN_IMAGES];
+	VkDeviceMemory index_buffer_memory[MAX_SWAPCHAIN_IMAGES];
     VkDescriptorSet curDescriptorSets[2];
 
     // This flag is used to decide whether framebuffer's depth attachment should be cleared
@@ -56,7 +56,7 @@ struct ShadingData_t shadingDat;
 
 VkBuffer vk_getIndexBuffer(void)
 {
-    return shadingDat.index_buffer;
+	return shadingDat.index_buffer[vk.idx_swapchain_image];
 }
 
 
@@ -210,39 +210,44 @@ void vk_createVertexBuffer(void)
     desc.size = XYZ_SIZE + COLOR_SIZE + ST0_SIZE + ST1_SIZE;
     desc.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
     
-    VK_CHECK(qvkCreateBuffer(vk.device, &desc, NULL, &shadingDat.vertex_buffer));
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		shadingDat.xyz_elements[c] = 0;
+		shadingDat.color_st_elements[c] = 0;
+
+		VK_CHECK(qvkCreateBuffer(vk.device, &desc, NULL, &shadingDat.vertex_buffer[c]));
 
 
-    VkMemoryRequirements vb_memory_requirements;
-    qvkGetBufferMemoryRequirements(vk.device, shadingDat.vertex_buffer, &vb_memory_requirements);
-    
-    uint32_t memory_type_bits = vb_memory_requirements.memoryTypeBits;
+		VkMemoryRequirements vb_memory_requirements;
+		qvkGetBufferMemoryRequirements(vk.device, shadingDat.vertex_buffer[c], &vb_memory_requirements);
 
-    VkMemoryAllocateInfo alloc_info;
-    alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    alloc_info.pNext = NULL;
-    alloc_info.allocationSize = vb_memory_requirements.size;
-    // VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT bit specifies that memory allocated with
-    // this type can be mapped for host access using vkMapMemory.
-    //
-    // VK_MEMORY_PROPERTY_HOST_COHERENT_BIT bit specifies that the host cache
-    // management commands vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges
-    // are not needed to flush host writes to the device or make device writes visible
-    // to the host, respectively.
-    alloc_info.memoryTypeIndex = find_memory_type(memory_type_bits, 
-            VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		uint32_t memory_type_bits = vb_memory_requirements.memoryTypeBits;
 
-    ri.Printf(PRINT_ALL, " Allocate device memory for Vertex Buffer: %ld bytes. \n",
-            alloc_info.allocationSize);
+		VkMemoryAllocateInfo alloc_info;
+		alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		alloc_info.pNext = NULL;
+		alloc_info.allocationSize = vb_memory_requirements.size;
+		// VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT bit specifies that memory allocated with
+		// this type can be mapped for host access using vkMapMemory.
+		//
+		// VK_MEMORY_PROPERTY_HOST_COHERENT_BIT bit specifies that the host cache
+		// management commands vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges
+		// are not needed to flush host writes to the device or make device writes visible
+		// to the host, respectively.
+		alloc_info.memoryTypeIndex = find_memory_type(memory_type_bits,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 
-    VK_CHECK(qvkAllocateMemory(vk.device, &alloc_info, NULL, &shadingDat.vertex_buffer_memory));
+		ri.Printf(PRINT_ALL, " Allocate device memory for Vertex Buffer: %ld bytes. \n",
+				alloc_info.allocationSize);
 
-    qvkBindBufferMemory(vk.device, shadingDat.vertex_buffer, shadingDat.vertex_buffer_memory, 0);
+		VK_CHECK(qvkAllocateMemory(vk.device, &alloc_info, NULL, &shadingDat.vertex_buffer_memory[c]));
 
-    void* data;
-    VK_CHECK(qvkMapMemory(vk.device, shadingDat.vertex_buffer_memory, 0, VK_WHOLE_SIZE, 0, &data));
-    shadingDat.vertex_buffer_ptr = (unsigned char*)data;
+		qvkBindBufferMemory(vk.device, shadingDat.vertex_buffer[c], shadingDat.vertex_buffer_memory[c], 0);
 
+		void* data;
+		VK_CHECK(qvkMapMemory(vk.device, shadingDat.vertex_buffer_memory[c], 0, VK_WHOLE_SIZE, 0, &data));
+		shadingDat.vertex_buffer_ptr[c] = (unsigned char*)data;
+	}
 }
 
 
@@ -261,38 +266,43 @@ void vk_createIndexBuffer(void)
     desc.size = INDEX_BUFFER_SIZE;
     desc.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
 
-    VK_CHECK(qvkCreateBuffer(vk.device, &desc, NULL, &shadingDat.index_buffer));
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		shadingDat.index_buffer_offset[c] = 0;
 
-    
-    VkMemoryRequirements ib_memory_requirements;
-    qvkGetBufferMemoryRequirements(vk.device, shadingDat.index_buffer, &ib_memory_requirements);
-
-    uint32_t memory_type_bits = ib_memory_requirements.memoryTypeBits;
+		VK_CHECK(qvkCreateBuffer(vk.device, &desc, NULL, &shadingDat.index_buffer[c]));
 
 
-    VkMemoryAllocateInfo alloc_info;
-    alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    alloc_info.pNext = NULL;
-    alloc_info.allocationSize = ib_memory_requirements.size;
-    // VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT bit specifies that memory allocated with
-    // this type can be mapped for host access using vkMapMemory.
-    //
-    // VK_MEMORY_PROPERTY_HOST_COHERENT_BIT bit specifies that the host cache
-    // management commands vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges
-    // are not needed to flush host writes to the device or make device writes visible
-    // to the host, respectively.
-    alloc_info.memoryTypeIndex = find_memory_type(memory_type_bits, 
-            VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		VkMemoryRequirements ib_memory_requirements;
+		qvkGetBufferMemoryRequirements(vk.device, shadingDat.index_buffer[c], &ib_memory_requirements);
 
-    ri.Printf(PRINT_ALL, " Allocate device memory for Index Buffer: %ld bytes. \n",
-            alloc_info.allocationSize);
+		uint32_t memory_type_bits = ib_memory_requirements.memoryTypeBits;
 
-    VK_CHECK(qvkAllocateMemory(vk.device, &alloc_info, NULL, &shadingDat.index_buffer_memory));
-    qvkBindBufferMemory(vk.device, shadingDat.index_buffer, shadingDat.index_buffer_memory, 0);
 
-    void* data;
-    VK_CHECK(qvkMapMemory(vk.device, shadingDat.index_buffer_memory, 0, VK_WHOLE_SIZE, 0, &data));
-    shadingDat.index_buffer_ptr = (unsigned char*)data;
+		VkMemoryAllocateInfo alloc_info;
+		alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		alloc_info.pNext = NULL;
+		alloc_info.allocationSize = ib_memory_requirements.size;
+		// VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT bit specifies that memory allocated with
+		// this type can be mapped for host access using vkMapMemory.
+		//
+		// VK_MEMORY_PROPERTY_HOST_COHERENT_BIT bit specifies that the host cache
+		// management commands vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges
+		// are not needed to flush host writes to the device or make device writes visible
+		// to the host, respectively.
+		alloc_info.memoryTypeIndex = find_memory_type(memory_type_bits,
+				VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+
+		ri.Printf(PRINT_ALL, " Allocate device memory for Index Buffer: %ld bytes. \n",
+				alloc_info.allocationSize);
+
+		VK_CHECK(qvkAllocateMemory(vk.device, &alloc_info, NULL, &shadingDat.index_buffer_memory[c]));
+		qvkBindBufferMemory(vk.device, shadingDat.index_buffer[c], shadingDat.index_buffer_memory[c], 0);
+
+		void* data;
+		VK_CHECK(qvkMapMemory(vk.device, shadingDat.index_buffer_memory[c], 0, VK_WHOLE_SIZE, 0, &data));
+		shadingDat.index_buffer_ptr[c] = (unsigned char*)data;
+	}
 }
 
 
@@ -502,34 +512,34 @@ void encodeStencilValue(uint32_t *values, uint32_t* numValues, VkStencilOpState 
 void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Depth_Range depRg, VkBool32 indexed)
 {
 	// configure vertex data stream
-	VkBuffer bufs[3] = { shadingDat.vertex_buffer, shadingDat.vertex_buffer, shadingDat.vertex_buffer };
+	VkBuffer bufs[3] = { shadingDat.vertex_buffer[vk.idx_swapchain_image], shadingDat.vertex_buffer[vk.idx_swapchain_image], shadingDat.vertex_buffer[vk.idx_swapchain_image] };
 	VkDeviceSize offs[3] = {
-		COLOR_OFFSET + shadingDat.color_st_elements * sizeof(color4ub_t),
-		ST0_OFFSET   + shadingDat.color_st_elements * sizeof(vec2_t),
-		ST1_OFFSET   + shadingDat.color_st_elements * sizeof(vec2_t)
+		COLOR_OFFSET + shadingDat.color_st_elements[vk.idx_swapchain_image] * sizeof(color4ub_t),
+		ST0_OFFSET   + shadingDat.color_st_elements[vk.idx_swapchain_image] * sizeof(vec2_t),
+		ST1_OFFSET   + shadingDat.color_st_elements[vk.idx_swapchain_image] * sizeof(vec2_t)
 	};
 
     // color
-    if ((shadingDat.color_st_elements + tess.numVertexes) * sizeof(color4ub_t) > COLOR_SIZE)
+	if ((shadingDat.color_st_elements[vk.idx_swapchain_image] + tess.numVertexes) * sizeof(color4ub_t) > COLOR_SIZE)
         ri.Error(ERR_DROP, "vulkan: vertex buffer overflow (color) %ld \n", 
-                (shadingDat.color_st_elements + tess.numVertexes) * sizeof(color4ub_t));
+				(shadingDat.color_st_elements[vk.idx_swapchain_image] + tess.numVertexes) * sizeof(color4ub_t));
 
-    unsigned char* dst_color = shadingDat.vertex_buffer_ptr + offs[0];
+	unsigned char* dst_color = shadingDat.vertex_buffer_ptr[vk.idx_swapchain_image] + offs[0];
     memcpy(dst_color, tess.svars.colors, tess.numVertexes * sizeof(color4ub_t));
     // st0
 
-    unsigned char* dst_st0 = shadingDat.vertex_buffer_ptr + offs[1];
+	unsigned char* dst_st0 = shadingDat.vertex_buffer_ptr[vk.idx_swapchain_image] + offs[1];
     memcpy(dst_st0, tess.svars.texcoords[0], tess.numVertexes * sizeof(vec2_t));
 
 	// st1
 	if (multitexture)
     {
-		unsigned char* dst = shadingDat.vertex_buffer_ptr + offs[2];
+		unsigned char* dst = shadingDat.vertex_buffer_ptr[vk.idx_swapchain_image] + offs[2];
 		memcpy(dst, tess.svars.texcoords[1], tess.numVertexes * sizeof(vec2_t));
 	}
 
-	qvkCmdBindVertexBuffers(vk.command_buffer, 1, multitexture ? 3 : 2, bufs, offs);
-	shadingDat.color_st_elements += tess.numVertexes;
+	qvkCmdBindVertexBuffers(vk.command_buffer[vk.idx_swapchain_image], 1, multitexture ? 3 : 2, bufs, offs);
+	shadingDat.color_st_elements[vk.idx_swapchain_image] += tess.numVertexes;
 
 	// bind descriptor sets
 
@@ -538,11 +548,11 @@ void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Dept
 //    (either compute or graphics, according to the pipelineBindPoint).
 //    Any bindings that were previously applied via these sets are no longer valid.
 
-	qvkCmdBindDescriptorSets(vk.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, 
+	qvkCmdBindDescriptorSets(vk.command_buffer[vk.idx_swapchain_image], VK_PIPELINE_BIND_POINT_GRAPHICS,
         vk.pipeline_layout, 0, (multitexture ? 2 : 1), shadingDat.curDescriptorSets, 0, NULL);
 
     // bind pipeline
-	qvkCmdBindPipeline(vk.command_buffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.pipeline);
+	qvkCmdBindPipeline(vk.command_buffer[vk.idx_swapchain_image], VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline.pipeline);
 
 	// configure pipeline's dynamic state
 
@@ -551,12 +561,12 @@ void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Dept
 
     vk_setViewportScissor(backEnd.projection2D, depRg, &viewport, &scissor);
 
-    qvkCmdSetScissor(vk.command_buffer, 0, 1, &scissor);
-    qvkCmdSetViewport(vk.command_buffer, 0, 1, &viewport);
+	qvkCmdSetScissor(vk.command_buffer[vk.idx_swapchain_image], 0, 1, &scissor);
+	qvkCmdSetViewport(vk.command_buffer[vk.idx_swapchain_image], 0, 1, &viewport);
 
 
 	if (tess.shader->polygonOffset) {
-		qvkCmdSetDepthBias(vk.command_buffer, r_offsetUnits->value, 0.0f, r_offsetFactor->value);
+		qvkCmdSetDepthBias(vk.command_buffer[vk.idx_swapchain_image], r_offsetUnits->value, 0.0f, r_offsetFactor->value);
 	}
 
 	if(pipeline.depthStencil)
@@ -565,14 +575,14 @@ void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Dept
 		uint32_t values = 0;
 		encodeStencilValue(stencilState, &values, pipeline.op, pipeline.op, pipeline.stencilTest);
 		//ri.Printf(PRINT_ALL, "Stencil states %u, %u\n", stencilState[0], stencilState[1]);
-		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_FRAGMENT_BIT, 0, 4, stencilState);
+		qvkCmdPushConstants(vk.command_buffer[vk.idx_swapchain_image], vk.pipeline_layout, VK_SHADER_STAGE_FRAGMENT_BIT, 0, 4, stencilState);
 	}
 
 	// issue draw call
 	if (indexed)
-		qvkCmdDrawIndexed(vk.command_buffer, tess.numIndexes, 1, 0, 0, 0);
+		qvkCmdDrawIndexed(vk.command_buffer[vk.idx_swapchain_image], tess.numIndexes, 1, 0, 0, 0);
 	else
-		qvkCmdDraw(vk.command_buffer, tess.numVertexes, 1, 0, 0);
+		qvkCmdDraw(vk.command_buffer[vk.idx_swapchain_image], tess.numVertexes, 1, 0, 0);
 	
     shadingDat.s_depth_attachment_dirty = VK_TRUE;
 }
@@ -633,7 +643,7 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
         // which are updated via Vulkan commands rather than via writes to memory or copy commands.
         // Push constants represent a high speed path to modify constant data in pipelines
         // that is expected to outperform memory-backed resource updates.
-		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 40 * 4, push_constants);
+		qvkCmdPushConstants(vk.command_buffer[vk.idx_swapchain_image], vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 40 * 4, push_constants);
 	}
     else
     {
@@ -686,7 +696,7 @@ void updateMVP(VkBool32 isPortal, VkBool32 is2D, const float mvMat4x4[16])
         // which are updated via Vulkan commands rather than via writes to memory or copy commands.
         // Push constants represent a high speed path to modify constant data in pipelines
         // that is expected to outperform memory-backed resource updates.
-		qvkCmdPushConstants(vk.command_buffer, vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 20 * 4, push_constants);
+		qvkCmdPushConstants(vk.command_buffer[vk.idx_swapchain_image], vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, 0, 20 * 4, push_constants);
     }
 }
 
@@ -725,18 +735,18 @@ void vk_UploadXYZI(float (*pXYZ)[4], uint32_t nVertex, uint32_t* pIdx, uint32_t 
 {
 	// xyz stream
 	{
-        const VkDeviceSize xyz_offset = XYZ_OFFSET + shadingDat.xyz_elements * sizeof(vec4_t);
+		const VkDeviceSize xyz_offset = XYZ_OFFSET + shadingDat.xyz_elements[vk.idx_swapchain_image] * sizeof(vec4_t);
 		
-        unsigned char* vDst = shadingDat.vertex_buffer_ptr + xyz_offset;
+		unsigned char* vDst = shadingDat.vertex_buffer_ptr[vk.idx_swapchain_image] + xyz_offset;
 
         // 4 float in the array, with each 4 bytes.
 		memcpy(vDst, pXYZ, nVertex * 16);
 
-		qvkCmdBindVertexBuffers(vk.command_buffer, 0, 1, &shadingDat.vertex_buffer, &xyz_offset);
+		qvkCmdBindVertexBuffers(vk.command_buffer[vk.idx_swapchain_image], 0, 1, &shadingDat.vertex_buffer[vk.idx_swapchain_image], &xyz_offset);
 		
-        shadingDat.xyz_elements += tess.numVertexes;
+		shadingDat.xyz_elements[vk.idx_swapchain_image] += tess.numVertexes;
 
-        assert (shadingDat.xyz_elements * sizeof(vec4_t) < XYZ_SIZE);
+		assert (shadingDat.xyz_elements[vk.idx_swapchain_image] * sizeof(vec4_t) < XYZ_SIZE);
 	}
 
 	// indexes stream
@@ -744,7 +754,7 @@ void vk_UploadXYZI(float (*pXYZ)[4], uint32_t nVertex, uint32_t* pIdx, uint32_t 
 	{
 		const uint32_t indexes_size = nIndex * sizeof(uint32_t);        
 
-		unsigned char* iDst = shadingDat.index_buffer_ptr + shadingDat.index_buffer_offset;
+		unsigned char* iDst = shadingDat.index_buffer_ptr[vk.idx_swapchain_image] + shadingDat.index_buffer_offset[vk.idx_swapchain_image];
 
 		//memcpy(iDst, pIdx, indexes_size);
 		uint16_t* iDst16 = iDst;
@@ -755,11 +765,11 @@ void vk_UploadXYZI(float (*pXYZ)[4], uint32_t nVertex, uint32_t* pIdx, uint32_t 
 			iDst16[c] = idx;
 		}
 
-		qvkCmdBindIndexBuffer(vk.command_buffer, shadingDat.index_buffer, shadingDat.index_buffer_offset, VK_INDEX_TYPE_UINT16);
+		qvkCmdBindIndexBuffer(vk.command_buffer[vk.idx_swapchain_image], shadingDat.index_buffer[vk.idx_swapchain_image], shadingDat.index_buffer_offset[vk.idx_swapchain_image], VK_INDEX_TYPE_UINT16);
 		
-        shadingDat.index_buffer_offset += indexes_size;
+		shadingDat.index_buffer_offset[vk.idx_swapchain_image] += indexes_size;
 
-        assert (shadingDat.index_buffer_offset < INDEX_BUFFER_SIZE);
+		assert (shadingDat.index_buffer_offset[vk.idx_swapchain_image] < INDEX_BUFFER_SIZE);
 	}
 }
 
@@ -767,9 +777,9 @@ void vk_UploadXYZI(float (*pXYZ)[4], uint32_t nVertex, uint32_t* pIdx, uint32_t 
 void vk_resetGeometryBuffer(void)
 {
 	// Reset geometry buffer's current offsets.
-	shadingDat.xyz_elements = 0;
-	shadingDat.color_st_elements = 0;
-	shadingDat.index_buffer_offset = 0;
+	shadingDat.xyz_elements[vk.idx_swapchain_image] = 0;
+	shadingDat.color_st_elements[vk.idx_swapchain_image] = 0;
+	shadingDat.index_buffer_offset[vk.idx_swapchain_image] = 0;
     shadingDat.s_depth_attachment_dirty = VK_FALSE;
 
     Mat4Identity(s_modelview_matrix);
@@ -781,15 +791,17 @@ void vk_destroy_shading_data(void)
     ri.Printf(PRINT_ALL, " Destroy vertex/index buffer: shadingDat.vertex_buffer shadingDat.index_buffer. \n");
     ri.Printf(PRINT_ALL, " Free device memory: vertex_buffer_memory index_buffer_memory. \n");
 
-    qvkUnmapMemory(vk.device, shadingDat.vertex_buffer_memory);
-	qvkFreeMemory(vk.device, shadingDat.vertex_buffer_memory, NULL);
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+	{
+		qvkUnmapMemory(vk.device, shadingDat.vertex_buffer_memory[c]);
+		qvkFreeMemory(vk.device, shadingDat.vertex_buffer_memory[c], NULL);
 
-    qvkUnmapMemory(vk.device, shadingDat.index_buffer_memory);
-	qvkFreeMemory(vk.device, shadingDat.index_buffer_memory, NULL);
+		qvkUnmapMemory(vk.device, shadingDat.index_buffer_memory[c]);
+		qvkFreeMemory(vk.device, shadingDat.index_buffer_memory[c], NULL);
 
-    qvkDestroyBuffer(vk.device, shadingDat.vertex_buffer, NULL);
-	qvkDestroyBuffer(vk.device, shadingDat.index_buffer, NULL);
-
+		qvkDestroyBuffer(vk.device, shadingDat.vertex_buffer[c], NULL);
+		qvkDestroyBuffer(vk.device, shadingDat.index_buffer[c], NULL);
+	}
     memset(&shadingDat, 0, sizeof(shadingDat));
 
 
@@ -819,7 +831,7 @@ void vk_clearDepthStencilAttachments(void)
         clear_rect.layerCount = 1;
 
 
-        qvkCmdClearAttachments(vk.command_buffer, 1, &attachments, 1, &clear_rect);
+		qvkCmdClearAttachments(vk.command_buffer[vk.idx_swapchain_image], 1, &attachments, 1, &clear_rect);
     }
 }
 
@@ -879,7 +891,7 @@ void vk_clearColorAttachments(const float* color)
 	clear_rect[0].baseArrayLayer = 0;
 	clear_rect[0].layerCount = 1;
 
-	qvkCmdClearAttachments(vk.command_buffer, 1, attachments, 1, clear_rect);
+	qvkCmdClearAttachments(vk.command_buffer[vk.idx_swapchain_image], 1, attachments, 1, clear_rect);
 
 }
 

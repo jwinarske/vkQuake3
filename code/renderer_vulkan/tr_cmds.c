@@ -535,13 +535,13 @@ void R_IssueRenderCommands( qboolean runPerformanceCounters )
             } break;
 
             case RC_DRAW_BUFFER:
-            {
-                // data = RB_DrawBuffer( data ); 
-                // const drawBufferCommand_t * const cmd = (const drawBufferCommand_t *)data;
-                vk_resetGeometryBuffer();
-                
+            {              
                 // VULKAN
                 vk_begin_frame();
+
+				// data = RB_DrawBuffer( data );
+				// const drawBufferCommand_t * const cmd = (const drawBufferCommand_t *)data;
+				vk_resetGeometryBuffer();
 
                 data += sizeof(drawBufferCommand_t);
 

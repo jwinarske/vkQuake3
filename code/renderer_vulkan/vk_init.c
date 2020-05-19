@@ -33,7 +33,8 @@ void vk_initialize(void)
     vk_create_command_pool(&vk.command_pool);
     
     ri.Printf(PRINT_ALL, " Create command buffer: vk.command_buffer \n");
-    vk_create_command_buffer(vk.command_pool, &vk.command_buffer);
+	for(uint32_t c = 0; c < MAX_SWAPCHAIN_IMAGES; ++c)
+		vk_create_command_buffer(vk.command_pool, &vk.command_buffer[c]);
 
 
     int width;
