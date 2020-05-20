@@ -97,6 +97,7 @@ file(GLOB q3obj
 	"../../botlib/l_struct.c"
 
 	"../../sdl/sdl_input.c"
+	"../../sdl/inputHandler.c"
 	"../../sdl/sdl_snd.c"
 
 	"../../sys/con_log.c"
@@ -120,4 +121,4 @@ target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declarat
 
 target_include_directories(ioquake3 PUBLIC ../../SDL2)
 
-target_link_libraries(ioquake3 pthread dl m rt jpeg-8c SDL2 zlib)
+target_link_libraries(ioquake3 pthread dl m rt jpeg-8c SDL2 zlib mtdev evdev udev input)
