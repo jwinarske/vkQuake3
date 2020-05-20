@@ -19,7 +19,7 @@ void vk_destroyWindow(void);
 
 void vk_getInstanceProcAddrImpl(void);
 
-void vk_createSurfaceImpl(void);
+void vk_createSurfaceImpl(uint32_t width, uint32_t height);
 
 void vk_minimizeWindow( void );
 

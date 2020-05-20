@@ -755,9 +755,8 @@ void vk_getProcAddress(void)
 	// Get device level functions.
 	vk_loadDeviceFunctions();
 
-	// The window surface needs to be created right after the instance creation,
-	// because it can actually influence the presentation mode selection.
-	vk_createSurfaceImpl();
+	// This function is responsible for initializing a valid Vulkan subsystem.
+	vk_createWindow();
 
 	vk_selectSurfaceFormat();
 

@@ -44,7 +44,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #endif
 
 
-//static SDL_Window* window_sdl = NULL;
 static VkDisplayModeKHR displayMode;
 
 
@@ -52,126 +51,8 @@ static VkDisplayModeKHR displayMode;
 static cvar_t* r_displayIndex;
 
 
-static void VKimp_DetectAvailableModes(void)
-{
-	int i, j;
-	char buf[ MAX_STRING_CHARS ] = { 0 };
-
-	//SDL_DisplayMode windowMode;
-    
-	// If a window exists, note its display index
-//	if( window_sdl != NULL )
-//	{
-//		r_displayIndex->integer = SDL_GetWindowDisplayIndex( window_sdl );
-//		if( r_displayIndex->integer < 0 )
-//		{
-//			ri.Printf(PRINT_ALL, "SDL_GetWindowDisplayIndex() failed: %s\n", SDL_GetError() );
-//            return;
-//		}
-//	}
-
-	uint32_t displayCount;
-	qvkGetPhysicalDeviceDisplayPropertiesKHR(vk.physical_device, &displayCount, 0);
-	VkDisplayPropertiesKHR* displayProperties = (VkDisplayPropertiesKHR*)malloc(sizeof(VkDisplayPropertiesKHR)*displayCount);
-	qvkGetPhysicalDeviceDisplayPropertiesKHR(vk.physical_device, &displayCount, displayProperties);
-
-	if (displayCount < 1)
-	{
-		ri.Printf(PRINT_ALL, "No displays found\n");
-	}
-
-	//int numSDLModes = SDL_GetNumDisplayModes( r_displayIndex->integer );
-
-	uint32_t modeCount;
-	qvkGetDisplayModePropertiesKHR(vk.physical_device, displayProperties[r_displayIndex->integer].display, &modeCount, 0);
-	VkDisplayModePropertiesKHR* displayModeProperties = (VkDisplayModePropertiesKHR*)malloc(sizeof(VkDisplayModePropertiesKHR)*modeCount);
-	qvkGetDisplayModePropertiesKHR(vk.physical_device, displayProperties[r_displayIndex->integer].display, &modeCount, displayModeProperties);
-
-	if(!modeCount)
-	{
-		ri.Printf(PRINT_ALL, "Couldn't get display mode count\n" );
-		return;
-	}
-
-//	if( SDL_GetWindowDisplayMode( window_sdl, &windowMode ) < 0 || numSDLModes <= 0 )
-//	{
-//		ri.Printf(PRINT_ALL, "Couldn't get window display mode, no resolutions detected: %s\n", SDL_GetError() );
-//		return;
-//	}
-
-	int numModes = 0;
-	SDL_Rect* modes = SDL_calloc(modeCount, sizeof( SDL_Rect ));
-	if ( !modes )
-	{
-		////////////////////////////////////
-		ri.Error(ERR_FATAL, "Out of memory" );
-		////////////////////////////////////
-	}
-
-	for( i = 0; i < modeCount; i++ )
-	{
-//		SDL_DisplayMode mode;
-
-//		if( SDL_GetDisplayMode( r_displayIndex->integer, i, &mode ) < 0 )
-//			continue;
-
-//		if( !mode.w || !mode.h )
-//		{
-//			ri.Printf(PRINT_ALL,  "Display supports any resolution\n" );
-//			SDL_free( modes );
-//			return;
-//		}
-
-//		if( windowMode.format != mode.format )
-//			continue;
-
-		// SDL can give the same resolution with different refresh rates.
-		// Only list resolution once.
-		for( j = 0; j < numModes; j++ )
-		{
-			if( (displayModeProperties[i].parameters.visibleRegion.width == displayModeProperties[j].parameters.visibleRegion.width)
-				&& (displayModeProperties[i].parameters.visibleRegion.height == displayModeProperties[j].parameters.visibleRegion.height) )
-				break;
-		}
-
-		if( j != numModes )
-			continue;
-
-		modes[ numModes ].w = displayModeProperties[i].parameters.visibleRegion.width;
-		modes[ numModes ].h = displayModeProperties[i].parameters.visibleRegion.height;
-		numModes++;
-	}
-
-	for( i = 0; i < numModes; i++ )
-	{
-		const char *newModeString = va( "%ux%u ", modes[ i ].w, modes[ i ].h );
-
-		if( strlen( newModeString ) < (int)sizeof( buf ) - strlen( buf ) )
-			Q_strcat( buf, sizeof( buf ), newModeString );
-		else
-			ri.Printf(PRINT_ALL,  "Skipping mode %ux%u, buffer too small\n", modes[ i ].w, modes[ i ].h );
-	}
-
-	if( *buf )
-	{
-		buf[ strlen( buf ) - 1 ] = 0;
-		ri.Printf(PRINT_ALL, "Available modes: '%s'\n", buf );
-		ri.Cvar_Set( "r_availableModes", buf );
-	}
-	SDL_free( modes );
-}
-
-
 static int VKimp_SetMode(int mode, qboolean fullscreen)
 {
-	//SDL_DisplayMode desktopMode;
-
-	//Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_VULKAN;
-
-//	if ( r_allowResize->integer )
-//		flags |= SDL_WINDOW_RESIZABLE;
-
-
 	ri.Printf(PRINT_ALL,  "...VKimp_SetMode()...\n");
 
 	uint32_t displayCount;
@@ -189,108 +70,25 @@ static int VKimp_SetMode(int mode, qboolean fullscreen)
 	VkDisplayModePropertiesKHR* displayModeProperties = (VkDisplayModePropertiesKHR*)malloc(sizeof(VkDisplayModePropertiesKHR)*modeCount);
 	qvkGetDisplayModePropertiesKHR(vk.physical_device, displayProperties[r_displayIndex->integer].display, &modeCount, displayModeProperties);
 
-	if(modeCount > 0 && displayModeProperties[0].parameters.visibleRegion.height > 0)
-	{
-		ri.Printf(PRINT_ALL, "bpp %i\t%s\t%i x %i, refresh_rate: %dHz\n", 32, "RGBA8",
-				  displayModeProperties[0].parameters.visibleRegion.width,
-				displayModeProperties[0].parameters.visibleRegion.height,
-				displayModeProperties[0].parameters.refreshRate);
-	}
-
-	/*SDL_GetNumVideoDisplays();
-
-	int display_mode_count = SDL_GetNumDisplayModes(r_displayIndex->integer);
-	if (display_mode_count < 1)
-	{
-		ri.Printf(PRINT_ALL, "SDL_GetNumDisplayModes failed: %s", SDL_GetError());
-	}
-
-
-    int tmp = SDL_GetDesktopDisplayMode(r_displayIndex->integer, &desktopMode);
-	if( (tmp == 0) && (desktopMode.h > 0) )
-    {
-    	Uint32 f = desktopMode.format;
-        ri.Printf(PRINT_ALL, "bpp %i\t%s\t%i x %i, refresh_rate: %dHz\n", SDL_BITSPERPIXEL(f), SDL_GetPixelFormatName(f), desktopMode.w, desktopMode.h, desktopMode.refresh_rate);
-    }
-    else if (SDL_GetDisplayMode(r_displayIndex->integer, 0, &desktopMode) != 0)
-	{
-    	//mode = 0: use the first display mode SDL return;
-        ri.Printf(PRINT_ALL,"SDL_GetDisplayMode failed: %s\n", SDL_GetError());
-        mode = 3;
-        desktopMode.w = 640;
-        desktopMode.h = 480;
-        desktopMode.refresh_rate = 60;
-        fullscreen = 0;
-	}*/
-
-    if(fullscreen)
+	//if(fullscreen)
     {
         // prevent crush the OS
-        r_mode->integer = mode = -2;
-        		
-		//flags |= SDL_WINDOW_FULLSCREEN;
-		//flags |= SDL_WINDOW_BORDERLESS;
+		r_mode->integer = mode = -1;
+		R_SetWinMode( -1, 0, 0, 0 );
     }
-
-	R_SetWinMode( mode, displayModeProperties[0].parameters.visibleRegion.width,
-			displayModeProperties[0].parameters.visibleRegion.height,
-			displayModeProperties[0].parameters.refreshRate );
-    
-
-
-//    if( window_sdl != NULL )
-//	{
-//		// SDL_GetWindowPosition( window_sdl, &x, &y );
-//		SDL_DestroyWindow( window_sdl );
-//		window_sdl = NULL;
-//        ri.Printf(PRINT_ALL, "Existing window being destroyed\n");
-//	}
 
     int width = 640;
     int height = 480;
 
     R_GetWinResolution(&width, &height);
 
-//	window_sdl = SDL_CreateWindow( CLIENT_WINDOW_TITLE, SDL_WINDOWPOS_CENTERED,
-//            SDL_WINDOWPOS_CENTERED, width, height, flags );
+	vk_createSurfaceImpl(width, height);
 
 	free(displayProperties);
 	free(displayModeProperties);
 
-//	if( window_sdl )
-    {
-        VKimp_DetectAvailableModes();
-        return 0;
-    }
-
-//	ri.Printf(PRINT_WARNING, " Couldn't create a window\n" );
-//    return -1;
+	return 0;
 }
-
-/*void vk_videoInit(void)
-{
-	// Use this function to get a mask of the specified
-	// subsystems which have previously been initialized.
-	// If flags is 0 it returns a mask of all initialized subsystems,
-	// otherwise it returns the initialization status of the specified subsystems.
-	if (0 == SDL_WasInit(SDL_INIT_VIDEO))
-	{
-		ri.Printf(PRINT_ALL, "Video is not initialized before, so initial it.\n");
-
-		if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		{
-			ri.Printf(PRINT_ALL, " SDL_Init( SDL_INIT_VIDEO ) FAILED (%s)\n", SDL_GetError());
-		}
-		else
-		{
-			ri.Printf(PRINT_ALL, " SDL using driver \"%s\"\n", SDL_GetCurrentVideoDriver( ));
-		}
-	}
-	else
-	{
-		ri.Printf(PRINT_ALL, "Video is already initialized.\n");
-	}
-}*/
 
 /*
  * This routine is responsible for initializing the OS specific portions of Vulkan
@@ -300,26 +98,6 @@ void vk_createWindow(void)
 	ri.Printf(PRINT_ALL, "...Creating window (using Vulkan Direct to Display)...\n");
 
 	r_displayIndex = ri.Cvar_Get( "r_displayIndex", "0", CVAR_ARCHIVE | CVAR_LATCH );
-
-	/*
-    SDL_Surface* icon = SDL_CreateRGBSurfaceFrom(
-			(void *)CLIENT_WINDOW_ICON.pixel_data,
-			CLIENT_WINDOW_ICON.width,
-			CLIENT_WINDOW_ICON.height,
-			CLIENT_WINDOW_ICON.bytes_per_pixel * 8,
-			CLIENT_WINDOW_ICON.bytes_per_pixel * CLIENT_WINDOW_ICON.width,
-#ifdef Q3_LITTLE_ENDIAN
-            0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000
-#else
-			0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF
-#endif
-			);
-
-    if(icon == NULL)
-    {
-        ri.Printf(PRINT_ALL, " SDL_CreateRGBSurface Failed. \n" );
-	}*/
-
 
 	if(ri.Cvar_VariableIntegerValue( "com_abnormalExit" ) )
 	{
@@ -349,12 +127,6 @@ void vk_createWindow(void)
 
 
 success:
-
-	//SDL_SetWindowIcon( window_sdl, icon );
-
-	//SDL_FreeSurface( icon );
-
-	// This depends on SDL_INIT_VIDEO, hence having it here
 
 	//TODO
 	ri.IN_Init(NULL);
@@ -386,16 +158,12 @@ void vk_destroyWindow( void )
 	ri.Printf(PRINT_ALL, " Destroy Window Subsystem.\n");
 
 	ri.IN_Shutdown();
-	//SDL_QuitSubSystem( SDL_INIT_VIDEO );
-
-	//SDL_DestroyWindow( window_sdl );
-	//window_sdl = NULL;
 }
 
 
-void vk_createSurfaceImpl(void)
+void vk_createSurfaceImpl(uint32_t width, uint32_t height)
 {
-    ri.Printf(PRINT_ALL, " Create Surface: vk.surface.\n");
+	ri.Printf(PRINT_ALL, " Create Surface: vk.surface %u x %u\n", width, height);
 
 	uint32_t displayCount;
 	qvkGetPhysicalDeviceDisplayPropertiesKHR(vk.physical_device, &displayCount, 0);
@@ -408,9 +176,20 @@ void vk_createSurfaceImpl(void)
 	VkDisplayModePropertiesKHR* displayModeProperties = (VkDisplayModePropertiesKHR*)malloc(sizeof(VkDisplayModePropertiesKHR)*modeCount);
 	qvkGetDisplayModePropertiesKHR(vk.physical_device, displayProperties[0].display, &modeCount, displayModeProperties);
 
+	int mode = -1;
+	for(uint32_t c = 0; c < modeCount; ++c)
+	{
+		if(displayModeProperties[c].parameters.visibleRegion.width == width &&
+		   displayModeProperties[c].parameters.visibleRegion.height == height)
+		{
+			mode = c;
+			break;
+		}
+	}
+
 	VkDisplayModeCreateInfoKHR dmci = {};
 	dmci.sType = VK_STRUCTURE_TYPE_DISPLAY_MODE_CREATE_INFO_KHR;
-	dmci.parameters = displayModeProperties[0].parameters;
+	dmci.parameters = displayModeProperties[mode].parameters;
 	VkDisplayModeKHR displayMode;
 	qvkCreateDisplayModeKHR(vk.physical_device, displayProperties[0].display, &dmci, 0, &displayMode);
 
@@ -419,7 +198,7 @@ void vk_createSurfaceImpl(void)
 	dsci.displayMode = displayMode;
 	dsci.transform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
 	dsci.alphaMode = VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR;
-	dsci.imageExtent = displayModeProperties[0].parameters.visibleRegion;
+	dsci.imageExtent = displayModeProperties[mode].parameters.visibleRegion;
 	qvkCreateDisplayPlaneSurfaceKHR(vk.instance, &dsci, 0, &vk.surface);
 
 	free(displayProperties);
@@ -444,61 +223,4 @@ void vk_minimizeWindow( void )
 {
     VkBool32 toggleWorked = 1;
     ri.Printf( PRINT_ALL, " Minimizing Window (SDL). \n");
-
-	/*
-	VkBool32 isWinFullscreen = ( SDL_GetWindowFlags( window_sdl ) & SDL_WINDOW_FULLSCREEN );
-    
-
-    if( isWinFullscreen )
-	{
-		toggleWorked = (SDL_SetWindowFullscreen( window_sdl, 0 ) >= 0);
-	}
-
-    // SDL_WM_ToggleFullScreen didn't work, so do it the slow way
-    if( toggleWorked )
-    {
-        // ri.IN_Shutdown( );
-        SDL_MinimizeWindow( window_sdl );
-        // SDL_HideWindow( window_sdl );
-    }
-    else
-    {
-        ri.Printf( PRINT_ALL, " SDL_SetWindowFullscreen didn't work, so do it the slow way \n");
-
-        ri.Cmd_ExecuteText(EXEC_APPEND, "vid_restart\n");
-	}*/
 }
-
-/*
-	if( r_fullscreen->modified )
-	{
-		qboolean    needToToggle;
-		qboolean    sdlToggled = qfalse;
-
-		// Find out the current state
-		int fullscreen = !!( SDL_GetWindowFlags( window_sdl ) & SDL_WINDOW_FULLSCREEN );
-
-		if( r_fullscreen->integer && ri.Cvar_VariableIntegerValue( "in_nograb" ) )
-		{
-			ri.Printf( PRINT_ALL, "Fullscreen not allowed with in_nograb 1\n");
-			ri.Cvar_Set( "r_fullscreen", "0" );
-			r_fullscreen->modified = qfalse;
-		}
-
-		// Is the state we want different from the current state?
-		needToToggle = !!r_fullscreen->integer != fullscreen;
-
-		if( needToToggle )
-		{
-			sdlToggled = SDL_SetWindowFullscreen( window_sdl, r_fullscreen->integer ) >= 0;
-
-			// SDL_WM_ToggleFullScreen didn't work, so do it the slow way
-			if( !sdlToggled )
-				ri.Cmd_ExecuteText(EXEC_APPEND, "vid_restart\n");
-
-			ri.IN_Restart( );
-		}
-
-		r_fullscreen->modified = qfalse;
-	}
-*/
