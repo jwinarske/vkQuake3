@@ -509,7 +509,7 @@ void encodeStencilValue(uint32_t *values, uint32_t* numValues, VkStencilOpState 
 }
 
 
-void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Depth_Range depRg, VkBool32 indexed)
+void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Depth_Range depRg, VkBool32 indexed, VkBool32 isPortal)
 {
 	// configure vertex data stream
 	VkBuffer bufs[3] = { shadingDat.vertex_buffer[vk.idx_swapchain_image], shadingDat.vertex_buffer[vk.idx_swapchain_image], shadingDat.vertex_buffer[vk.idx_swapchain_image] };
@@ -563,6 +563,16 @@ void vk_shade_geometry(pipelineDef pipeline, VkBool32 multitexture, enum Vk_Dept
 
 	qvkCmdSetScissor(vk.command_buffer[vk.idx_swapchain_image], 0, 1, &scissor);
 	qvkCmdSetViewport(vk.command_buffer[vk.idx_swapchain_image], 0, 1, &viewport);
+
+	float push_constants[2];
+	push_constants[0] = viewport.maxDepth - viewport.minDepth;
+	push_constants[1] = viewport.minDepth;
+
+	// As described above in section Pipeline Layouts, the pipeline layout defines shader push constants
+	// which are updated via Vulkan commands rather than via writes to memory or copy commands.
+	// Push constants represent a high speed path to modify constant data in pipelines
+	// that is expected to outperform memory-backed resource updates.
+	qvkCmdPushConstants(vk.command_buffer[vk.idx_swapchain_image], vk.pipeline_layout, VK_SHADER_STAGE_VERTEX_BIT, (isPortal ? 38 : 18) * 4, 2 * 4, push_constants);
 
 
 	if (tess.shader->polygonOffset) {
@@ -1314,7 +1324,7 @@ static void ProjectDlightTexture( void )
 		// VULKAN
 
 		vk_shade_geometry(g_stdPipelines.dlight_pipelines[backEnd.refdef.dlights[l].additive > 0 ? 1 : 0][tess.shader->cullType][tess.shader->polygonOffset],
-                VK_FALSE, DEPTH_RANGE_NORMAL, VK_TRUE);
+				VK_FALSE, DEPTH_RANGE_NORMAL, VK_TRUE, backEnd.viewParms.isPortal);
 
 	}
 }
@@ -1349,7 +1359,7 @@ static void RB_FogPass( void ) {
 	// VULKAN
 
     assert(tess.shader->fogPass > 0);
-	vk_shade_geometry(g_stdPipelines.fog_pipelines[tess.shader->fogPass - 1][tess.shader->cullType][tess.shader->polygonOffset], VK_FALSE, DEPTH_RANGE_NORMAL, VK_TRUE);
+	vk_shade_geometry(g_stdPipelines.fog_pipelines[tess.shader->fogPass - 1][tess.shader->cullType][tess.shader->polygonOffset], VK_FALSE, DEPTH_RANGE_NORMAL, VK_TRUE, backEnd.viewParms.isPortal);
 }
 
 
@@ -1481,15 +1491,15 @@ END_ANIMA2:
         
         if (backEnd.viewParms.isMirror)
         {
-            vk_shade_geometry(tess.xstages[stage]->vk_mirror_pipeline, multitexture, depth_range, VK_TRUE);
+			vk_shade_geometry(tess.xstages[stage]->vk_mirror_pipeline, multitexture, depth_range, VK_TRUE, backEnd.viewParms.isPortal);
         }
         else if (backEnd.viewParms.isPortal)
         {
-            vk_shade_geometry(tess.xstages[stage]->vk_portal_pipeline, multitexture, depth_range, VK_TRUE);
+			vk_shade_geometry(tess.xstages[stage]->vk_portal_pipeline, multitexture, depth_range, VK_TRUE, backEnd.viewParms.isPortal);
         }
         else
         {
-            vk_shade_geometry(tess.xstages[stage]->vk_pipeline, multitexture, depth_range, VK_TRUE);
+			vk_shade_geometry(tess.xstages[stage]->vk_pipeline, multitexture, depth_range, VK_TRUE, backEnd.viewParms.isPortal);
         }
 
                 
