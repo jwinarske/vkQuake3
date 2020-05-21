@@ -255,7 +255,7 @@ static keyNum_t IN_TranslateSDLToQ3Key( uint32_t button, qboolean down )
 			case 69: key = K_KP_NUMLOCK; break;
 			case 119: key = K_BREAK; break;
 			case 111: key = K_DEL; break;
-			//case 41: key = ; //`
+			case 41: key = K_CONSOLE; break; //`
 			case 12: key = K_KP_MINUS; break;
 			case 13: key = K_KP_EQUALS; break;
 			case 14: key = K_BACKSPACE; break;
