@@ -31,6 +31,7 @@ add_definitions(-DBUILD_DIR="build")
 add_definitions(-DBOTLIB)
 #add_definitions(-DNO_VM_COMPILED)
 add_definitions(-DUSE_RENDERER_DLOPEN)
+add_definitions(-DNDEBUG)
 
 set (SOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 link_directories(${SOURCE_PATH}/code/SDL2/lib)

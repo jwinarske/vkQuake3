@@ -59,29 +59,29 @@ static int in_eventTime = 0;
 IN_PrintKey
 ===============
 */
-static void IN_PrintKey( const SDL_Keysym *keysym, keyNum_t key, qboolean down )
+static void IN_PrintKey( uint32_t button, keyNum_t key, qboolean down )
 {
 	if( down )
 		Com_Printf( "+ " );
 	else
 		Com_Printf( "  " );
 
-	Com_Printf( "Scancode: 0x%02x(%s) Sym: 0x%02x(%s)",
-			keysym->scancode, SDL_GetScancodeName( keysym->scancode ),
-			keysym->sym, SDL_GetKeyName( keysym->sym ) );
+//	Com_Printf( "Scancode: 0x%02x(%s) Sym: 0x%02x(%s)",
+//			keysym->scancode, SDL_GetScancodeName( keysym->scancode ),
+//			keysym->sym, SDL_GetKeyName( keysym->sym ) );
 
-	if( keysym->mod & KMOD_LSHIFT )   Com_Printf( " KMOD_LSHIFT" );
-	if( keysym->mod & KMOD_RSHIFT )   Com_Printf( " KMOD_RSHIFT" );
-	if( keysym->mod & KMOD_LCTRL )    Com_Printf( " KMOD_LCTRL" );
-	if( keysym->mod & KMOD_RCTRL )    Com_Printf( " KMOD_RCTRL" );
-	if( keysym->mod & KMOD_LALT )     Com_Printf( " KMOD_LALT" );
-	if( keysym->mod & KMOD_RALT )     Com_Printf( " KMOD_RALT" );
-	if( keysym->mod & KMOD_LGUI )     Com_Printf( " KMOD_LGUI" );
-	if( keysym->mod & KMOD_RGUI )     Com_Printf( " KMOD_RGUI" );
-	if( keysym->mod & KMOD_NUM )      Com_Printf( " KMOD_NUM" );
-	if( keysym->mod & KMOD_CAPS )     Com_Printf( " KMOD_CAPS" );
-	if( keysym->mod & KMOD_MODE )     Com_Printf( " KMOD_MODE" );
-	if( keysym->mod & KMOD_RESERVED ) Com_Printf( " KMOD_RESERVED" );
+//	if( keysym->mod & KMOD_LSHIFT )   Com_Printf( " KMOD_LSHIFT" );
+//	if( keysym->mod & KMOD_RSHIFT )   Com_Printf( " KMOD_RSHIFT" );
+//	if( keysym->mod & KMOD_LCTRL )    Com_Printf( " KMOD_LCTRL" );
+//	if( keysym->mod & KMOD_RCTRL )    Com_Printf( " KMOD_RCTRL" );
+//	if( keysym->mod & KMOD_LALT )     Com_Printf( " KMOD_LALT" );
+//	if( keysym->mod & KMOD_RALT )     Com_Printf( " KMOD_RALT" );
+//	if( keysym->mod & KMOD_LGUI )     Com_Printf( " KMOD_LGUI" );
+//	if( keysym->mod & KMOD_RGUI )     Com_Printf( " KMOD_RGUI" );
+//	if( keysym->mod & KMOD_NUM )      Com_Printf( " KMOD_NUM" );
+//	if( keysym->mod & KMOD_CAPS )     Com_Printf( " KMOD_CAPS" );
+//	if( keysym->mod & KMOD_MODE )     Com_Printf( " KMOD_MODE" );
+//	if( keysym->mod & KMOD_RESERVED ) Com_Printf( " KMOD_RESERVED" );
 
 	Com_Printf( " Q:0x%02x(%s)\n", key, Key_KeynumToString( key ) );
 }
@@ -186,124 +186,125 @@ static qboolean IN_IsConsoleKey( keyNum_t key, int character )
 IN_TranslateSDLToQ3Key
 ===============
 */
-static keyNum_t IN_TranslateSDLToQ3Key( SDL_Keysym *keysym, qboolean down )
+static keyNum_t IN_TranslateSDLToQ3Key( uint32_t button, qboolean down )
 {
 	keyNum_t key = 0;
 
-	if( keysym->scancode >= SDL_SCANCODE_1 && keysym->scancode <= SDL_SCANCODE_0 )
+	if(button >= 2 && button <= 11)
 	{
-		// Always map the number keys as such even if they actually map
-		// to other characters (eg, "1" is "&" on an AZERTY keyboard).
-		// This is required for SDL before 2.0.6, except on Windows
-		// which already had this behavior.
-		if( keysym->scancode == SDL_SCANCODE_0 )
+		if( button == 11 )
 			key = '0';
 		else
-			key = '1' + keysym->scancode - SDL_SCANCODE_1;
+			key = '1' + (button - 2);
 	}
-	else if( keysym->sym >= SDLK_SPACE && keysym->sym < SDLK_DELETE )
+	else if( (button >= 16 && button <= 25) ||
+			 (button >= 30 && button <= 38) ||
+			 (button >= 44 && button <= 50)
+			 )
 	{
-		// These happen to match the ASCII chars
-		key = (int)keysym->sym;
+		switch(button)
+		{
+			case 16: key = 'q'; break;
+			case 17: key = 'w'; break;
+			case 18: key = 'e'; break;
+			case 19: key = 'r'; break;
+			case 20: key = 't'; break;
+			case 21: key = 'y'; break;
+			case 22: key = 'u'; break;
+			case 23: key = 'i'; break;
+			case 24: key = 'o'; break;
+			case 25: key = 'p'; break;
+
+			case 30: key = 'a'; break;
+			case 31: key = 's'; break;
+			case 32: key = 'd'; break;
+			case 33: key = 'f'; break;
+			case 34: key = 'g'; break;
+			case 35: key = 'h'; break;
+			case 36: key = 'j'; break;
+			case 37: key = 'k'; break;
+			case 38: key = 'l'; break;
+
+			case 44: key = 'z'; break;
+			case 45: key = 'x'; break;
+			case 46: key = 'c'; break;
+			case 47: key = 'v'; break;
+			case 48: key = 'b'; break;
+			case 49: key = 'n'; break;
+			case 50: key = 'm'; break;
+		}
 	}
 	else
 	{
-		switch( keysym->sym )
+		switch(button)
 		{
-			case SDLK_PAGEUP:       key = K_PGUP;          break;
-			case SDLK_KP_9:         key = K_KP_PGUP;       break;
-			case SDLK_PAGEDOWN:     key = K_PGDN;          break;
-			case SDLK_KP_3:         key = K_KP_PGDN;       break;
-			case SDLK_KP_7:         key = K_KP_HOME;       break;
-			case SDLK_HOME:         key = K_HOME;          break;
-			case SDLK_KP_1:         key = K_KP_END;        break;
-			case SDLK_END:          key = K_END;           break;
-			case SDLK_KP_4:         key = K_KP_LEFTARROW;  break;
-			case SDLK_LEFT:         key = K_LEFTARROW;     break;
-			case SDLK_KP_6:         key = K_KP_RIGHTARROW; break;
-			case SDLK_RIGHT:        key = K_RIGHTARROW;    break;
-			case SDLK_KP_2:         key = K_KP_DOWNARROW;  break;
-			case SDLK_DOWN:         key = K_DOWNARROW;     break;
-			case SDLK_KP_8:         key = K_KP_UPARROW;    break;
-			case SDLK_UP:           key = K_UPARROW;       break;
-			case SDLK_ESCAPE:       key = K_ESCAPE;        break;
-			case SDLK_KP_ENTER:     key = K_KP_ENTER;      break;
-			case SDLK_RETURN:       key = K_ENTER;         break;
-			case SDLK_TAB:          key = K_TAB;           break;
-			case SDLK_F1:           key = K_F1;            break;
-			case SDLK_F2:           key = K_F2;            break;
-			case SDLK_F3:           key = K_F3;            break;
-			case SDLK_F4:           key = K_F4;            break;
-			case SDLK_F5:           key = K_F5;            break;
-			case SDLK_F6:           key = K_F6;            break;
-			case SDLK_F7:           key = K_F7;            break;
-			case SDLK_F8:           key = K_F8;            break;
-			case SDLK_F9:           key = K_F9;            break;
-			case SDLK_F10:          key = K_F10;           break;
-			case SDLK_F11:          key = K_F11;           break;
-			case SDLK_F12:          key = K_F12;           break;
-			case SDLK_F13:          key = K_F13;           break;
-			case SDLK_F14:          key = K_F14;           break;
-			case SDLK_F15:          key = K_F15;           break;
-
-			case SDLK_BACKSPACE:    key = K_BACKSPACE;     break;
-			case SDLK_KP_PERIOD:    key = K_KP_DEL;        break;
-			case SDLK_DELETE:       key = K_DEL;           break;
-			case SDLK_PAUSE:        key = K_PAUSE;         break;
-
-			case SDLK_LSHIFT:
-			case SDLK_RSHIFT:       key = K_SHIFT;         break;
-
-			case SDLK_LCTRL:
-			case SDLK_RCTRL:        key = K_CTRL;          break;
-
-#ifdef __APPLE__
-			case SDLK_RGUI:
-			case SDLK_LGUI:         key = K_COMMAND;       break;
-#else
-			case SDLK_RGUI:
-			case SDLK_LGUI:         key = K_SUPER;         break;
-#endif
-
-			case SDLK_RALT:
-			case SDLK_LALT:         key = K_ALT;           break;
-
-			case SDLK_KP_5:         key = K_KP_5;          break;
-			case SDLK_INSERT:       key = K_INS;           break;
-			case SDLK_KP_0:         key = K_KP_INS;        break;
-			case SDLK_KP_MULTIPLY:  key = K_KP_STAR;       break;
-			case SDLK_KP_PLUS:      key = K_KP_PLUS;       break;
-			case SDLK_KP_MINUS:     key = K_KP_MINUS;      break;
-			case SDLK_KP_DIVIDE:    key = K_KP_SLASH;      break;
-
-			case SDLK_MODE:         key = K_MODE;          break;
-			case SDLK_HELP:         key = K_HELP;          break;
-			case SDLK_PRINTSCREEN:  key = K_PRINT;         break;
-			case SDLK_SYSREQ:       key = K_SYSREQ;        break;
-			case SDLK_MENU:         key = K_MENU;          break;
-			case SDLK_APPLICATION:	key = K_MENU;          break;
-			case SDLK_POWER:        key = K_POWER;         break;
-			case SDLK_UNDO:         key = K_UNDO;          break;
-			case SDLK_SCROLLLOCK:   key = K_SCROLLOCK;     break;
-			case SDLK_NUMLOCKCLEAR: key = K_KP_NUMLOCK;    break;
-			case SDLK_CAPSLOCK:     key = K_CAPSLOCK;      break;
-
+			case 1: key = K_ESCAPE; break;
+			case 59: key = K_F1; break;
+			case 60: key = K_F2; break;
+			case 61: key = K_F3; break;
+			case 62: key = K_F4; break;
+			case 63: key = K_F5; break;
+			case 64: key = K_F6; break;
+			case 65: key = K_F7; break;
+			case 66: key = K_F8; break;
+			case 67: key = K_F9; break;
+			case 68: key = K_F10; break;
+			case 87: key = K_F11; break;
+			case 88: key = K_F12; break;
+			case 99: key = K_PRINT; break;
+			case 69: key = K_KP_NUMLOCK; break;
+			case 119: key = K_BREAK; break;
+			case 111: key = K_DEL; break;
+			//case 41: key = ; //`
+			case 12: key = K_KP_MINUS; break;
+			case 13: key = K_KP_EQUALS; break;
+			case 14: key = K_BACKSPACE; break;
+			case 15: key = K_TAB; break;
+			//case 26: key = //[
+			//case 27: key = //]
+			case 58: key = K_CAPSLOCK; break;
+			//case 39: key = //;
+			//case 40: key = //'
+			//case 43: key = //\\
+			case 42: key = K_SHIFT; break;
+			//case 86: key = //<
+			//case 51: key = //,
+			//case 52: key = //.
+			case 53: key = K_KP_SLASH; break;
+			case 54: key = K_SHIFT; break;
+			case 28: key = K_ENTER; break;
+			case 29: key = K_CTRL; break;
+			case 125: key = K_SUPER; break;
+			case 56: key = K_ALT; break;
+			case 57: key = ' '; break;
+			case 100: key = K_ALT; break;
+			//case 127: key = K_SHIFT; break; //context menu
+			case 97: key = K_CTRL; break;
+			case 110: key = K_INS; break;
+			case 102: key = K_HOME; break;
+			case 104: key = K_PGUP; break;
+			case 109: key = K_PGDN; break;
+			case 107: key = K_END; break;
+			case 103: key = K_UPARROW; break;
+			case 108: key = K_DOWNARROW; break;
+			case 105: key = K_LEFTARROW; break;
+			case 106: key = K_RIGHTARROW; break;
 			default:
-				if( !( keysym->sym & SDLK_SCANCODE_MASK ) && keysym->scancode <= 95 )
+				if( button <= 95 )
 				{
 					// Map Unicode characters to 95 world keys using the key's scan code.
 					// FIXME: There aren't enough world keys to cover all the scancodes.
 					// Maybe create a map of scancode to quake key at start up and on
 					// key map change; allocate world key numbers as needed similar
 					// to SDL 1.2.
-					key = K_WORLD_0 + (int)keysym->scancode;
+					key = K_WORLD_0 + button;
 				}
 				break;
 		}
 	}
 
 	if( in_keyboardDebug->integer )
-		IN_PrintKey( keysym, key, down );
+		IN_PrintKey( button, key, down );
 
 	if( IN_IsConsoleKey( key, 0 ) )
 	{
@@ -321,13 +322,13 @@ IN_GobbleMotionEvents
 */
 static void IN_GobbleMotionEvents( void )
 {
-	SDL_Event dummy[ 1 ];
+	//SDL_Event dummy[ 1 ];
 	int val = 0;
 
 	// Gobble any mouse motion events
-	SDL_PumpEvents( );
-	while( ( val = SDL_PeepEvents( dummy, 1, SDL_GETEVENT,
-		SDL_MOUSEMOTION, SDL_MOUSEMOTION ) ) > 0 ) { }
+//	SDL_PumpEvents( );
+//	while( ( val = SDL_PeepEvents( dummy, 1, SDL_GETEVENT,
+//		SDL_MOUSEMOTION, SDL_MOUSEMOTION ) ) > 0 ) { }
 
 	if ( val < 0 )
 		Com_Printf( "IN_GobbleMotionEvents failed: %s\n", SDL_GetError( ) );
@@ -977,182 +978,128 @@ IN_ProcessEvents
 */
 static void IN_ProcessEvents( void )
 {
-	SDL_Event e;
 	keyNum_t key = 0;
 	static keyNum_t lastKeyDown = 0;
 
-	//if( !SDL_WasInit( SDL_INIT_VIDEO ) )
-//			return;
+	inputEvent e;
 
-	handleInput();
-	return;
-
-	while( SDL_PollEvent( &e ) )
+	while(handleInput(&e) > 0)
 	{
 		switch( e.type )
 		{
-			case SDL_KEYDOWN:
-				if ( e.key.repeat && Key_GetCatcher( ) == 0 )
-					break;
-
-				if( ( key = IN_TranslateSDLToQ3Key( &e.key.keysym, qtrue ) ) )
-					Com_QueueEvent( in_eventTime, SE_KEY, key, qtrue, 0, NULL );
-
-				if( key == K_BACKSPACE )
-					Com_QueueEvent( in_eventTime, SE_CHAR, CTRL('h'), 0, 0, NULL );
-				else if( keys[K_CTRL].down && key >= 'a' && key <= 'z' )
-					Com_QueueEvent( in_eventTime, SE_CHAR, CTRL(key), 0, 0, NULL );
-
-				lastKeyDown = key;
-				break;
-
-			case SDL_KEYUP:
-				if( ( key = IN_TranslateSDLToQ3Key( &e.key.keysym, qfalse ) ) )
-					Com_QueueEvent( in_eventTime, SE_KEY, key, qfalse, 0, NULL );
-
-				lastKeyDown = 0;
-				break;
-
-			case SDL_TEXTINPUT:
-				if( lastKeyDown != K_CONSOLE )
+			case 300:
+			{
+				if(e.buttonState)
 				{
-					char *c = e.text.text;
+					if ( e.buttonRepeat && Key_GetCatcher( ) == 0 )
+						break;
 
-					// Quick and dirty UTF-8 to UTF-32 conversion
-					while( *c )
-					{
-						int utf32 = 0;
+					if( ( key = IN_TranslateSDLToQ3Key( e.button, qtrue ) ) )
+						Com_QueueEvent( in_eventTime, SE_KEY, key, qtrue, 0, NULL );
 
-						if( ( *c & 0x80 ) == 0 )
-							utf32 = *c++;
-						else if( ( *c & 0xE0 ) == 0xC0 ) // 110x xxxx
-						{
-							utf32 |= ( *c++ & 0x1F ) << 6;
-							utf32 |= ( *c++ & 0x3F );
-						}
-						else if( ( *c & 0xF0 ) == 0xE0 ) // 1110 xxxx
-						{
-							utf32 |= ( *c++ & 0x0F ) << 12;
-							utf32 |= ( *c++ & 0x3F ) << 6;
-							utf32 |= ( *c++ & 0x3F );
-						}
-						else if( ( *c & 0xF8 ) == 0xF0 ) // 1111 0xxx
-						{
-							utf32 |= ( *c++ & 0x07 ) << 18;
-							utf32 |= ( *c++ & 0x3F ) << 12;
-							utf32 |= ( *c++ & 0x3F ) << 6;
-							utf32 |= ( *c++ & 0x3F );
-						}
-						else
-						{
-							Com_DPrintf( "Unrecognised UTF-8 lead byte: 0x%x\n", (unsigned int)*c );
-							c++;
-						}
+					if( key == K_BACKSPACE )
+						Com_QueueEvent( in_eventTime, SE_CHAR, CTRL('h'), 0, 0, NULL );
+					else if( keys[K_CTRL].down && key >= 'a' && key <= 'z' )
+						Com_QueueEvent( in_eventTime, SE_CHAR, CTRL(key), 0, 0, NULL );
 
-						if( utf32 != 0 )
-						{
-							if( IN_IsConsoleKey( 0, utf32 ) )
-							{
-								Com_QueueEvent( in_eventTime, SE_KEY, K_CONSOLE, qtrue, 0, NULL );
-								Com_QueueEvent( in_eventTime, SE_KEY, K_CONSOLE, qfalse, 0, NULL );
-							}
-							else
-								Com_QueueEvent( in_eventTime, SE_CHAR, utf32, 0, 0, NULL );
-						}
-          }
-        }
-				break;
+					lastKeyDown = key;
+					break;
+				}
+				else
+				{
+					if( ( key = IN_TranslateSDLToQ3Key( e.button, qfalse ) ) )
+						Com_QueueEvent( in_eventTime, SE_KEY, key, qfalse, 0, NULL );
 
-			case SDL_MOUSEMOTION:
+					lastKeyDown = 0;
+					break;
+				}
+			}
+			case 400:
 				if( mouseActive )
 				{
-					if( !e.motion.xrel && !e.motion.yrel )
-						break;
-					Com_QueueEvent( in_eventTime, SE_MOUSE, e.motion.xrel, e.motion.yrel, 0, NULL );
+					Com_QueueEvent( in_eventTime, SE_MOUSE, e.xCoord, e.yCoord, 0, NULL );
 				}
 				break;
 
-			case SDL_MOUSEBUTTONDOWN:
-			case SDL_MOUSEBUTTONUP:
+			case 402:
 				{
 					int b;
-					switch( e.button.button )
+					switch( e.button )
 					{
-						case SDL_BUTTON_LEFT:   b = K_MOUSE1;     break;
-						case SDL_BUTTON_MIDDLE: b = K_MOUSE3;     break;
-						case SDL_BUTTON_RIGHT:  b = K_MOUSE2;     break;
-						case SDL_BUTTON_X1:     b = K_MOUSE4;     break;
-						case SDL_BUTTON_X2:     b = K_MOUSE5;     break;
-						default:                b = K_AUX1 + ( e.button.button - SDL_BUTTON_X2 + 1 ) % 16; break;
+						case 272:	b = K_MOUSE1;     break;
+						case 274:	b = K_MOUSE3;     break;
+						case 273:	b = K_MOUSE2;     break;
+						//case SDL_BUTTON_X1:     b = K_MOUSE4;     break;
+						//case SDL_BUTTON_X2:     b = K_MOUSE5;     break;
+						//default:                b = K_AUX1 + ( e.button.button - SDL_BUTTON_X2 + 1 ) % 16; break;
 					}
-					Com_QueueEvent( in_eventTime, SE_KEY, b,
-						( e.type == SDL_MOUSEBUTTONDOWN ? qtrue : qfalse ), 0, NULL );
+					Com_QueueEvent( in_eventTime, SE_KEY, b, e.buttonState, 0, NULL );
 				}
 				break;
 
-			case SDL_MOUSEWHEEL:
-				if( e.wheel.y > 0 )
+			case 403:
+				if( e.yCoord > 0.0 )
 				{
 					Com_QueueEvent( in_eventTime, SE_KEY, K_MWHEELUP, qtrue, 0, NULL );
 					Com_QueueEvent( in_eventTime, SE_KEY, K_MWHEELUP, qfalse, 0, NULL );
 				}
-				else if( e.wheel.y < 0 )
+				else if( e.yCoord < 0 )
 				{
 					Com_QueueEvent( in_eventTime, SE_KEY, K_MWHEELDOWN, qtrue, 0, NULL );
 					Com_QueueEvent( in_eventTime, SE_KEY, K_MWHEELDOWN, qfalse, 0, NULL );
 				}
 				break;
 
-			case SDL_CONTROLLERDEVICEADDED:
-			case SDL_CONTROLLERDEVICEREMOVED:
-				if (in_joystick->integer)
-					IN_InitJoystick();
-				break;
+			//case SDL_CONTROLLERDEVICEADDED:
+			//case SDL_CONTROLLERDEVICEREMOVED:
+//				if (in_joystick->integer)
+//					IN_InitJoystick();
+//				break;
 
-			case SDL_QUIT:
-				Cbuf_ExecuteText(EXEC_NOW, "quit Closed window\n");
-				break;
+//			case SDL_QUIT:
+//				Cbuf_ExecuteText(EXEC_NOW, "quit Closed window\n");
+//				break;
 
-			case SDL_WINDOWEVENT:
-				switch( e.window.event )
-				{
-					case SDL_WINDOWEVENT_RESIZED:
-						{
-							int width, height;
+//			case SDL_WINDOWEVENT:
+//				switch( e.window.event )
+//				{
+//					case SDL_WINDOWEVENT_RESIZED:
+//						{
+//							int width, height;
 
-							width = e.window.data1;
-							height = e.window.data2;
+//							width = e.window.data1;
+//							height = e.window.data2;
 
-							// ignore this event on fullscreen
-							if( cls.glconfig.isFullscreen )
-							{
-								break;
-							}
+//							// ignore this event on fullscreen
+//							if( cls.glconfig.isFullscreen )
+//							{
+//								break;
+//							}
 
-							// check if size actually changed
-							if( cls.glconfig.vidWidth == width && cls.glconfig.vidHeight == height )
-							{
-								break;
-							}
+//							// check if size actually changed
+//							if( cls.glconfig.vidWidth == width && cls.glconfig.vidHeight == height )
+//							{
+//								break;
+//							}
 
-							Cvar_SetValue( "r_customwidth", width );
-							Cvar_SetValue( "r_customheight", height );
-							Cvar_Set( "r_mode", "-1" );
+//							Cvar_SetValue( "r_customwidth", width );
+//							Cvar_SetValue( "r_customheight", height );
+//							Cvar_Set( "r_mode", "-1" );
 
-							// Wait until user stops dragging for 1 second, so
-							// we aren't constantly recreating the GL context while
-							// he tries to drag...
-							vidRestartTime = Sys_Milliseconds( ) + 1000;
-						}
-						break;
+//							// Wait until user stops dragging for 1 second, so
+//							// we aren't constantly recreating the GL context while
+//							// he tries to drag...
+//							vidRestartTime = Sys_Milliseconds( ) + 1000;
+//						}
+//						break;
 
-					case SDL_WINDOWEVENT_MINIMIZED:    Cvar_SetValue( "com_minimized", 1 ); break;
-					case SDL_WINDOWEVENT_RESTORED:
-					case SDL_WINDOWEVENT_MAXIMIZED:    Cvar_SetValue( "com_minimized", 0 ); break;
-					case SDL_WINDOWEVENT_FOCUS_LOST:   Cvar_SetValue( "com_unfocused", 1 ); break;
-					case SDL_WINDOWEVENT_FOCUS_GAINED: Cvar_SetValue( "com_unfocused", 0 ); break;
-				}
-				break;
+//					case SDL_WINDOWEVENT_MINIMIZED:    Cvar_SetValue( "com_minimized", 1 ); break;
+//					case SDL_WINDOWEVENT_RESTORED:
+//					case SDL_WINDOWEVENT_MAXIMIZED:    Cvar_SetValue( "com_minimized", 0 ); break;
+//					case SDL_WINDOWEVENT_FOCUS_LOST:   Cvar_SetValue( "com_unfocused", 1 ); break;
+//					case SDL_WINDOWEVENT_FOCUS_GAINED: Cvar_SetValue( "com_unfocused", 0 ); break;
+//				}
+//				break;
 
 			default:
 				break;
@@ -1234,8 +1181,8 @@ void IN_Init( void *windowData )
 	IN_DeactivateMouse( Cvar_VariableIntegerValue( "r_fullscreen" ) != 0 );
 
 	//appState = SDL_GetWindowFlags( SDL_window );
-	Cvar_SetValue( "com_unfocused",	!( appState & SDL_WINDOW_INPUT_FOCUS ) );
-	Cvar_SetValue( "com_minimized", appState & SDL_WINDOW_MINIMIZED );
+	Cvar_SetValue( "com_unfocused",	0 ); // !( appState & SDL_WINDOW_INPUT_FOCUS ) );
+	Cvar_SetValue( "com_minimized", 0 ); //appState & SDL_WINDOW_MINIMIZED );
 
 	//IN_InitJoystick( );
 	Com_DPrintf( "------------------------------------\n" );
@@ -1248,7 +1195,7 @@ IN_Shutdown
 */
 void IN_Shutdown( void )
 {
-	SDL_StopTextInput( );
+	//SDL_StopTextInput( );
 
 	IN_DeactivateMouse( Cvar_VariableIntegerValue( "r_fullscreen" ) != 0 );
 	mouseAvailable = qfalse;

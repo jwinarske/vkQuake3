@@ -13,8 +13,6 @@ extern "C" {
 #include <libinput.h>
 #include <libudev.h>
 
-#include "../client/client.h"
-
 struct libinput *li;
 struct udev* _udev;
 
@@ -43,11 +41,6 @@ int initInputHandler()
 
 	libinput_dispatch(li);
 
-	//configure devices
-//		libinput_device_config_accel_set_speed()
-//		libinput_device_config_accel_set_profile()
-//		libinput_device_config_scroll_set_natural_scroll_enabled()
-
 	struct libinput_event* event = 0;
 	while ((event = libinput_get_event(li)) != 0)
 	{
@@ -58,7 +51,6 @@ int initInputHandler()
 		case LIBINPUT_EVENT_DEVICE_ADDED:
 		{
 			struct libinput_device* dev = libinput_event_get_device(event);
-			Com_Printf("Device name: %s\n", libinput_device_get_name(dev));
 			break;
 		}
 		};
@@ -71,67 +63,87 @@ int initInputHandler()
 	return 1;
 }
 
-int handleInput()
+int handleInput(inputEvent* e)
 {
 	if(!li) return -1;
+	if(!e) return -1;
+
+	e->type = -1;
 
 	libinput_dispatch(li);
 
-	struct libinput_event* event = 0;
-	while ((event = libinput_get_event(li)) != 0)
+	struct libinput_event* event = libinput_get_event(li);
+
+	if(!event)
 	{
-		uint32_t type = libinput_event_get_type(event);
-
-		switch(type)
-		{
-		case LIBINPUT_EVENT_DEVICE_ADDED:
-		{
-			struct libinput_device* dev = libinput_event_get_device(event);
-			Com_Printf("Device name: %s\n", libinput_device_get_name(dev));
-			break;
-		}
-		case LIBINPUT_EVENT_KEYBOARD_KEY:
-		{
-			uint32_t keyCode = libinput_event_keyboard_get_key(libinput_event_get_keyboard_event(event));
-			enum libinput_key_state keyState = libinput_event_keyboard_get_key_state(libinput_event_get_keyboard_event(event));
-			Com_Printf("Keypress keycode %u state %u\n", keyCode, keyState);
-			break;
-		}
-		case LIBINPUT_EVENT_POINTER_MOTION:
-		{
-			double xCoord = libinput_event_pointer_get_dx(libinput_event_get_pointer_event(event));
-			double yCoord = libinput_event_pointer_get_dy(libinput_event_get_pointer_event(event));
-			Com_Printf("Pointer relative motion xcoord %lf ycoord %lf\n", xCoord, yCoord);
-			break;
-		}
-		case LIBINPUT_EVENT_POINTER_MOTION_ABSOLUTE:
-		{
-			double xCoord = libinput_event_pointer_get_absolute_x(libinput_event_get_pointer_event(event));
-			double yCoord = libinput_event_pointer_get_absolute_y(libinput_event_get_pointer_event(event));
-			Com_Printf("Pointer absolute motion xcoord %lf ycoord %lf\n", xCoord, yCoord);
-			break;
-		}
-		case LIBINPUT_EVENT_POINTER_BUTTON:
-		{
-			uint32_t button = libinput_event_pointer_get_button(libinput_event_get_pointer_event(event));
-			enum libinput_button_state buttonState = libinput_event_pointer_get_button_state(libinput_event_get_pointer_event(event));
-			Com_Printf("Pointer button button %u, state %u\n", button, buttonState);
-			break;
-		}
-		case LIBINPUT_EVENT_POINTER_AXIS:
-		{
-			enum libinput_pointer_axis_source axisSource = libinput_event_pointer_get_axis_source(libinput_event_get_pointer_event(event));
-			double axisValueVertical = libinput_event_pointer_get_axis_value(libinput_event_get_pointer_event(event), LIBINPUT_POINTER_AXIS_SCROLL_VERTICAL);
-			double axisValueHorizontal = libinput_event_pointer_get_axis_value(libinput_event_get_pointer_event(event), LIBINPUT_POINTER_AXIS_SCROLL_HORIZONTAL);
-			Com_Printf("Pointer axis  source %u, value vertical %lf, value horizontal %lf\n", axisSource, axisValueVertical, axisValueHorizontal);
-			break;
-		}
-		};
-
-
-		libinput_event_destroy(event);
-		libinput_dispatch(li);
+		return -1;
 	}
+
+	e->type = libinput_event_get_type(event);;
+
+	switch(e->type)
+	{
+	case LIBINPUT_EVENT_KEYBOARD_KEY:
+	{
+		static uint32_t lastKey = 0;
+		lastKey = e->button;
+		e->button = libinput_event_keyboard_get_key(libinput_event_get_keyboard_event(event));
+		e->buttonState = libinput_event_keyboard_get_key_state(libinput_event_get_keyboard_event(event));
+		if(lastKey == e->button)
+		{
+			e->buttonRepeat = 1;
+		}
+		else
+		{
+			e->buttonRepeat = 0;
+		}
+		break;
+	}
+	case LIBINPUT_EVENT_POINTER_MOTION:
+	{
+		e->xCoord = libinput_event_pointer_get_dx(libinput_event_get_pointer_event(event));
+		e->yCoord = libinput_event_pointer_get_dy(libinput_event_get_pointer_event(event));
+		break;
+	}
+	case LIBINPUT_EVENT_POINTER_MOTION_ABSOLUTE:
+	{
+		e->xCoord = libinput_event_pointer_get_absolute_x(libinput_event_get_pointer_event(event));
+		e->yCoord = libinput_event_pointer_get_absolute_y(libinput_event_get_pointer_event(event));
+		break;
+	}
+	case LIBINPUT_EVENT_POINTER_BUTTON:
+	{
+		e->button = libinput_event_pointer_get_button(libinput_event_get_pointer_event(event));
+		e->buttonState = libinput_event_pointer_get_button_state(libinput_event_get_pointer_event(event));
+		break;
+	}
+	case LIBINPUT_EVENT_POINTER_AXIS:
+	{
+		enum libinput_pointer_axis_source axisSource = libinput_event_pointer_get_axis_source(libinput_event_get_pointer_event(event));
+		if(axisSource != LIBINPUT_POINTER_AXIS_SOURCE_WHEEL)
+		{
+			break;
+		}
+
+		if(libinput_event_pointer_has_axis(event, LIBINPUT_POINTER_AXIS_SCROLL_HORIZONTAL))
+		{
+			e->xCoord = libinput_event_pointer_get_axis_value(libinput_event_get_pointer_event(event), LIBINPUT_POINTER_AXIS_SCROLL_HORIZONTAL);
+		}
+
+		if(libinput_event_pointer_has_axis(event, LIBINPUT_POINTER_AXIS_SCROLL_VERTICAL))
+		{
+			e->yCoord = libinput_event_pointer_get_axis_value(libinput_event_get_pointer_event(event), LIBINPUT_POINTER_AXIS_SCROLL_VERTICAL);
+		}
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	};
+
+
+	libinput_event_destroy(event);
 
 	return 1;
 }
