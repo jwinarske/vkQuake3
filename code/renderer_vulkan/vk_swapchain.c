@@ -3,6 +3,7 @@
 #include "VKimpl.h"
 #include "vk_instance.h"
 
+#include "../qcommon/qcommon.h"
 
 /*
 
@@ -122,27 +123,45 @@ void vk_createSwapChain(VkDevice device, VkSurfaceKHR surface, VkSurfaceFormatKH
 
         free(pPresentModes);
 
+		cvar_t* swapInterval = Cvar_Get( "r_swapInterval", "1", 0 );
 
-        if (mailbox_supported)
-        {
-            present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
-            image_count = MAX(3u, vk.surface_caps.minImageCount);
-            
-            ri.Printf(PRINT_ALL, "\n VK_PRESENT_MODE_MAILBOX_KHR mode, minImageCount: %d. \n", image_count);
-        }
-        else if(immediate_supported)
-        {
-            present_mode = VK_PRESENT_MODE_IMMEDIATE_KHR;
-            image_count = MAX(2u, vk.surface_caps.minImageCount);
+		if(swapInterval && swapInterval->integer > 0)
+		{
+			if (mailbox_supported)
+			{
+				present_mode = VK_PRESENT_MODE_MAILBOX_KHR;
+				image_count = MAX(3u, vk.surface_caps.minImageCount);
 
-            ri.Printf(PRINT_ALL, "\n VK_PRESENT_MODE_IMMEDIATE_KHR mode, minImageCount: %d. \n", image_count);
-        }
-        else
+				ri.Printf(PRINT_ALL, "\n VK_PRESENT_MODE_MAILBOX_KHR mode, minImageCount: %d. \n", image_count);
+			}
+			else
+			{
+				// VK_PRESENT_MODE_FIFO_KHR mode is guaranteed to be available.
+				present_mode = VK_PRESENT_MODE_FIFO_KHR;
+				image_count = MAX(2u, vk.surface_caps.minImageCount);
+
+				ri.Printf(PRINT_ALL, "\n VK_PRESENT_MODE_FIFO_KHR mode, minImageCount: %d. \n", image_count);
+			}
+		}
+		else
         {
-            // VK_PRESENT_MODE_FIFO_KHR mode is guaranteed to be available.
-            present_mode = VK_PRESENT_MODE_FIFO_KHR;
-            image_count = MAX(2u, vk.surface_caps.minImageCount);
+			if(immediate_supported)
+			{
+				present_mode = VK_PRESENT_MODE_IMMEDIATE_KHR;
+				image_count = MAX(2u, vk.surface_caps.minImageCount);
+
+				ri.Printf(PRINT_ALL, "\n VK_PRESENT_MODE_IMMEDIATE_KHR mode, minImageCount: %d. \n", image_count);
+			}
+			else
+			{
+				// VK_PRESENT_MODE_FIFO_KHR mode is guaranteed to be available.
+				present_mode = VK_PRESENT_MODE_FIFO_KHR;
+				image_count = MAX(2u, vk.surface_caps.minImageCount);
+
+				ri.Printf(PRINT_ALL, "\n VK_PRESENT_MODE_FIFO_KHR mode, minImageCount: %d. \n", image_count);
+			}
         }
+
 
         // The Spec Say:
         // image_count must <= VkSurfaceCapabilitiesKHR.maxImageCount

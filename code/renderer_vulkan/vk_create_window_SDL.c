@@ -187,15 +187,9 @@ void vk_createSurfaceImpl(uint32_t width, uint32_t height)
 		}
 	}
 
-	VkDisplayModeCreateInfoKHR dmci = {};
-	dmci.sType = VK_STRUCTURE_TYPE_DISPLAY_MODE_CREATE_INFO_KHR;
-	dmci.parameters = displayModeProperties[mode].parameters;
-	VkDisplayModeKHR displayMode;
-	qvkCreateDisplayModeKHR(vk.physical_device, displayProperties[0].display, &dmci, 0, &displayMode);
-
 	VkDisplaySurfaceCreateInfoKHR dsci = {};
 	dsci.sType = VK_STRUCTURE_TYPE_DISPLAY_SURFACE_CREATE_INFO_KHR;
-	dsci.displayMode = displayMode;
+	dsci.displayMode = displayModeProperties[mode].displayMode;
 	dsci.transform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
 	dsci.alphaMode = VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR;
 	dsci.imageExtent = displayModeProperties[mode].parameters.visibleRegion;

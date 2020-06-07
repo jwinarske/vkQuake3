@@ -125,7 +125,6 @@ PFN_vkQueuePresentKHR							qvkQueuePresentKHR;
 PFN_vkGetPhysicalDeviceDisplayPropertiesKHR		qvkGetPhysicalDeviceDisplayPropertiesKHR;
 PFN_vkGetDisplayModePropertiesKHR				qvkGetDisplayModePropertiesKHR;
 PFN_vkCreateDisplayPlaneSurfaceKHR				qvkCreateDisplayPlaneSurfaceKHR;
-PFN_vkCreateDisplayModeKHR						qvkCreateDisplayModeKHR;
 
 #ifndef NDEBUG
 
@@ -337,7 +336,6 @@ static void vk_loadGlobalFunctions(void)
 	INIT_INSTANCE_FUNCTION(vkGetPhysicalDeviceDisplayPropertiesKHR)
 	INIT_INSTANCE_FUNCTION(vkGetDisplayModePropertiesKHR)
 	INIT_INSTANCE_FUNCTION(vkCreateDisplayPlaneSurfaceKHR)
-	INIT_INSTANCE_FUNCTION(vkCreateDisplayModeKHR)
 
     #undef INIT_INSTANCE_FUNCTION
 
@@ -894,7 +892,6 @@ void vk_clearProcAddress(void)
 	qvkGetPhysicalDeviceDisplayPropertiesKHR	= NULL;
 	qvkGetDisplayModePropertiesKHR				= NULL;
 	qvkCreateDisplayPlaneSurfaceKHR				= NULL;
-	qvkCreateDisplayModeKHR						= NULL;
 }
 
 

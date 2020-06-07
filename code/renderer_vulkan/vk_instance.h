@@ -111,7 +111,6 @@ extern PFN_vkQueuePresentKHR							qvkQueuePresentKHR;
 extern PFN_vkGetPhysicalDeviceDisplayPropertiesKHR		qvkGetPhysicalDeviceDisplayPropertiesKHR;
 extern PFN_vkGetDisplayModePropertiesKHR				qvkGetDisplayModePropertiesKHR;
 extern PFN_vkCreateDisplayPlaneSurfaceKHR				qvkCreateDisplayPlaneSurfaceKHR;
-extern PFN_vkCreateDisplayModeKHR						qvkCreateDisplayModeKHR;
 
 
 
