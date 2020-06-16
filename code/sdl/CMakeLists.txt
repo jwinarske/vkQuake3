@@ -6,7 +6,7 @@ file(GLOB sdlSrc
 	"sdl_snd.c"
 )
 
-add_library(sdl SHARED ${sdlSrc})
+add_library(sdl STATIC ${sdlSrc})
 target_compile_options(sdl PRIVATE -Wall -Werror=implicit-function-declaration -std=c11  -march=${ARCH_STRING} -fPIC)
 
 target_include_directories(sdl PUBLIC ../SDL2)

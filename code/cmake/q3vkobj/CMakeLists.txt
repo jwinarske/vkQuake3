@@ -93,4 +93,4 @@ target_compile_options(renderer_vulkan_${ARCH_STRING} PRIVATE -Wall -Werror=impl
 
 target_include_directories(renderer_vulkan_${ARCH_STRING} PUBLIC ../../jpeg-8c ../../ ../../renderer_vulkan/QPUassembler/)
 
-target_link_libraries(renderer_vulkan_${ARCH_STRING} pthread dl m rt SDL2)
+target_link_libraries(renderer_vulkan_${ARCH_STRING} pthread dl m rt SDL2 jpeg-8c)
