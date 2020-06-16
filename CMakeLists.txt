@@ -17,7 +17,12 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 	add_definitions(-DDEBUG_BUILD)
 endif()
 
-set(ARCH_STRING armv8-a)
+set(ARCH_STRING
+	#armv8-a		#RPi support: 2B 1.2, 3B, 3B+
+	#armv7-a	#RPi support: 2B
+	#armv8		#RPi support: 3A+
+	armv6z		#RPi support: 1A, 1A+, 1B, Zero 1.2, Zero 1.3, Zero W
+	)
 add_definitions(-DARCH_STRING="${ARCH_STRING}")
 add_definitions(-DPLATFORM="linux")
 add_definitions(-DCROSS_COMPILING=1)
@@ -29,7 +34,9 @@ add_definitions(-DMISSIONPACK="missionpack")
 add_definitions(-DMOUNT_DIR="code")
 add_definitions(-DBUILD_DIR="build")
 add_definitions(-DBOTLIB)
-#add_definitions(-DNO_VM_COMPILED)
+if(${ARCH_STRING} STREQUAL armv6z)
+	add_definitions(-DNO_VM_COMPILED)
+endif()
 add_definitions(-DUSE_RENDERER_DLOPEN)
 add_definitions(-DNDEBUG)
 
