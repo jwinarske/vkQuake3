@@ -1,28 +1,36 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.10.2)
 
-project (vkQuake3)
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug, Release, or MinSizeRel." FORCE)
+    message(STATUS "CMAKE_BUILD_TYPE not set, defaulting to Release.")
+endif ()
 
-#SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-#SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-#SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-
-set(CMAKE_VERBOSE_MAKEFILE ON)
+project (vkQuake3 
+         DESCRIPTION "Vulkan Quake3 Engine"
+         LANGUAGES CXX C ASM)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 	message("Debug build")
 	add_definitions(-DDEBUG_BUILD)
 endif()
 
-set(ARCH_STRING
-	#armv8-a		#RPi support: 2B 1.2, 3B, 3B+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if(NOT CMAKE_CROSSCOMPILING)
+    set(ARCH_STRING x86_64)
+else()
+	#armv8-a	#RPi support: 2B 1.2, 3B, 3B+
 	#armv7-a	#RPi support: 2B
 	#armv8		#RPi support: 3A+
-	armv6z		#RPi support: 1A, 1A+, 1B, Zero 1.2, Zero 1.3, Zero W
-	)
+	#armv6z		#RPi support: 1A, 1A+, 1B, Zero 1.2, Zero 1.3, Zero W
+	if (NOT ARCH_STRING)
+		set(ARCH_STRING "armv8-a" CACHE STRING "Choose the arch of build." FORCE)
+		message(STATUS "CMAKE_BUILD_TYPE not set, defaulting to armv8-a.")
+	endif ()
+endif()
+
 add_definitions(-DARCH_STRING="${ARCH_STRING}")
 add_definitions(-DPLATFORM="linux")
 add_definitions(-DCROSS_COMPILING=1)
@@ -41,7 +49,6 @@ add_definitions(-DUSE_RENDERER_DLOPEN)
 add_definitions(-DNDEBUG)
 
 set (SOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-link_directories(${SOURCE_PATH}/code/SDL2/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(code)

@@ -7,7 +7,7 @@ file(GLOB sdlSrc
 )
 
 add_library(sdl STATIC ${sdlSrc})
-target_compile_options(sdl PRIVATE -Wall -Werror=implicit-function-declaration -std=c11  -march=${ARCH_STRING} -fPIC)
+target_compile_options(sdl PRIVATE -Wall -Werror=implicit-function-declaration)
 
 target_include_directories(sdl PUBLIC ../SDL2)
 target_link_libraries(sdl SDL2 mtdev evdev udev input)

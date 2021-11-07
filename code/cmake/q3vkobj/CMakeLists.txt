@@ -89,8 +89,10 @@ file(GLOB q3vkobj
 )
 
 add_library(renderer_vulkan_${ARCH_STRING} SHARED ${q3vkobj})
-target_compile_options(renderer_vulkan_${ARCH_STRING} PRIVATE -Wall -Werror=implicit-function-declaration -std=c11 -march=${ARCH_STRING} -fPIC)
+target_compile_options(renderer_vulkan_${ARCH_STRING} PRIVATE -Wall -Werror=implicit-function-declaration)
 
 target_include_directories(renderer_vulkan_${ARCH_STRING} PUBLIC ../../jpeg-8c ../../ ../../renderer_vulkan/QPUassembler/)
 
 target_link_libraries(renderer_vulkan_${ARCH_STRING} pthread dl m rt SDL2 jpeg-8c)
+
+install(TARGETS renderer_vulkan_${ARCH_STRING})

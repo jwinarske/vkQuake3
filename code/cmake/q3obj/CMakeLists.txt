@@ -64,8 +64,6 @@ file(GLOB q3obj
 	"../../qcommon/puff.c"
 	"../../qcommon/vm.c"
 	"../../qcommon/vm_interpreted.c"
-	"../../qcommon/vm_armv7l.c"
-	"../../client/vm_armv7l.c"
 
 	"../../botlib/be_aas_bspq3.c"
 	"../../botlib/be_aas_cluster.c"
@@ -116,9 +114,23 @@ file(GLOB q3obj
 	#MUMBLE?
 )
 
-add_executable(ioquake3 ${q3obj})
-target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declaration -std=c11 -march=${ARCH_STRING})
+if (NOT CMAKE_CROSSCOMPILING)
+    list(APPEND q3obj 
+	    ../../asm/ftola.c
+		../../asm/snapvector.c
+        ../../qcommon/vm_x86.c
+	)
+else ()
+    list(APPEND q3obj 
+        ../../qcommon/vm_armv7l.c
+        ../../client/vm_armv7l.c
+	)
+endif ()
 
-target_include_directories(ioquake3 PUBLIC ../../SDL2)
+add_executable(ioquake3 ${q3obj})
+
+target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declaration)
 
 target_link_libraries(ioquake3 pthread dl m rt jpeg-8c SDL2 zlib mtdev evdev udev input)
+
+install(TARGETS ioquake3)
