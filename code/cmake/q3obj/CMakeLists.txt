@@ -115,16 +115,13 @@ file(GLOB q3obj
 )
 
 if (NOT CMAKE_CROSSCOMPILING)
-    list(APPEND q3obj 
-	    ../../asm/ftola.c
-		../../asm/snapvector.c
+    list(APPEND q3obj
+        ../../asm/ftola.c
+        ../../asm/snapvector.c
         ../../qcommon/vm_x86.c
 	)
 else ()
-    list(APPEND q3obj 
-        ../../qcommon/vm_armv7l.c
-        ../../client/vm_armv7l.c
-	)
+    list(APPEND q3obj ../../qcommon/vm_armv7l.c)
 endif ()
 
 add_executable(ioquake3 ${q3obj})
