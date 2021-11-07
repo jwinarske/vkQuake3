@@ -118,15 +118,20 @@ if (NOT CMAKE_CROSSCOMPILING)
     list(APPEND q3obj
         ../../asm/ftola.c
         ../../asm/snapvector.c
-        ../../qcommon/vm_x86.c
+        ../../qcommon/vm_interpreted.c
 	)
+elseif(ARCH_STRING STREQUAL "aarch64")
+    list(APPEND q3obj ../../qcommon/vm_interpreted.c)
+elseif(ARCH_STRING STREQUAL "corei7")
+    list(APPEND q3obj ../../qcommon/vm_interpreted.c)
 else ()
+    # assuming if not aarch64 or corei7, then ARMv7.
     list(APPEND q3obj ../../qcommon/vm_armv7l.c)
 endif ()
 
 add_executable(ioquake3 ${q3obj})
 
-target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declaration)
+target_compile_options(ioquake3 PRIVATE -Wall -Werror=implicit-function-declaration -DNO_VM_COMPILED)
 
 target_link_libraries(ioquake3 pthread dl m rt jpeg-8c SDL2 zlib mtdev evdev udev input)
 
